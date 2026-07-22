@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+
+<html class="light" lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Server Failure Simulation - Smart PJU Ecosystem</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Geist:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-container": "#c4dcff",
+                    "surface-container-highest": "#e0e3e5",
+                    "on-surface": "#191c1e",
+                    "surface-container-low": "#f2f4f6",
+                    "inverse-primary": "#b4c5ff",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "background": "#f7f9fb",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "error-container": "#ffdad6",
+                    "surface-container": "#eceef0",
+                    "on-error": "#ffffff",
+                    "outline": "#737686",
+                    "tertiary-fixed": "#ffddb8",
+                    "surface-container-lowest": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "surface-dim": "#d8dadc",
+                    "error": "#ba1a1a",
+                    "on-secondary-fixed": "#001c37",
+                    "on-secondary-container": "#49617f",
+                    "on-surface-variant": "#434655",
+                    "primary-container": "#2563eb",
+                    "surface-variant": "#e0e3e5",
+                    "on-primary-fixed": "#00174b",
+                    "tertiary-container": "#996100",
+                    "on-tertiary-container": "#ffeedd",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "tertiary": "#784b00",
+                    "on-tertiary-fixed": "#2a1700",
+                    "on-primary": "#ffffff",
+                    "surface-bright": "#f7f9fb",
+                    "primary": "#004ac6",
+                    "on-secondary-fixed-variant": "#314865",
+                    "surface": "#f7f9fb",
+                    "outline-variant": "#c3c6d7",
+                    "surface-container-high": "#e6e8ea",
+                    "on-background": "#191c1e",
+                    "on-tertiary": "#ffffff",
+                    "secondary": "#49607e",
+                    "on-primary-fixed-variant": "#003ea8",
+                    "inverse-on-surface": "#eff1f3",
+                    "on-secondary": "#ffffff",
+                    "primary-fixed": "#dbe1ff",
+                    "on-primary-container": "#eeefff",
+                    "inverse-surface": "#2d3133",
+                    "surface-tint": "#0053db",
+                    "secondary-fixed-dim": "#b0c8eb",
+                    "secondary-fixed": "#d2e4ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xl": "32px",
+                    "md": "16px",
+                    "lg": "24px",
+                    "form-max": "768px",
+                    "base": "4px",
+                    "xs": "4px",
+                    "sm": "8px",
+                    "gutter": "16px",
+                    "container-max": "1280px"
+            },
+            "fontFamily": {
+                    "body-medium": ["Inter"],
+                    "headline-md": ["Geist"],
+                    "code-sm": ["JetBrains Mono"],
+                    "display-lg": ["Geist"],
+                    "headline-sm": ["Geist"],
+                    "body-base": ["Inter"],
+                    "label-caps": ["Geist"],
+                    "stat-lg": ["Geist"]
+            },
+            "fontSize": {
+                    "body-medium": ["14px", {"lineHeight": "20px", "letterSpacing": "0", "fontWeight": "500"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "code-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0", "fontWeight": "400"}],
+                    "display-lg": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-sm": ["18px", {"lineHeight": "24px", "letterSpacing": "0", "fontWeight": "600"}],
+                    "body-base": ["14px", {"lineHeight": "20px", "letterSpacing": "0", "fontWeight": "400"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "stat-lg": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .grid-pattern {
+            background-image: radial-gradient(circle, #e2e8f0 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        @keyframes pulse-red {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .animate-pulse-red { animation: pulse-red 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        .progress-bar-transition { transition: width 0.5s ease-in-out, background-color 0.5s ease; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body-base antialiased min-h-screen">
+<!-- Navigation Drawer (Desktop Only) -->
+<aside class="fixed left-0 top-0 z-40 h-full w-72 bg-inverse-surface border-r border-outline-variant shadow-md hidden md:flex flex-col">
+<div class="px-lg py-xl">
+<h1 class="text-headline-md font-headline-md font-bold text-on-primary">PJU Ternate Admin</h1>
+<p class="text-body-medium font-body-medium text-surface-variant opacity-70">System Supervisor</p>
+</div>
+<nav class="flex-1 px-sm">
+<div class="flex items-center gap-md text-surface-variant hover:text-on-primary rounded-lg px-md py-sm mx-sm my-xs transition-colors duration-150 cursor-pointer active:scale-95">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-body-medium font-body-medium">Executive Dashboard</span>
+</div>
+<div class="flex items-center gap-md bg-primary-container text-on-primary-container rounded-lg px-md py-sm mx-sm my-xs transition-colors duration-150 cursor-pointer active:scale-95">
+<span class="material-symbols-outlined">security</span>
+<span class="text-body-medium font-body-medium">Disaster Recovery</span>
+</div>
+<div class="flex items-center gap-md text-surface-variant hover:text-on-primary rounded-lg px-md py-sm mx-sm my-xs transition-colors duration-150 cursor-pointer active:scale-95">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+<span class="text-body-medium font-body-medium">Financial Reports</span>
+</div>
+<div class="flex items-center gap-md text-surface-variant hover:text-on-primary rounded-lg px-md py-sm mx-sm my-xs transition-colors duration-150 cursor-pointer active:scale-95">
+<span class="material-symbols-outlined">settings_applications</span>
+<span class="text-body-medium font-body-medium">Backend Config</span>
+</div>
+<div class="flex items-center gap-md text-surface-variant hover:text-on-primary rounded-lg px-md py-sm mx-sm my-xs transition-colors duration-150 cursor-pointer active:scale-95">
+<span class="material-symbols-outlined">hub</span>
+<span class="text-body-medium font-body-medium">API Integration</span>
+</div>
+<div class="flex items-center gap-md text-surface-variant hover:text-on-primary rounded-lg px-md py-sm mx-sm my-xs transition-colors duration-150 cursor-pointer active:scale-95">
+<span class="material-symbols-outlined">campaign</span>
+<span class="text-body-medium font-body-medium">Citizen Reports</span>
+</div>
+</nav>
+<div class="p-lg border-t border-outline-variant text-surface-variant opacity-50 flex justify-between items-center">
+<span class="text-label-caps font-label-caps uppercase">V1.2.0</span>
+<span class="material-symbols-outlined">info</span>
+</div>
+</aside>
+<!-- Top App Bar -->
+<header class="fixed top-0 right-0 left-0 md:left-72 z-30 flex items-center justify-between px-lg h-16 bg-surface border-b border-outline-variant">
+<div class="flex items-center gap-md">
+<button class="md:hidden p-sm text-on-surface hover:bg-surface-container-high rounded-full transition-all">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h2 class="text-headline-sm font-headline-sm font-bold text-primary">Smart PJU Ecosystem</h2>
+</div>
+<div class="flex items-center gap-md">
+<span class="hidden sm:block text-label-caps font-label-caps text-on-surface-variant">NODE: PRIMARY-TRN-01</span>
+<button class="p-sm text-on-surface hover:bg-surface-container-high rounded-full transition-all active:opacity-80">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-16 pb-20 md:pb-0 md:pl-72 min-h-screen">
+<div class="p-lg max-w-container-max mx-auto">
+<!-- Simulation Header -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-lg gap-md">
+<div>
+<h3 class="text-display-lg font-display-lg text-on-surface tracking-tight">Simulation: Critical Failover</h3>
+<p class="text-body-medium font-body-medium text-on-surface-variant">Manual simulation of cluster-wide failure to validate automatic DR orchestration.</p>
+</div>
+<div class="flex gap-sm">
+<button class="px-lg py-sm bg-primary text-on-primary rounded-lg font-body-medium font-semibold hover:bg-primary-fixed-variant transition-all active:scale-95 shadow-md" id="startSim">
+                        Mulai Simulasi
+                    </button>
+<button class="px-lg py-sm border border-outline-variant text-on-surface rounded-lg font-body-medium hover:bg-surface-container-high transition-all" id="resetSim">
+                        Reset System
+                    </button>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-lg">
+<!-- Server Load Visualization -->
+<div class="md:col-span-8 bg-surface-container-lowest border border-outline-variant rounded-xl p-lg shadow-sm overflow-hidden relative">
+<div class="flex justify-between items-center mb-md">
+<div class="flex items-center gap-sm">
+<span class="w-3 h-3 rounded-full bg-emerald-500" id="nodeStatusIndicator"></span>
+<span class="text-headline-sm font-headline-sm" id="nodeName">Primary-TRN-01 (Active)</span>
+</div>
+<div class="text-code-sm font-code-sm text-on-surface-variant px-sm py-xs bg-surface-container rounded border border-outline-variant">
+                            IP: 10.20.0.1
+                        </div>
+</div>
+<div class="h-64 bg-surface-container-low rounded-lg relative overflow-hidden grid-pattern">
+<!-- Simulated Load Graph (Simple SVG) -->
+<svg class="absolute bottom-0 left-0 w-full h-full" viewbox="0 0 800 200">
+<path class="transition-all duration-1000 ease-in-out" d="M 0 200 L 100 180 L 200 170 L 300 160 L 400 140 L 500 100 L 600 50 L 700 20 L 800 200" fill="none" id="loadPath" stroke="#004ac6" stroke-width="3"></path>
+<area class="opacity-10 transition-all duration-1000 ease-in-out" d="M 0 200 L 100 180 L 200 170 L 300 160 L 400 140 L 500 100 L 600 50 L 700 20 L 800 200 Z" fill="url(#grad1)" id="loadArea"/>
+<defs>
+<lineargradient id="grad1" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" style="stop-color:rgb(0,74,198);stop-opacity:1"></stop>
+<stop offset="100%" style="stop-color:rgb(0,74,198);stop-opacity:0"></stop>
+</lineargradient>
+</defs>
+</svg>
+<!-- Overlay for "CRASH" state -->
+<div class="absolute inset-0 bg-error/10 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity flex items-center justify-center" id="crashOverlay">
+<div class="bg-error text-on-error px-xl py-md rounded-xl font-headline-md shadow-lg flex items-center gap-md animate-pulse">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">error</span>
+                                CRITICAL FAILURE DETECTED
+                            </div>
+</div>
+</div>
+<div class="mt-lg grid grid-cols-3 gap-md">
+<div class="bg-surface-container rounded-lg p-md">
+<p class="text-label-caps font-label-caps text-on-surface-variant">CPU LOAD</p>
+<p class="text-stat-lg font-stat-lg text-on-surface" id="cpuText">24%</p>
+<div class="w-full bg-outline-variant h-1.5 rounded-full mt-sm overflow-hidden">
+<div class="bg-primary h-full progress-bar-transition" id="cpuBar" style="width: 24%"></div>
+</div>
+</div>
+<div class="bg-surface-container rounded-lg p-md">
+<p class="text-label-caps font-label-caps text-on-surface-variant">MEMORY</p>
+<p class="text-stat-lg font-stat-lg text-on-surface" id="memText">4.2 GB</p>
+<div class="w-full bg-outline-variant h-1.5 rounded-full mt-sm overflow-hidden">
+<div class="bg-primary h-full progress-bar-transition" id="memBar" style="width: 35%"></div>
+</div>
+</div>
+<div class="bg-surface-container rounded-lg p-md">
+<p class="text-label-caps font-label-caps text-on-surface-variant">REQUESTS/S</p>
+<p class="text-stat-lg font-stat-lg text-on-surface" id="reqText">1.2k</p>
+<div class="w-full bg-outline-variant h-1.5 rounded-full mt-sm overflow-hidden">
+<div class="bg-primary h-full progress-bar-transition" id="reqBar" style="width: 15%"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Recovery Stats -->
+<div class="md:col-span-4 flex flex-col gap-lg">
+<!-- Timer Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg shadow-sm flex flex-col items-center justify-center text-center">
+<div class="w-16 h-16 bg-primary/10 text-primary rounded-xl flex items-center justify-center mb-md">
+<span class="material-symbols-outlined text-4xl">timer</span>
+</div>
+<p class="text-label-caps font-label-caps text-on-surface-variant mb-xs">Recovery Time (RTO)</p>
+<p class="text-[48px] font-headline-md font-bold text-on-surface leading-none" id="timerDisplay">0.00s</p>
+<p class="text-body-medium font-body-medium text-emerald-600 mt-sm">Target: &lt; 45.00s</p>
+</div>
+<!-- Failover Target -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg shadow-sm">
+<p class="text-label-caps font-label-caps text-on-surface-variant mb-md">Failover Node Standby</p>
+<div class="flex items-center gap-md p-md bg-surface-container rounded-lg border border-outline-variant">
+<div class="w-10 h-10 bg-surface-container-highest rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant">dns</span>
+</div>
+<div class="flex-1">
+<p class="text-body-medium font-semibold text-on-surface">Ternate-Secondary-01</p>
+<p class="text-code-sm text-on-surface-variant">Sync: 100% (Healthy)</p>
+</div>
+<span class="material-symbols-outlined text-emerald-500" id="standbyIndicator">check_circle</span>
+</div>
+</div>
+</div>
+<!-- Event Log / Console -->
+<div class="md:col-span-12 bg-inverse-surface rounded-xl p-lg shadow-lg border border-outline-variant overflow-hidden">
+<div class="flex justify-between items-center mb-md">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary-fixed-dim">terminal</span>
+<h4 class="text-headline-sm font-headline-sm text-on-primary-container">System Activity Log</h4>
+</div>
+<span class="text-code-sm text-surface-variant">Live Console Feed</span>
+</div>
+<div class="h-48 overflow-y-auto font-code-sm text-surface-variant flex flex-col gap-xs scrollbar-thin scrollbar-thumb-outline" id="logContainer">
+<div class="flex gap-md opacity-60">
+<span class="text-primary-fixed-dim">[14:20:01]</span>
+<span>System healthy. All nodes reporting OK.</span>
+</div>
+<div class="flex gap-md opacity-60">
+<span class="text-primary-fixed-dim">[14:20:05]</span>
+<span>Waiting for simulation trigger...</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Nav (Mobile Only) -->
+<nav class="lg:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-16 bg-surface border-t border-outline-variant shadow-lg">
+<div class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary">
+<span class="material-symbols-outlined">monitoring</span>
+<span class="text-label-caps font-label-caps uppercase">Overview</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary">
+<span class="material-symbols-outlined">report_problem</span>
+<span class="text-label-caps font-label-caps uppercase">Alerts</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1">
+<span class="material-symbols-outlined">storage</span>
+<span class="text-label-caps font-label-caps uppercase">DR Status</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary">
+<span class="material-symbols-outlined">tune</span>
+<span class="text-label-caps font-label-caps uppercase">Settings</span>
+</div>
+</nav>
+<script>
+        const startBtn = document.getElementById('startSim');
+        const resetBtn = document.getElementById('resetSim');
+        const cpuText = document.getElementById('cpuText');
+        const cpuBar = document.getElementById('cpuBar');
+        const memText = document.getElementById('memText');
+        const memBar = document.getElementById('memBar');
+        const reqText = document.getElementById('reqText');
+        const reqBar = document.getElementById('reqBar');
+        const timerDisplay = document.getElementById('timerDisplay');
+        const crashOverlay = document.getElementById('crashOverlay');
+        const nodeStatus = document.getElementById('nodeStatusIndicator');
+        const nodeName = document.getElementById('nodeName');
+        const logContainer = document.getElementById('logContainer');
+        const standbyIndicator = document.getElementById('standbyIndicator');
+
+        let simInterval = null;
+        let timerInterval = null;
+        let isSimulating = false;
+
+        function addLog(message, type = 'info') {
+            const time = new Date().toLocaleTimeString('en-GB', { hour12: false });
+            const logEntry = document.createElement('div');
+            logEntry.className = 'flex gap-md';
+            let colorClass = 'text-primary-fixed-dim';
+            if(type === 'error') colorClass = 'text-error';
+            if(type === 'success') colorClass = 'text-emerald-400';
+            
+            logEntry.innerHTML = `<span class="${colorClass}">[${time}]</span> <span class="${type === 'error' ? 'font-bold' : ''}">${message}</span>`;
+            logContainer.prepend(logEntry);
+        }
+
+        function runSimulation() {
+            if (isSimulating) return;
+            isSimulating = true;
+            startBtn.disabled = true;
+            startBtn.classList.add('opacity-50');
+
+            let cpu = 24;
+            let mem = 35;
+            let req = 15;
+            let step = 0;
+
+            addLog("Simulation started: Initiating artificial load spike.", "info");
+
+            simInterval = setInterval(() => {
+                step++;
+                
+                // Ramp up
+                cpu += Math.random() * 8 + 2;
+                mem += Math.random() * 5 + 1;
+                req += Math.random() * 10 + 5;
+
+                if (cpu >= 100) cpu = 100;
+                if (mem >= 100) mem = 100;
+                if (req >= 100) req = 100;
+
+                cpuText.innerText = `${Math.floor(cpu)}%`;
+                cpuBar.style.width = `${cpu}%`;
+                memText.innerText = `${(4.2 + (mem/10)).toFixed(1)} GB`;
+                memBar.style.width = `${mem}%`;
+                reqText.innerText = `${(1.2 + (req/20)).toFixed(1)}k`;
+                reqBar.style.width = `${req}%`;
+
+                if (cpu > 80) {
+                    cpuBar.classList.replace('bg-primary', 'bg-tertiary');
+                    addLog(`Warning: Primary node CPU exceeding threshold (${Math.floor(cpu)}%)`, 'error');
+                }
+
+                if (cpu >= 98) {
+                    clearInterval(simInterval);
+                    triggerCrash();
+                }
+            }, 300);
+        }
+
+        function triggerCrash() {
+            addLog("CRITICAL: Primary-TRN-01 kernel panic. Process terminated.", "error");
+            crashOverlay.classList.remove('opacity-0');
+            nodeStatus.classList.replace('bg-emerald-500', 'bg-error');
+            nodeStatus.classList.add('animate-pulse-red');
+            
+            let startTime = Date.now();
+            timerInterval = setInterval(() => {
+                let elapsed = (Date.now() - startTime) / 1000;
+                timerDisplay.innerText = `${elapsed.toFixed(2)}s`;
+                
+                if (elapsed > 2.0 && elapsed < 2.5) {
+                    addLog("DR Orchestrator: Detecting node failure... Heartbeat lost.", "info");
+                }
+                if (elapsed > 4.5 && elapsed < 5.0) {
+                    addLog("DR Orchestrator: Initiating failover to Ternate-Secondary-01", "info");
+                    standbyIndicator.classList.add('animate-spin');
+                    standbyIndicator.innerText = 'sync';
+                }
+                if (elapsed > 8.0 && elapsed < 8.5) {
+                    addLog("Network: Re-routing DNS traffic to 10.20.0.2", "info");
+                }
+                if (elapsed > 12.0) {
+                    completeRecovery();
+                }
+            }, 50);
+        }
+
+        function completeRecovery() {
+            clearInterval(timerInterval);
+            addLog("FAILOVER COMPLETE. Secondary node is now PRIMARY-ACTIVE.", "success");
+            
+            crashOverlay.classList.add('opacity-0');
+            nodeStatus.classList.remove('bg-error', 'animate-pulse-red');
+            nodeStatus.classList.add('bg-emerald-500');
+            nodeName.innerText = "Ternate-Secondary-01 (Active)";
+            standbyIndicator.classList.remove('animate-spin');
+            standbyIndicator.innerText = 'verified';
+            standbyIndicator.classList.add('text-primary');
+
+            // Reset dashboard values to "new" healthy state
+            cpuText.innerText = `18%`;
+            cpuBar.style.width = `18%`;
+            cpuBar.classList.replace('bg-tertiary', 'bg-primary');
+            memText.innerText = `3.8 GB`;
+            memBar.style.width = `28%`;
+            reqText.innerText = `1.1k`;
+            reqBar.style.width = `12%`;
+        }
+
+        function resetSystem() {
+            location.reload();
+        }
+
+        startBtn.addEventListener('click', runSimulation);
+        resetBtn.addEventListener('click', resetSystem);
+    </script>
+</body></html>

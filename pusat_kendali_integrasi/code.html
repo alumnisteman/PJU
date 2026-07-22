@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+
+<html class="light" lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pusat Kendali Integrasi - PJU Smart City Ternate</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Geist:wght@400;600;700&family=JetBrains+Mono&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid #e2e8f0;
+        }
+        .grid-pattern {
+            background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed": "#dbe1ff",
+                        "primary-container": "#2563eb",
+                        "on-error": "#ffffff",
+                        "secondary-fixed": "#d2e4ff",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "tertiary-container": "#996100",
+                        "surface-container-low": "#f2f4f6",
+                        "surface": "#f7f9fb",
+                        "secondary-fixed-dim": "#b0c8eb",
+                        "inverse-surface": "#2d3133",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed-variant": "#314865",
+                        "surface-container-highest": "#e0e3e5",
+                        "outline": "#737686",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "primary": "#004ac6",
+                        "on-background": "#191c1e",
+                        "inverse-primary": "#b4c5ff",
+                        "surface-bright": "#f7f9fb",
+                        "surface-container": "#eceef0",
+                        "secondary": "#49607e",
+                        "on-secondary-fixed": "#001c37",
+                        "on-error-container": "#93000a",
+                        "on-secondary-container": "#49617f",
+                        "surface-variant": "#e0e3e5",
+                        "outline-variant": "#c3c6d7",
+                        "on-surface-variant": "#434655",
+                        "on-primary": "#ffffff",
+                        "on-surface": "#191c1e",
+                        "surface-dim": "#d8dadc",
+                        "secondary-container": "#c4dcff",
+                        "on-tertiary-container": "#ffeedd",
+                        "error-container": "#ffdad6",
+                        "surface-container-high": "#e6e8ea",
+                        "on-tertiary": "#ffffff",
+                        "surface-tint": "#0053db",
+                        "tertiary-fixed": "#ffddb8",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "error": "#ba1a1a",
+                        "background": "#f7f9fb",
+                        "tertiary": "#784b00",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed": "#00174b",
+                        "on-tertiary-fixed": "#2a1700",
+                        "on-primary-container": "#eeefff",
+                        "inverse-on-surface": "#eff1f3"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "12px",
+                        "xl": "16px",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xs": "4px",
+                        "sm": "8px",
+                        "lg": "24px",
+                        "base": "4px",
+                        "form-max": "768px",
+                        "xl": "32px",
+                        "gutter": "16px",
+                        "md": "16px",
+                        "container-max": "1280px"
+                    },
+                    "fontFamily": {
+                        "code-sm": ["JetBrains Mono"],
+                        "stat-lg": ["Geist"],
+                        "display-lg": ["Geist"],
+                        "body-base": ["Inter"],
+                        "label-caps": ["Geist"],
+                        "body-medium": ["Inter"],
+                        "headline-sm": ["Geist"],
+                        "headline-md": ["Geist"]
+                    },
+                    "fontSize": {
+                        "code-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0", "fontWeight": "400"}],
+                        "stat-lg": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "display-lg": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-base": ["14px", {"lineHeight": "20px", "letterSpacing": "0", "fontWeight": "400"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                        "body-medium": ["14px", {"lineHeight": "20px", "letterSpacing": "0", "fontWeight": "500"}],
+                        "headline-sm": ["18px", {"lineHeight": "24px", "letterSpacing": "0", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background font-body-base text-on-surface min-h-screen grid-pattern">
+<!-- Navigation Drawer (Desktop) -->
+<nav class="fixed inset-y-0 left-0 z-40 flex flex-col h-full w-72 bg-inverse-surface text-white border-r border-outline-variant transition-transform duration-200 ease-in-out hidden md:flex">
+<div class="px-gutter py-xl">
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary-fixed">PJU Smart City</h1>
+<p class="text-xs text-outline-variant mt-1">Pusat Kendali Integrasi</p>
+</div>
+<div class="flex-1 px-sm space-y-xs">
+<!-- Active: Command Center -->
+<a class="flex items-center gap-md px-md py-sm bg-secondary-container text-on-secondary-container font-bold rounded-lg mx-2 transition-all" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-medium text-body-medium">Command Center</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-low mx-2 rounded-lg transition-all text-white/70 hover:text-white" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-body-medium text-body-medium">Asset Inventory</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-low mx-2 rounded-lg transition-all text-white/70 hover:text-white" href="#">
+<span class="material-symbols-outlined">route</span>
+<span class="font-body-medium text-body-medium">Route Optimization</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-low mx-2 rounded-lg transition-all text-white/70 hover:text-white" href="#">
+<span class="material-symbols-outlined">screenshot_monitor</span>
+<span class="font-body-medium text-body-medium">Vehicle Inspection</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-low mx-2 rounded-lg transition-all text-white/70 hover:text-white" href="#">
+<span class="material-symbols-outlined">local_gas_station</span>
+<span class="font-body-medium text-body-medium">Fuel Logs</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-low mx-2 rounded-lg transition-all text-white/70 hover:text-white" href="#">
+<span class="material-symbols-outlined">campaign</span>
+<span class="font-body-medium text-body-medium">Citizen Reports</span>
+</a>
+</div>
+<div class="p-gutter border-t border-white/10 flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center font-bold text-white">TU</div>
+<div class="flex-1 overflow-hidden">
+<p class="font-body-medium text-body-medium truncate">Ternate Field Unit</p>
+<p class="text-xs text-outline-variant">Zone A - North Ternate</p>
+</div>
+<span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="md:ml-72 min-h-screen pb-20 md:pb-lg">
+<!-- TopAppBar -->
+<header class="w-full top-0 sticky z-30 bg-surface border-b border-outline-variant">
+<div class="flex justify-between items-center px-gutter py-md max-w-container-max mx-auto">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-primary font-bold">foggy</span>
+<h2 class="font-headline-md text-headline-md font-bold text-primary">Pusat Kendali Integrasi</h2>
+</div>
+<div class="flex items-center gap-lg">
+<div class="hidden md:flex items-center gap-sm px-md py-xs bg-surface-container rounded-full border border-outline-variant">
+<span class="material-symbols-outlined text-outline">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-body-base w-48" placeholder="Cari aset atau laporan..." type="text"/>
+</div>
+<button class="relative p-xs hover:bg-surface-container-high transition-colors rounded-full active:scale-95 duration-150">
+<span class="material-symbols-outlined text-primary">notifications</span>
+<span class="absolute top-0 right-0 w-2 h-2 bg-error rounded-full"></span>
+</button>
+</div>
+</div>
+</header>
+<!-- Dashboard Canvas -->
+<div class="p-gutter max-w-container-max mx-auto space-y-lg">
+<!-- Summary Stats (Top Row) -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-lg">
+<!-- Citizen Reports Summary -->
+<div class="bg-surface-container-lowest p-lg rounded-lg border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-md">
+<div>
+<p class="font-label-caps text-label-caps text-on-surface-variant">LAPORAN MASUK</p>
+<h3 class="font-stat-lg text-stat-lg mt-xs text-on-surface">128</h3>
+</div>
+<div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">campaign</span>
+</div>
+</div>
+<div class="flex items-center gap-xs text-xs">
+<span class="text-error font-bold flex items-center"><span class="material-symbols-outlined text-xs">trending_up</span> 12%</span>
+<span class="text-outline">vs minggu lalu</span>
+</div>
+</div>
+<!-- Active Tasks Summary -->
+<div class="bg-surface-container-lowest p-lg rounded-lg border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-md">
+<div>
+<p class="font-label-caps text-label-caps text-on-surface-variant">TUGAS AKTIF</p>
+<h3 class="font-stat-lg text-stat-lg mt-xs text-on-surface">42</h3>
+</div>
+<div class="w-10 h-10 rounded-lg bg-tertiary/10 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined">assignment</span>
+</div>
+</div>
+<div class="w-full bg-surface-container-high h-1.5 rounded-full mt-xs">
+<div class="bg-primary h-full rounded-full" style="width: 65%"></div>
+</div>
+<p class="text-xs text-outline mt-sm">65% Target penyelesaian hari ini</p>
+</div>
+<!-- Global Inventory Summary -->
+<div class="bg-surface-container-lowest p-lg rounded-lg border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-md">
+<div>
+<p class="font-label-caps text-label-caps text-on-surface-variant">STOK MATERIAL</p>
+<h3 class="font-stat-lg text-stat-lg mt-xs text-on-surface">84%</h3>
+</div>
+<div class="w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined">inventory_2</span>
+</div>
+</div>
+<div class="flex items-center gap-xs text-xs">
+<span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 font-bold">OPTIMAL</span>
+<span class="text-outline">5 item stok rendah</span>
+</div>
+</div>
+<!-- Fuel Efficiency Summary -->
+<div class="bg-surface-container-lowest p-lg rounded-lg border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-md">
+<div>
+<p class="font-label-caps text-label-caps text-on-surface-variant">EFISIENSI BBM</p>
+<h3 class="font-stat-lg text-stat-lg mt-xs text-on-surface">12.4</h3>
+</div>
+<div class="w-10 h-10 rounded-lg bg-error/10 flex items-center justify-center text-error">
+<span class="material-symbols-outlined">local_gas_station</span>
+</div>
+</div>
+<div class="flex items-center gap-xs text-xs">
+<span class="text-emerald-600 font-bold flex items-center">Km/L</span>
+<span class="text-outline">Rata-rata armada</span>
+</div>
+</div>
+</div>
+<!-- Main Layout: Bento Grid Style -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-lg h-full">
+<!-- Live Map & Fleet Tracking (Large Area) -->
+<div class="lg:col-span-8 bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden flex flex-col shadow-sm">
+<div class="p-md flex justify-between items-center border-b border-outline-variant bg-surface-bright">
+<div>
+<h4 class="font-headline-sm text-headline-sm">Visualisasi Real-Time Kota Ternate</h4>
+<p class="text-xs text-outline">Lokasi unit lapangan dan titik laporan aktif</p>
+</div>
+<div class="flex gap-sm">
+<button class="px-md py-xs bg-surface text-primary border border-primary rounded-lg text-xs font-bold hover:bg-primary-fixed transition-colors">Tampilkan Semua Unit</button>
+</div>
+</div>
+<div class="relative flex-1 min-h-[400px]">
+<div class="absolute inset-0 z-0 bg-cover bg-center" data-location="Ternate, Indonesia" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCWcAia10iAGypzxSnPp-h4XlDu_sRcNMeGCfv4kXEw_ijefQTn5VR0t0fvJ_L7Qcr-LVH7v9MBhSquif581p9MtqZl9U0pLLSuDo3qfmvcKYJ0S3JoTM8-GXzEQzXEWV4a0A-fZuIheyGYepW6Y49ccCOIbzYdHyxuovQ7tEibl2P1hT2Kq3ZTP6E17NjliJCXUSY_leQ0gSUsCpy_gGcpxz9d-1t-8L1GkYIrVOm1qXdK8ASo324K2_-PmJwAu76gu1BZ2DQ29m0V')"></div>
+<!-- UI Overlay on Map -->
+<div class="absolute top-md left-md space-y-sm z-10">
+<div class="glass-card p-sm rounded-lg flex items-center gap-md">
+<span class="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></span>
+<span class="text-xs font-bold text-on-surface">Unit Lapangan Aktif: 12</span>
+</div>
+</div>
+<div class="absolute bottom-md right-md z-10 space-y-xs">
+<div class="glass-card p-xs rounded-lg flex flex-col gap-xs">
+<button class="p-xs hover:bg-surface-container rounded-md"><span class="material-symbols-outlined">add</span></button>
+<button class="p-xs hover:bg-surface-container rounded-md"><span class="material-symbols-outlined">remove</span></button>
+</div>
+</div>
+</div>
+</div>
+<!-- Recent Activities & Reports -->
+<div class="lg:col-span-4 space-y-lg">
+<!-- Urgent Citizen Reports -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm flex flex-col">
+<div class="p-md border-b border-outline-variant flex justify-between items-center">
+<h4 class="font-headline-sm text-headline-sm">Laporan Mendesak</h4>
+<span class="bg-error text-white px-2 py-0.5 rounded-full text-[10px] font-bold">5 BARU</span>
+</div>
+<div class="divide-y divide-outline-variant overflow-y-auto max-h-[250px]">
+<div class="p-md hover:bg-surface-container-low transition-colors cursor-pointer">
+<div class="flex justify-between items-start">
+<h5 class="text-body-medium font-bold">Tiang Roboh - Gamalama</h5>
+<span class="text-[10px] text-outline">2 mnt yang lalu</span>
+</div>
+<p class="text-xs text-on-surface-variant line-clamp-1 mt-xs">Bahaya listrik di depan pasar induk, butuh unit darurat segera.</p>
+<div class="mt-sm flex gap-xs">
+<span class="px-2 py-0.5 rounded-full bg-error-container text-on-error-container text-[10px] font-bold">CRITICAL</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant text-[10px]">ZONE A</span>
+</div>
+</div>
+<div class="p-md hover:bg-surface-container-low transition-colors cursor-pointer">
+<div class="flex justify-between items-start">
+<h5 class="text-body-medium font-bold">Lampu Padam - Kastela</h5>
+<span class="text-[10px] text-outline">15 mnt yang lalu</span>
+</div>
+<p class="text-xs text-on-surface-variant line-clamp-1 mt-xs">Seluruh ruas jalan utama gelap, rawan kecelakaan.</p>
+<div class="mt-sm flex gap-xs">
+<span class="px-2 py-0.5 rounded-full bg-tertiary/10 text-tertiary text-[10px] font-bold">HIGH</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant text-[10px]">ZONE C</span>
+</div>
+</div>
+</div>
+<button class="p-sm text-center text-primary text-xs font-bold border-t border-outline-variant hover:bg-surface-container transition-colors">Lihat Semua Laporan</button>
+</div>
+<!-- Fleet Health Stats -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm p-md">
+<h4 class="font-headline-sm text-headline-sm mb-md">Kesehatan Armada</h4>
+<div class="space-y-md">
+<div>
+<div class="flex justify-between text-xs mb-xs">
+<span class="font-medium">Unit Operasional</span>
+<span class="font-bold text-emerald-600">18/20</span>
+</div>
+<div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden">
+<div class="bg-emerald-500 h-full rounded-full" style="width: 90%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-xs mb-xs">
+<span class="font-medium">Jadwal Servis Minggu Ini</span>
+<span class="font-bold text-tertiary">3 Unit</span>
+</div>
+<div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden">
+<div class="bg-tertiary h-full rounded-full" style="width: 15%"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Row Analytics -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-lg">
+<!-- Asset Trends -->
+<div class="bg-surface-container-lowest p-md rounded-xl border border-outline-variant shadow-sm">
+<div class="flex justify-between items-center mb-md">
+<h4 class="text-body-medium font-bold">Tren Konsumsi BBM (7 Hari)</h4>
+<span class="material-symbols-outlined text-outline">insights</span>
+</div>
+<div class="h-32 w-full flex items-end justify-between gap-sm px-xs">
+<div class="w-full bg-primary/20 hover:bg-primary transition-colors rounded-t-sm" style="height: 45%"></div>
+<div class="w-full bg-primary/20 hover:bg-primary transition-colors rounded-t-sm" style="height: 60%"></div>
+<div class="w-full bg-primary/20 hover:bg-primary transition-colors rounded-t-sm" style="height: 55%"></div>
+<div class="w-full bg-primary/20 hover:bg-primary transition-colors rounded-t-sm" style="height: 80%"></div>
+<div class="w-full bg-primary/20 hover:bg-primary transition-colors rounded-t-sm" style="height: 70%"></div>
+<div class="w-full bg-primary h-full rounded-t-sm" style="height: 90%"></div>
+<div class="w-full bg-primary/20 hover:bg-primary transition-colors rounded-t-sm" style="height: 40%"></div>
+</div>
+<div class="flex justify-between text-[10px] text-outline mt-xs font-medium">
+<span>Sen</span><span>Sel</span><span>Rab</span><span>Kam</span><span>Jum</span><span>Sab</span><span>Min</span>
+</div>
+</div>
+<!-- Logistics / Warehouse Status -->
+<div class="bg-surface-container-lowest p-md rounded-xl border border-outline-variant shadow-sm">
+<h4 class="text-body-medium font-bold mb-md">Logistik & Material Kritis</h4>
+<div class="space-y-sm">
+<div class="flex items-center justify-between p-sm bg-error-container/10 rounded-lg border border-error-container/30">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-error">warning</span>
+<span class="text-xs font-medium">Lampu LED 50W</span>
+</div>
+<span class="text-xs font-bold text-error">Sisa 12 unit</span>
+</div>
+<div class="flex items-center justify-between p-sm bg-surface-container rounded-lg border border-outline-variant">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary">inventory</span>
+<span class="text-xs font-medium">Kabel NYY 4x16mm</span>
+</div>
+<span class="text-xs font-bold">Sisa 450m</span>
+</div>
+<div class="flex items-center justify-between p-sm bg-surface-container rounded-lg border border-outline-variant">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary">inventory</span>
+<span class="text-xs font-medium">Miniature Circuit Breaker</span>
+</div>
+<span class="text-xs font-bold">Sisa 84 unit</span>
+</div>
+</div>
+</div>
+<!-- Quick Actions / System Status -->
+<div class="bg-surface-container-lowest p-md rounded-xl border border-outline-variant shadow-sm flex flex-col">
+<h4 class="text-body-medium font-bold mb-md">Aksi Cepat Integrasi</h4>
+<div class="grid grid-cols-2 gap-sm flex-1">
+<button class="flex flex-col items-center justify-center gap-xs p-sm rounded-lg border border-outline-variant hover:bg-primary-fixed transition-all group active:scale-95">
+<span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">add_task</span>
+<span class="text-[10px] font-bold">Tugas Baru</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-xs p-sm rounded-lg border border-outline-variant hover:bg-primary-fixed transition-all group active:scale-95">
+<span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">local_shipping</span>
+<span class="text-[10px] font-bold">Dispatch Armada</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-xs p-sm rounded-lg border border-outline-variant hover:bg-primary-fixed transition-all group active:scale-95">
+<span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">description</span>
+<span class="text-[10px] font-bold">Buat Laporan</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-xs p-sm rounded-lg border border-outline-variant hover:bg-primary-fixed transition-all group active:scale-95">
+<span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">settings_input_component</span>
+<span class="text-[10px] font-bold">Konfigurasi IOT</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 bg-surface border-t border-outline-variant shadow-sm h-16 px-4 pb-safe flex justify-around items-center">
+<!-- Active: Map for mobile integration view -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">assignment</span>
+<span class="font-label-caps text-[10px] mt-0.5">Tasks</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">lightbulb</span>
+<span class="font-label-caps text-[10px] mt-0.5">Assets</span>
+</a>
+<div class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl px-4 py-1 active:scale-90 transition-transform shadow-md">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-caps text-[10px] mt-0.5">Center</span>
+</div>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-caps text-[10px] mt-0.5">Reports</span>
+</a>
+</nav>
+<!-- Contextual FAB (Only on specific screens, visible here for integration demo) -->
+<button class="fixed bottom-20 right-6 md:bottom-8 md:right-8 w-14 h-14 bg-primary text-white rounded-full shadow-lg flex items-center justify-center hover:bg-primary-container hover:scale-110 active:scale-95 transition-all z-40">
+<span class="material-symbols-outlined" style="font-size: 32px;">bolt</span>
+</button>
+<script>
+        // Micro-interaction: Active Navigation Logic
+        const navLinks = document.querySelectorAll('nav a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                // If not actual links, simulate state
+                // This is a mockup, so we don't preventDefault if they go to real pages
+                // e.preventDefault(); 
+            });
+        });
+
+        // Simple Clock / Refresh simulation
+        function updateStatus() {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+            // Could update some text here
+        }
+        setInterval(updateStatus, 60000);
+    </script>
+</body></html>

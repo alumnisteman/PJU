@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Digital Twin Command Center - Ternate</title>
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono&amp;family=Geist:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed": "#001c37",
+                        "surface-container-highest": "#e0e3e5",
+                        "secondary-fixed": "#d2e4ff",
+                        "on-secondary-fixed-variant": "#314865",
+                        "tertiary-fixed": "#ffddb8",
+                        "outline": "#737686",
+                        "outline-variant": "#c3c6d7",
+                        "surface-container-high": "#e6e8ea",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "on-tertiary-fixed": "#2a1700",
+                        "on-primary-container": "#eeefff",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#f2f4f6",
+                        "surface-dim": "#d8dadc",
+                        "on-background": "#191c1e",
+                        "inverse-surface": "#2d3133",
+                        "primary-container": "#2563eb",
+                        "primary": "#004ac6",
+                        "secondary-container": "#c4dcff",
+                        "on-tertiary": "#ffffff",
+                        "tertiary": "#784b00",
+                        "on-surface-variant": "#434655",
+                        "secondary": "#49607e",
+                        "on-primary-fixed": "#00174b",
+                        "on-error-container": "#93000a",
+                        "error": "#ba1a1a",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "tertiary-container": "#996100",
+                        "surface-container": "#eceef0",
+                        "background": "#f7f9fb",
+                        "on-tertiary-container": "#ffeedd",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "surface": "#f7f9fb",
+                        "primary-fixed": "#dbe1ff",
+                        "error-container": "#ffdad6",
+                        "surface-tint": "#0053db",
+                        "inverse-primary": "#b4c5ff",
+                        "inverse-on-surface": "#eff1f3",
+                        "on-error": "#ffffff",
+                        "surface-bright": "#f7f9fb",
+                        "on-surface": "#191c1e",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "on-secondary-container": "#49617f",
+                        "on-secondary": "#ffffff",
+                        "surface-variant": "#e0e3e5",
+                        "on-primary": "#ffffff",
+                        "secondary-fixed-dim": "#b0c8eb"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["Geist"],
+                        "headline-sm": ["Geist"],
+                        "code-sm": ["JetBrains Mono"],
+                        "stat-lg": ["Geist"],
+                        "display-lg": ["Geist"],
+                        "body-base": ["Inter"],
+                        "headline-md": ["Geist"],
+                        "body-medium": ["Inter"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .digital-twin-grid {
+            background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        .glow-node {
+            box-shadow: 0 0 15px rgba(37, 99, 235, 0.6);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glow-node-active {
+            box-shadow: 0 0 25px rgba(239, 68, 68, 0.8);
+            background-color: #ef4444 !important;
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(.33); opacity: 1; }
+            80%, 100% { opacity: 0; }
+        }
+        .pulse-effect::before {
+            content: '';
+            position: absolute;
+            width: 300%;
+            height: 300%;
+            border-radius: 50%;
+            background-color: #2563eb;
+            animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body-base overflow-hidden flex flex-col h-screen">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center w-full px-4 h-16 bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline z-50">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary dark:text-inverse-primary" style="font-size: 28px;">bolt</span>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-inverse-primary">Smart PJU Control</h1>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden md:flex bg-surface-container rounded-full px-4 py-1.5 border border-outline-variant items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">TERNATE_SERVER_O_3: ACTIVE</span>
+</div>
+<button class="p-2 hover:bg-surface-container-high transition-colors rounded-full active:scale-95 duration-150">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+</button>
+<button class="p-2 hover:bg-surface-container-high transition-colors rounded-full active:scale-95 duration-150">
+<span class="material-symbols-outlined text-on-surface-variant">settings</span>
+</button>
+</div>
+</header>
+<main class="flex-1 flex overflow-hidden relative">
+<!-- Sidebar Controls -->
+<aside class="w-80 bg-surface-container-low border-r border-outline-variant z-40 flex flex-col overflow-y-auto hidden lg:flex">
+<div class="p-6 space-y-8">
+<!-- System Status -->
+<div>
+<h3 class="font-label-caps text-label-caps text-on-surface-variant mb-4">REAL-TIME TELEMETRY</h3>
+<div class="grid grid-cols-1 gap-4">
+<div class="bg-surface p-4 rounded-xl border border-outline-variant shadow-sm">
+<div class="flex justify-between items-start mb-2">
+<span class="text-on-surface-variant font-label-caps text-label-caps">ACTIVE NODES</span>
+<div class="bg-primary-container/10 p-1 rounded-lg">
+<span class="material-symbols-outlined text-primary text-[20px]">lightbulb</span>
+</div>
+</div>
+<div class="font-stat-lg text-stat-lg text-on-surface">1,248 <span class="text-[14px] font-medium text-emerald-600">/ 1,250</span></div>
+</div>
+<div class="bg-surface p-4 rounded-xl border border-outline-variant shadow-sm">
+<div class="flex justify-between items-start mb-2">
+<span class="text-on-surface-variant font-label-caps text-label-caps">LOAD CONSUMPTION</span>
+<div class="bg-tertiary-container/10 p-1 rounded-lg">
+<span class="material-symbols-outlined text-tertiary text-[20px]">electric_bolt</span>
+</div>
+</div>
+<div class="font-stat-lg text-stat-lg text-on-surface">42.8 <span class="text-[14px] font-medium">kWh</span></div>
+</div>
+</div>
+</div>
+<!-- Traffic Correlation -->
+<div>
+<h3 class="font-label-caps text-label-caps text-on-surface-variant mb-4">TRAFFIC CORRELATION</h3>
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<span class="text-body-medium font-body-medium">Adaptive Dimming</span>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="bg-surface p-4 rounded-xl border border-outline-variant">
+<span class="text-on-surface-variant font-label-caps text-label-caps mb-2 block">ACTIVITY FLOW</span>
+<div class="h-24 w-full flex items-end gap-1 px-1 overflow-hidden">
+<div class="w-full bg-primary/20 rounded-t h-[40%] animate-[bounce_2s_infinite]"></div>
+<div class="w-full bg-primary/40 rounded-t h-[60%] animate-[bounce_2.5s_infinite]"></div>
+<div class="w-full bg-primary/20 rounded-t h-[30%] animate-[bounce_1.8s_infinite]"></div>
+<div class="w-full bg-primary/60 rounded-t h-[80%] animate-[bounce_2.2s_infinite]"></div>
+<div class="w-full bg-primary/30 rounded-t h-[50%] animate-[bounce_2.8s_infinite]"></div>
+<div class="w-full bg-primary/50 rounded-t h-[70%] animate-[bounce_2.1s_infinite]"></div>
+<div class="w-full bg-primary/20 rounded-t h-[45%] animate-[bounce_1.9s_infinite]"></div>
+</div>
+<div class="mt-2 text-center font-code-sm text-code-sm text-on-surface-variant">VLD: TERNATE_RING_ROAD_1</div>
+</div>
+</div>
+</div>
+<!-- Emergency Response Mode -->
+<div class="pt-4 mt-auto">
+<button class="w-full bg-error hover:bg-red-700 text-white font-headline-sm text-headline-sm py-4 rounded-xl flex items-center justify-center gap-3 shadow-lg active:scale-95 transition-all" id="emergencyToggle">
+<span class="material-symbols-outlined animate-pulse">campaign</span>
+                        EMERGENCY MODE
+                    </button>
+<p class="mt-3 text-center font-code-sm text-code-sm text-on-surface-variant px-4">Instant max illumination for priority corridors</p>
+</div>
+</div>
+</aside>
+<!-- Main Map View -->
+<section class="flex-1 relative overflow-hidden bg-surface-container-low digital-twin-grid">
+<!-- 3D Map Component (Simulated with depth effects) -->
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+<div class="relative w-[90%] h-[80%] bg-contain bg-no-repeat bg-center opacity-90 transform perspective-[1000px] rotate-x-[30deg] scale-110 transition-transform duration-1000" data-alt="A detailed 3D topographic map of Ternate island, Indonesia, showing the volcano Gamalama at the center. The map is rendered in a minimalist, cyber-security dashboard style with a dark blueprint aesthetic. Roads are traced in neon blue glowing lines, and topography is represented by clean vector contours. Soft ambient light illuminates the island against a neutral gray background." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA4WVE5Y0nc7Rz5_B_HJbyEH9vZi527mBkKLyvU7zcLkmbsPt5E0WiGC6PuaDHWpsQtYVzWEjwErk5bxKuzaGoPU6NADkuVkFFudfdntLqf6OWp-WaY7crdLBWHLEwcbIJRHpYRB0ZXstIjjAJktGzbmYgEaC6ufE3MfxEyflfx9ucoXhQpLwDVJIbO1aQlz55U8JkYkFN45kWFSbOySLnRuteSJ32-qB64j7xFSrQ_Jk37Iqurs-5Ijmx6jyYfR4p84JfEDhcxDWl4')">
+<!-- Glowing Nodes (PJU Poles) -->
+<!-- Ternate City Area -->
+<div class="absolute top-[60%] left-[70%] w-3 h-3 bg-primary rounded-full glow-node pulse-effect pointer-events-auto cursor-pointer"></div>
+<div class="absolute top-[65%] left-[72%] w-3 h-3 bg-primary rounded-full glow-node pointer-events-auto cursor-pointer"></div>
+<div class="absolute top-[58%] left-[75%] w-3 h-3 bg-primary rounded-full glow-node pointer-events-auto cursor-pointer"></div>
+<div class="absolute top-[70%] left-[68%] w-3 h-3 bg-primary rounded-full glow-node pointer-events-auto cursor-pointer"></div>
+<div class="absolute top-[75%] left-[65%] w-3 h-3 bg-primary rounded-full glow-node pointer-events-auto cursor-pointer"></div>
+<!-- West Coast -->
+<div class="absolute top-[40%] left-[20%] w-3 h-3 bg-primary rounded-full glow-node pointer-events-auto cursor-pointer"></div>
+<div class="absolute top-[45%] left-[18%] w-3 h-3 bg-primary rounded-full glow-node pointer-events-auto cursor-pointer"></div>
+<div class="absolute top-[50%] left-[22%] w-3 h-3 bg-primary rounded-full glow-node pointer-events-auto cursor-pointer"></div>
+<!-- North Coast -->
+<div class="absolute top-[15%] left-[50%] w-3 h-3 bg-primary rounded-full glow-node pointer-events-auto cursor-pointer"></div>
+<div class="absolute top-[20%] left-[55%] w-3 h-3 bg-primary rounded-full glow-node pointer-events-auto cursor-pointer"></div>
+<!-- South Coast -->
+<div class="absolute top-[85%] left-[45%] w-3 h-3 bg-primary rounded-full glow-node pointer-events-auto cursor-pointer"></div>
+<div class="absolute top-[88%] left-[50%] w-3 h-3 bg-primary rounded-full glow-node pointer-events-auto cursor-pointer"></div>
+</div>
+</div>
+<!-- Overlay Legend -->
+<div class="absolute top-6 left-6 p-4 bg-white/80 backdrop-blur-md rounded-xl border border-outline-variant shadow-lg z-10">
+<div class="flex items-center gap-3 mb-3">
+<div class="w-3 h-3 rounded-full bg-primary shadow-[0_0_8px_rgba(37,99,235,0.6)]"></div>
+<span class="font-body-medium text-body-medium">Standard Efficiency (70%)</span>
+</div>
+<div class="flex items-center gap-3 mb-3">
+<div class="w-3 h-3 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.6)]"></div>
+<span class="font-body-medium text-body-medium">Optimized (30%)</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-3 h-3 rounded-full bg-error shadow-[0_0_8px_rgba(239,68,68,0.6)] animate-pulse"></div>
+<span class="font-body-medium text-body-medium">High Alert / Emergency</span>
+</div>
+</div>
+<!-- Map Controls -->
+<div class="absolute bottom-6 right-6 flex flex-col gap-2 z-10">
+<button class="w-12 h-12 bg-white rounded-xl shadow-lg border border-outline-variant flex items-center justify-center hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined">add</span>
+</button>
+<button class="w-12 h-12 bg-white rounded-xl shadow-lg border border-outline-variant flex items-center justify-center hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined">remove</span>
+</button>
+<button class="w-12 h-12 bg-white rounded-xl shadow-lg border border-outline-variant flex items-center justify-center hover:bg-surface-container transition-colors mt-4">
+<span class="material-symbols-outlined">layers</span>
+</button>
+</div>
+<!-- Focus Card (Appears on click simulated) -->
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 bg-white border border-outline-variant rounded-xl shadow-2xl p-4 hidden z-20" id="nodeFocus">
+<div class="flex justify-between items-start mb-4">
+<h4 class="font-headline-sm text-headline-sm">NODE TR-942</h4>
+<button class="text-on-surface-variant hover:text-on-surface" onclick="hideFocus()">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="space-y-2 mb-4">
+<div class="flex justify-between font-code-sm text-code-sm">
+<span class="text-on-surface-variant">LOCATION:</span>
+<span>TERNATE_SOUTH</span>
+</div>
+<div class="flex justify-between font-code-sm text-code-sm">
+<span class="text-on-surface-variant">TEMP:</span>
+<span>42°C</span>
+</div>
+<div class="flex justify-between font-code-sm text-code-sm">
+<span class="text-on-surface-variant">VOLTAGE:</span>
+<span>228V</span>
+</div>
+</div>
+<button class="w-full bg-primary py-2 text-white rounded-lg font-body-medium text-body-medium">Override Lumens</button>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 py-2 bg-surface dark:bg-inverse-surface border-t border-outline-variant dark:border-outline z-50">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2 hover:text-primary dark:hover:text-primary-fixed active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-caps text-label-caps">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl p-2 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">map</span>
+<span class="font-label-caps text-label-caps">Map</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2 hover:text-primary dark:hover:text-primary-fixed active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-caps text-label-caps">Analytics</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2 hover:text-primary dark:hover:text-primary-fixed active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">warning</span>
+<span class="font-label-caps text-label-caps">Alerts</span>
+</a>
+</nav>
+<script>
+        const emergencyBtn = document.getElementById('emergencyToggle');
+        const nodes = document.querySelectorAll('.glow-node');
+        const nodeFocus = document.getElementById('nodeFocus');
+        let isEmergency = false;
+
+        emergencyBtn.addEventListener('click', () => {
+            isEmergency = !isEmergency;
+            
+            if (isEmergency) {
+                emergencyBtn.innerText = 'STOP EMERGENCY';
+                emergencyBtn.classList.remove('bg-error');
+                emergencyBtn.classList.add('bg-black');
+                nodes.forEach(node => {
+                    node.classList.add('glow-node-active');
+                    node.classList.add('pulse-effect');
+                });
+                document.body.classList.add('animate-pulse');
+            } else {
+                emergencyBtn.innerText = 'EMERGENCY MODE';
+                emergencyBtn.classList.add('bg-error');
+                emergencyBtn.classList.remove('bg-black');
+                nodes.forEach(node => {
+                    node.classList.remove('glow-node-active');
+                    node.classList.remove('pulse-effect');
+                });
+                document.body.classList.remove('animate-pulse');
+            }
+        });
+
+        nodes.forEach(node => {
+            node.addEventListener('click', (e) => {
+                e.stopPropagation();
+                nodeFocus.style.display = 'block';
+                nodeFocus.style.top = `${e.clientY - 100}px`;
+                nodeFocus.style.left = `${e.clientX}px`;
+            });
+        });
+
+        function hideFocus() {
+            nodeFocus.style.display = 'none';
+        }
+
+        document.addEventListener('click', (e) => {
+            if (!nodeFocus.contains(e.target)) {
+                hideFocus();
+            }
+        });
+
+        // Simple parallax on map based on mouse move
+        const mapSection = document.querySelector('section');
+        const mapImage = mapSection.querySelector('div[style*="background-image"]');
+        mapSection.addEventListener('mousemove', (e) => {
+            const xAxis = (window.innerWidth / 2 - e.pageX) / 50;
+            const yAxis = (window.innerHeight / 2 - e.pageY) / 50;
+            mapImage.style.transform = `perspective(1000px) rotateX(${30 + yAxis}deg) rotateY(${xAxis}deg) scale(1.1)`;
+        });
+    </script>
+</body></html>

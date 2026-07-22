@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+
+<html lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Geist:wght@400;600;700&family=JetBrains+Mono&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-bright": "#f7f9fb",
+                        "surface-container": "#eceef0",
+                        "on-secondary-fixed-variant": "#314865",
+                        "on-error": "#ffffff",
+                        "on-primary-container": "#eeefff",
+                        "secondary-fixed-dim": "#b0c8eb",
+                        "inverse-primary": "#b4c5ff",
+                        "secondary-fixed-dim": "#b0c8eb",
+                        "on-background": "#191c1e",
+                        "on-primary": "#ffffff",
+                        "background": "#f7f9fb",
+                        "primary-fixed": "#dbe1ff",
+                        "surface-dim": "#d8dadc",
+                        "surface-container-low": "#f2f4f6",
+                        "on-secondary-container": "#49617f",
+                        "surface-variant": "#e0e3e5",
+                        "primary": "#004ac6",
+                        "inverse-surface": "#2d3133",
+                        "surface-container-high": "#e6e8ea",
+                        "on-primary-fixed": "#00174b",
+                        "surface-container-highest": "#e0e3e5",
+                        "outline-variant": "#c3c6d7",
+                        "outline": "#737686",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "tertiary-fixed": "#ffddb8",
+                        "on-tertiary-container": "#ffeedd",
+                        "on-secondary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface": "#191c1e",
+                        "secondary": "#49607e",
+                        "on-tertiary": "#ffffff",
+                        "surface-tint": "#0053db",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "error": "#ba1a1a",
+                        "tertiary": "#784b00",
+                        "surface": "#f7f9fb",
+                        "secondary-fixed": "#d2e4ff",
+                        "primary-container": "#2563eb",
+                        "on-surface-variant": "#434655",
+                        "tertiary-container": "#996100",
+                        "on-tertiary-fixed": "#2a1700",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "on-error-container": "#93000a",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "inverse-on-surface": "#eff1f3"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "4px",
+                        "md": "16px",
+                        "lg": "24px",
+                        "xs": "4px",
+                        "form-max": "768px",
+                        "container-max": "1280px",
+                        "xl": "32px",
+                        "sm": "8px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "stat-lg": ["Geist"],
+                        "display-lg": ["Geist"],
+                        "body-medium": ["Inter"],
+                        "label-caps": ["Geist"],
+                        "headline-sm": ["Geist"],
+                        "headline-md": ["Geist"],
+                        "body-base": ["Inter"],
+                        "code-sm": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "stat-lg": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "display-lg": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-medium": ["14px", {"lineHeight": "20px", "letterSpacing": "0", "fontWeight": "500"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                        "headline-sm": ["18px", {"lineHeight": "24px", "letterSpacing": "0", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "body-base": ["14px", {"lineHeight": "20px", "letterSpacing": "0", "fontWeight": "400"}],
+                        "code-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f9fb;
+            color: #191c1e;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .haptic-active:active {
+            transform: scale(0.92);
+            filter: brightness(0.8);
+        }
+        .grid-blueprint {
+            background-image: linear-gradient(#e2e8f0 1px, transparent 1px), linear-gradient(90deg, #e2e8f0 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        .pulse-soft {
+            animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse-ring {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .5; }
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface-bright text-on-surface">
+<!-- Top Navigation Anchor (Shared Component: TopAppBar) -->
+<header class="w-full top-0 sticky bg-surface border-b border-outline-variant z-30">
+<div class="flex justify-between items-center px-md h-16 w-full max-w-container-max mx-auto">
+<div class="flex items-center gap-md">
+<button class="material-symbols-outlined text-primary hover:bg-surface-container-low p-2 rounded-full transition-colors active:scale-95">menu</button>
+<h1 class="font-headline-md text-headline-md font-bold text-primary">Sistem PJU Cerdas</h1>
+</div>
+<div class="flex items-center gap-md">
+<div class="hidden md:flex flex-col items-end mr-2">
+<span class="font-body-medium text-body-medium text-on-surface">Teknisi Lapangan</span>
+<span class="font-code-sm text-code-sm text-on-surface-variant">ID: #9921</span>
+</div>
+<div class="w-10 h-10 rounded-full overflow-hidden border border-primary-container">
+<img class="w-full h-full object-cover" data-alt="A professional close-up portrait of a technician wearing a high-visibility vest and a hard hat. The background is a clean, modern electrical substation with blue and grey tones. The lighting is crisp and engineering-grade, highlighting the detailed textures of the safety gear. The style is sharp corporate photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBR2x0ZaFq88WNjeCTJl446Q0uyRhgv4RpqzrYARVJNKeow0-LpO8Kd3stpuW-aX-2aUp2RdfpI4mfdtGoi6tYX15RNjd_tX7hbnuHNDVNTDttv_NOAv3nkC-tTPRe9O4b2HomqaS5KxXzc-3rIUo3elzlxwbrmdCXo6yMpVc7MFPTmQ4p8_9JPEia-S3Tv5JwwmOAsjTYZHqRW52XvarI4tNfucGCB645mqywUnaCBSISUaoJIfe54GNYmhWvZuR5e5xtIYRUN3IuS"/>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-container-max mx-auto p-md md:p-lg pb-32">
+<!-- Welcome Header -->
+<div class="mb-lg">
+<h2 class="font-headline-sm text-headline-sm text-on-surface-variant">Absensi & Kehadiran</h2>
+<div class="font-display-lg text-display-lg text-primary" id="current-date">Senin, 12 Juni 2024</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-lg">
+<!-- Main Clock Section (Left Column) -->
+<div class="md:col-span-8 space-y-lg">
+<!-- Clock In/Out Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg relative overflow-hidden flex flex-col items-center justify-center min-h-[400px]">
+<!-- Subtle Micro-texture background -->
+<div class="absolute inset-0 grid-blueprint opacity-5 pointer-events-none"></div>
+<div class="font-stat-lg text-[64px] leading-tight text-on-surface mb-xs tabular-nums" id="current-time">08:00:24</div>
+<div class="flex items-center gap-2 mb-xl">
+<span class="flex h-3 w-3 rounded-full bg-emerald-500 pulse-soft" id="gps-indicator"></span>
+<span class="font-body-medium text-body-medium text-on-surface-variant">GPS Terkunci: Area Gardu Utama Ternate</span>
+</div>
+<!-- Haptic Clock Button -->
+<button class="haptic-active transition-all duration-200 group relative w-64 h-64 rounded-full bg-primary flex flex-col items-center justify-center text-white shadow-[0_0_0_12px_rgba(0,74,198,0.1)] hover:shadow-[0_0_0_20px_rgba(0,74,198,0.15)] focus:ring-4 focus:ring-primary-container" id="clock-btn" onclick="toggleClock()">
+<span class="material-symbols-outlined text-[80px] mb-2" id="clock-icon" style="font-variation-settings: 'FILL' 1;">login</span>
+<span class="font-headline-sm text-headline-sm tracking-wide" id="clock-text">CLOCK IN</span>
+<!-- Ripple element -->
+<div class="absolute inset-0 rounded-full bg-white opacity-0 group-active:opacity-10 transition-opacity"></div>
+</button>
+<div class="mt-xl flex gap-lg">
+<div class="text-center">
+<p class="font-label-caps text-label-caps text-outline mb-1">MASUK</p>
+<p class="font-headline-sm text-headline-sm text-on-surface" id="time-in">-- : --</p>
+</div>
+<div class="w-px h-10 bg-outline-variant"></div>
+<div class="text-center">
+<p class="font-label-caps text-label-caps text-outline mb-1">KELUAR</p>
+<p class="font-headline-sm text-headline-sm text-on-surface" id="time-out">-- : --</p>
+</div>
+</div>
+</div>
+<!-- Map Geofencing Status -->
+<div class="bg-surface-container-low border border-outline-variant rounded-xl p-md overflow-hidden flex flex-col md:flex-row gap-md items-center">
+<div class="w-full md:w-1/3 h-32 rounded-lg bg-surface-variant overflow-hidden border border-outline-variant">
+<div class="w-full h-full bg-cover bg-center" data-alt="A clean, top-down schematic map of a city grid in Ternate, North Maluku. The map uses a sophisticated color scheme of slate grays and primary blues, indicating utility zones and power lines. A translucent blue circular geofence boundary is highlighted over a specific facility. Engineering-grade GIS visual style." data-location="Ternate Utara" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDoUfIH2A4FV5y7t0OulZPUMu9n2vnsmTaijuCnFMjwmEInBzhBMqE3-_R4GnQTdP2WPVdjEQPULjRnv1GvM2KwPhHouS6t6BxSbsvGtguVsXWJ4wTHNJeOMKttUhTbcHvObPR29E3MtC8yD-R-VXx-YX-sYi92d-quoIaPRHTbYAXJuRIY1j-SjwWOe040d9NWGESBDAgyYQASWt_S1TVaikoQAtkvCZC3V0ZetT4Hl0onwUpGNZHi0_3njvnW6y23dyW52Ha26Mya')"></div>
+</div>
+<div class="flex-1 space-y-2">
+<h4 class="font-headline-sm text-headline-sm text-on-surface">Status Geofencing</h4>
+<p class="font-body-base text-body-base text-on-surface-variant">Anda berada di dalam radius operasional (250m) dari titik aset gardu yang ditugaskan.</p>
+<div class="flex gap-2">
+<span class="px-3 py-1 bg-emerald-100 text-emerald-700 text-xs font-bold rounded-full border border-emerald-200">VALID</span>
+<span class="px-3 py-1 bg-primary-fixed text-on-primary-fixed text-xs font-bold rounded-full border border-outline-variant">GARDU #T72</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Stats & Summary (Right Column) -->
+<div class="md:col-span-4 space-y-lg">
+<!-- Weekly Summary -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg">
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-lg flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">analytics</span>
+                        Ringkasan Minggu Ini
+                    </h3>
+<div class="space-y-md">
+<!-- Stat Item -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">schedule</span>
+</div>
+<span class="font-body-medium text-body-medium text-on-surface-variant">Total Jam Kerja</span>
+</div>
+<span class="font-stat-lg text-headline-md text-on-surface">32.5h</span>
+</div>
+<!-- Progress Bar -->
+<div class="space-y-1">
+<div class="flex justify-between text-xs font-bold text-outline uppercase tracking-wider">
+<span>Target: 40h</span>
+<span>81%</span>
+</div>
+<div class="w-full h-[6px] bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[81%] transition-all duration-1000"></div>
+</div>
+</div>
+<hr class="border-outline-variant"/>
+<!-- Tasks Completed -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-tertiary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-tertiary">task_alt</span>
+</div>
+<span class="font-body-medium text-body-medium text-on-surface-variant">Tugas Selesai</span>
+</div>
+<span class="font-stat-lg text-headline-md text-on-surface">14/18</span>
+</div>
+<!-- Reliability Index -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-secondary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary">verified</span>
+</div>
+<span class="font-body-medium text-body-medium text-on-surface-variant">Indeks Kehadiran</span>
+</div>
+<span class="font-stat-lg text-headline-md text-on-surface">98%</span>
+</div>
+</div>
+</div>
+<!-- Recent Logs -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden">
+<div class="px-lg py-md border-b border-outline-variant bg-surface-container-low flex justify-between items-center">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant">RIWAYAT TERBARU</h3>
+<button class="text-primary font-body-medium text-xs hover:underline">Lihat Semua</button>
+</div>
+<div class="divide-y divide-outline-variant">
+<div class="p-md flex justify-between items-center hover:bg-surface-container-low transition-colors">
+<div>
+<p class="font-body-medium text-on-surface">Jumat, 9 Juni</p>
+<p class="text-xs text-outline">08:02 - 17:15</p>
+</div>
+<span class="px-2 py-1 bg-emerald-100 text-emerald-700 text-[10px] font-bold rounded uppercase">LENGKAP</span>
+</div>
+<div class="p-md flex justify-between items-center hover:bg-surface-container-low transition-colors">
+<div>
+<p class="font-body-medium text-on-surface">Kamis, 8 Juni</p>
+<p class="text-xs text-outline">07:55 - 16:45</p>
+</div>
+<span class="px-2 py-1 bg-emerald-100 text-emerald-700 text-[10px] font-bold rounded uppercase">LENGKAP</span>
+</div>
+<div class="p-md flex justify-between items-center hover:bg-surface-container-low transition-colors">
+<div>
+<p class="font-body-medium text-on-surface">Rabu, 7 Juni</p>
+<p class="text-xs text-outline">08:10 - 17:30</p>
+</div>
+<span class="px-2 py-1 bg-emerald-100 text-emerald-700 text-[10px] font-bold rounded uppercase">LENGKAP</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Shell (Shared Component) -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 py-2 bg-surface-container-lowest border-t border-outline-variant z-50 shadow-lg md:hidden">
+<div class="flex flex-col items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-caps text-label-caps mt-1">Beranda</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl px-4 py-1">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">list_alt</span>
+<span class="font-label-caps text-label-caps mt-1">Tugas</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">lightbulb</span>
+<span class="font-label-caps text-label-caps mt-1">Aset</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-caps text-label-caps mt-1">Profil</span>
+</div>
+</nav>
+<script>
+        // Real-time Clock
+        function updateTime() {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('id-ID', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            const dateStr = now.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+            
+            document.getElementById('current-time').textContent = timeStr.replace(/\./g, ':');
+            document.getElementById('current-date').textContent = dateStr;
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
+
+        // Clock In/Out Logic
+        let isClockedIn = false;
+        function toggleClock() {
+            const btn = document.getElementById('clock-btn');
+            const text = document.getElementById('clock-text');
+            const icon = document.getElementById('clock-icon');
+            const timeIn = document.getElementById('time-in');
+            const timeOut = document.getElementById('time-out');
+            const now = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }).replace(/\./g, ':');
+
+            isClockedIn = !isClockedIn;
+
+            if (isClockedIn) {
+                btn.classList.replace('bg-primary', 'bg-error');
+                btn.classList.add('shadow-[0_0_0_12px_rgba(186,26,26,0.1)]');
+                btn.classList.remove('shadow-[0_0_0_12px_rgba(0,74,198,0.1)]');
+                text.textContent = 'CLOCK OUT';
+                icon.textContent = 'logout';
+                timeIn.textContent = now;
+                timeIn.classList.add('text-primary', 'font-bold');
+            } else {
+                btn.classList.replace('bg-error', 'bg-primary');
+                btn.classList.remove('shadow-[0_0_0_12px_rgba(186,26,26,0.1)]');
+                btn.classList.add('shadow-[0_0_0_12px_rgba(0,74,198,0.1)]');
+                text.textContent = 'CLOCK IN';
+                icon.textContent = 'login';
+                timeOut.textContent = now;
+                timeOut.classList.add('text-error', 'font-bold');
+                
+                // Reset interaction after delay
+                setTimeout(() => {
+                    alert('Absensi hari ini telah terekam. Terima kasih atas kerja keras Anda!');
+                }, 500);
+            }
+            
+            // Haptic feedback simulation (vibrate if mobile)
+            if ("vibrate" in navigator) {
+                navigator.vibrate(50);
+            }
+        }
+    </script>
+</body></html>

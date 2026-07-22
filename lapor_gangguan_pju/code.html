@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Report Fault | Smart PJU Control</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Geist:wght@400;700&family=JetBrains+Mono&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "surface-dim": "#d8dadc",
+                    "secondary-fixed-dim": "#b0c8eb",
+                    "on-secondary-fixed": "#001c37",
+                    "inverse-surface": "#2d3133",
+                    "error": "#ba1a1a",
+                    "primary-fixed": "#dbe1ff",
+                    "inverse-on-surface": "#eff1f3",
+                    "secondary": "#49607e",
+                    "tertiary-fixed": "#ffddb8",
+                    "surface-container-low": "#f2f4f6",
+                    "surface-container-highest": "#e0e3e5",
+                    "background": "#f7f9fb",
+                    "on-primary": "#ffffff",
+                    "outline": "#737686",
+                    "error-container": "#ffdad6",
+                    "inverse-primary": "#b4c5ff",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "on-secondary-container": "#49617f",
+                    "on-background": "#191c1e",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-fixed": "#d2e4ff",
+                    "on-secondary": "#ffffff",
+                    "tertiary": "#784b00",
+                    "outline-variant": "#c3c6d7",
+                    "tertiary-container": "#996100",
+                    "on-primary-fixed-variant": "#003ea8",
+                    "on-surface": "#191c1e",
+                    "on-primary-fixed": "#00174b",
+                    "secondary-container": "#c4dcff",
+                    "surface": "#f7f9fb",
+                    "on-tertiary-fixed": "#2a1700",
+                    "on-surface-variant": "#434655",
+                    "on-error": "#ffffff",
+                    "surface-tint": "#0053db",
+                    "on-secondary-fixed-variant": "#314865",
+                    "surface-variant": "#e0e3e5",
+                    "surface-container": "#eceef0",
+                    "primary-container": "#2563eb",
+                    "on-primary-container": "#eeefff",
+                    "surface-bright": "#f7f9fb",
+                    "primary": "#004ac6",
+                    "on-tertiary-container": "#ffeedd",
+                    "surface-container-high": "#e6e8ea"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "12px",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "form-max": "768px",
+                    "lg": "24px",
+                    "md": "16px",
+                    "container-max": "1280px",
+                    "gutter": "16px",
+                    "base": "4px",
+                    "xs": "4px",
+                    "sm": "8px",
+                    "xl": "32px"
+            },
+            "fontFamily": {
+                    "label-caps": ["Geist"],
+                    "body-medium": ["Inter"],
+                    "body-base": ["Inter"],
+                    "headline-md": ["Geist"],
+                    "code-sm": ["JetBrains Mono"],
+                    "stat-lg": ["Geist"],
+                    "display-lg": ["Geist"],
+                    "headline-sm": ["Geist"]
+            },
+            "fontSize": {
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "body-medium": ["14px", {"lineHeight": "20px", "letterSpacing": "0", "fontWeight": "500"}],
+                    "body-base": ["14px", {"lineHeight": "20px", "letterSpacing": "0", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "code-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0", "fontWeight": "400"}],
+                    "stat-lg": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "display-lg": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-sm": ["18px", {"lineHeight": "24px", "letterSpacing": "0", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .micro-grid {
+            background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        input:focus, textarea:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px #2563eb;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body-base micro-grid min-h-screen pb-24">
+<!-- Top Navigation Bar -->
+<header class="bg-surface border-b border-outline-variant flex justify-between items-center w-full px-4 h-16 sticky top-0 z-50">
+<div class="flex items-center gap-3">
+<button class="material-symbols-outlined text-primary p-2 hover:bg-surface-container-high transition-colors rounded-full active:scale-95 duration-150">arrow_back</button>
+<h1 class="font-headline-md text-headline-md font-bold text-primary">Smart PJU Control</h1>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant p-2 hover:bg-surface-container-high transition-colors rounded-full active:scale-95 duration-150">notifications</span>
+</div>
+</header>
+<main class="max-w-[768px] mx-auto px-4 py-8 space-y-8">
+<!-- Header Section -->
+<section class="space-y-2">
+<h2 class="font-display-lg text-display-lg text-on-surface">Report a Fault</h2>
+<p class="text-on-surface-variant font-body-medium">Help us keep your streets bright and safe. Provide the details below to notify our engineering team.</p>
+</section>
+<!-- Form Container -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 md:p-8 space-y-8 shadow-sm">
+<!-- Location Search -->
+<div class="space-y-2">
+<label class="font-label-caps text-label-caps text-on-surface-variant" for="location-search">Location or Pole ID</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full h-[40px] pl-10 pr-4 bg-surface border border-outline-variant rounded-lg font-body-base focus:border-primary-container" id="location-search" placeholder="Enter ID (e.g. PJ-402) or street name" type="text"/>
+</div>
+<p class="text-[12px] text-outline italic">IDs are usually found on a metal plate at the base of the pole.</p>
+</div>
+<!-- Map Picker Section -->
+<div class="space-y-4">
+<div class="flex justify-between items-end">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase">Precise Location</label>
+<button class="text-primary font-body-medium flex items-center gap-1 hover:underline">
+<span class="material-symbols-outlined text-[18px]">my_location</span>
+                        Use current GPS
+                    </button>
+</div>
+<div class="relative w-full h-64 rounded-xl overflow-hidden border border-outline-variant group">
+<div class="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-105" data-alt="A clean, professional digital map interface showing a suburban street layout with a single blue glowing pinpoint icon marking a specific street light location. The map style is minimalist with a light-grey and white color palette, consistent with an engineering dashboard aesthetic. Soft afternoon sunlight highlights the crisp vectors of the map." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC2iYm63ZuQgVyLhSozs5o1heLhaWl780EG-swT5NkLecXSRLiGYuWN237irPXkwjZp47uHI6ZpStMNWPdg6B8mS-dVS2nYY-aR4_ecZ7oqbeMRGxRV3CO7GLAGCw5uEBJxUEiGKw8IoRhjhyvFmm-Gt4K_Db0YpboPnxsnDTLhH2ehpGt9xRND4TLY46vfZkdm2aoOSKqUO3URSO6GwQif1U4K9u3x_qO7lOGupTfhv-Duuksk1IFTGSsrssN0rcgoHLvxuCNHl08T')"></div>
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+<span class="material-symbols-outlined text-primary text-4xl" style="font-variation-settings: 'FILL' 1;">location_on</span>
+</div>
+<div class="absolute bottom-3 left-3 bg-surface/90 backdrop-blur-sm px-3 py-1.5 rounded-lg border border-outline-variant shadow-sm">
+<p class="font-code-sm text-code-sm text-on-surface">Coord: -6.2088, 106.8456</p>
+</div>
+</div>
+</div>
+<!-- Category Selection -->
+<div class="space-y-4">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase">Issue Category</label>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<button class="issue-pill flex flex-col items-center justify-center p-4 border border-outline-variant rounded-xl bg-surface hover:border-primary hover:bg-primary-fixed transition-all group" data-category="lamp_off">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary mb-2">light_off</span>
+<span class="font-body-medium text-[13px]">Lamp off</span>
+</button>
+<button class="issue-pill flex flex-col items-center justify-center p-4 border border-outline-variant rounded-xl bg-surface hover:border-primary hover:bg-primary-fixed transition-all group" data-category="flickering">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary mb-2">flare</span>
+<span class="font-body-medium text-[13px]">Flickering</span>
+</button>
+<button class="issue-pill flex flex-col items-center justify-center p-4 border border-outline-variant rounded-xl bg-surface hover:border-primary hover:bg-primary-fixed transition-all group" data-category="broken_pole">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary mb-2">construction</span>
+<span class="font-body-medium text-[13px]">Broken Pole</span>
+</button>
+<button class="issue-pill flex flex-col items-center justify-center p-4 border border-outline-variant rounded-xl bg-surface hover:border-primary hover:bg-primary-fixed transition-all group" data-category="other">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary mb-2">more_horiz</span>
+<span class="font-body-medium text-[13px]">Other</span>
+</button>
+</div>
+</div>
+<!-- Photo Upload Section -->
+<div class="space-y-4">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase">Photo Evidence</label>
+<div class="flex flex-col items-center justify-center w-full h-40 border-2 border-dashed border-outline-variant rounded-xl bg-surface-container-low hover:bg-surface-container transition-colors cursor-pointer group">
+<span class="material-symbols-outlined text-outline group-hover:text-primary text-4xl mb-2">add_a_photo</span>
+<p class="font-body-medium text-on-surface-variant">Tap to upload photo</p>
+<p class="text-[12px] text-outline">Max size 5MB (JPG, PNG)</p>
+</div>
+</div>
+<!-- Description Text Area -->
+<div class="space-y-2">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase" for="description">Additional Details</label>
+<textarea class="w-full bg-surface border border-outline-variant rounded-lg p-4 font-body-base focus:border-primary-container resize-none" id="description" placeholder="Describe the problem in detail (e.g. since when, specific visual cues...)" rows="4"></textarea>
+</div>
+<!-- Submit Button -->
+<div class="pt-4">
+<button class="w-full h-[52px] bg-primary text-on-primary rounded-xl font-headline-sm text-headline-sm flex items-center justify-center gap-3 hover:bg-primary-container active:scale-95 transition-all shadow-lg shadow-primary/20" id="submit-report">
+                    Submit Report
+                    <span class="material-symbols-outlined">send</span>
+</button>
+</div>
+</div>
+<!-- Footnote Information -->
+<section class="p-6 bg-secondary-container rounded-xl border border-secondary/20 flex gap-4 items-start">
+<span class="material-symbols-outlined text-on-secondary-container mt-0.5">info</span>
+<div>
+<h4 class="font-body-medium text-on-secondary-container">Automated Status Tracking</h4>
+<p class="text-[13px] text-on-secondary-container/80 mt-1">Once submitted, you will receive a tracking ID via SMS or app notification. Our field technicians are typically dispatched within 24-48 hours for standard urban zones.</p>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Bar (Fixed) -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 py-2 bg-surface border-t border-outline-variant z-50">
+<div class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:text-primary transition-colors cursor-pointer">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-caps text-label-caps">Dashboard</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:text-primary transition-colors cursor-pointer">
+<span class="material-symbols-outlined">map</span>
+<span class="font-label-caps text-label-caps">Map</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:text-primary transition-colors cursor-pointer">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-caps text-label-caps">Analytics</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl p-2 active:scale-90 transition-transform cursor-pointer">
+<span class="material-symbols-outlined">warning</span>
+<span class="font-label-caps text-label-caps">Alerts</span>
+</div>
+</nav>
+<script>
+        // Micro-interactions for Category Pills
+        const pills = document.querySelectorAll('.issue-pill');
+        pills.forEach(pill => {
+            pill.addEventListener('click', () => {
+                pills.forEach(p => {
+                    p.classList.remove('bg-primary-container', 'text-on-primary-container', 'border-primary');
+                    p.classList.add('bg-surface', 'border-outline-variant');
+                    const icon = p.querySelector('.material-symbols-outlined');
+                    icon.classList.remove('text-on-primary-container');
+                    icon.classList.add('text-on-surface-variant');
+                });
+                
+                pill.classList.remove('bg-surface', 'border-outline-variant');
+                pill.classList.add('bg-primary-container', 'text-on-primary-container', 'border-primary');
+                const activeIcon = pill.querySelector('.material-symbols-outlined');
+                activeIcon.classList.remove('text-on-surface-variant');
+                activeIcon.classList.add('text-on-primary-container');
+            });
+        });
+
+        // Submit Logic Simulation
+        const submitBtn = document.getElementById('submit-report');
+        submitBtn.addEventListener('click', () => {
+            submitBtn.innerHTML = `
+                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Processing...
+            `;
+            setTimeout(() => {
+                submitBtn.innerHTML = `Success <span class="material-symbols-outlined">check_circle</span>`;
+                submitBtn.classList.remove('bg-primary');
+                submitBtn.classList.add('bg-emerald-600');
+                
+                alert('Report submitted successfully! Ticket ID: #ENG-9921');
+            }, 1500);
+        });
+    </script>
+</body></html>

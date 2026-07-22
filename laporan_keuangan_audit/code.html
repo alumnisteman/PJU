@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+
+<html class="light" lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Laporan Keuangan Audit - Smart PJU Ecosystem</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Geist:wght@400;600;700;800&amp;family=JetBrains+Mono&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-container": "#c4dcff",
+                    "surface-container-highest": "#e0e3e5",
+                    "on-surface": "#191c1e",
+                    "surface-container-low": "#f2f4f6",
+                    "inverse-primary": "#b4c5ff",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "background": "#f7f9fb",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "error-container": "#ffdad6",
+                    "surface-container": "#eceef0",
+                    "on-error": "#ffffff",
+                    "outline": "#737686",
+                    "tertiary-fixed": "#ffddb8",
+                    "surface-container-lowest": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "surface-dim": "#d8dadc",
+                    "error": "#ba1a1a",
+                    "on-secondary-fixed": "#001c37",
+                    "on-secondary-container": "#49617f",
+                    "on-surface-variant": "#434655",
+                    "primary-container": "#2563eb",
+                    "surface-variant": "#e0e3e5",
+                    "on-primary-fixed": "#00174b",
+                    "tertiary-container": "#996100",
+                    "on-tertiary-container": "#ffeedd",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "tertiary": "#784b00",
+                    "on-tertiary-fixed": "#2a1700",
+                    "on-primary": "#ffffff",
+                    "surface-bright": "#f7f9fb",
+                    "primary": "#004ac6",
+                    "on-secondary-fixed-variant": "#314865",
+                    "surface": "#f7f9fb",
+                    "outline-variant": "#c3c6d7",
+                    "surface-container-high": "#e6e8ea",
+                    "on-background": "#191c1e",
+                    "on-tertiary": "#ffffff",
+                    "secondary": "#49607e",
+                    "on-primary-fixed-variant": "#003ea8",
+                    "inverse-on-surface": "#eff1f3",
+                    "on-secondary": "#ffffff",
+                    "primary-fixed": "#dbe1ff",
+                    "on-primary-container": "#eeefff",
+                    "inverse-surface": "#2d3133",
+                    "surface-tint": "#0053db",
+                    "secondary-fixed-dim": "#b0c8eb",
+                    "secondary-fixed": "#d2e4ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "12px",
+                    "xl": "16px",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xl": "32px",
+                    "md": "16px",
+                    "lg": "24px",
+                    "form-max": "768px",
+                    "base": "4px",
+                    "xs": "4px",
+                    "sm": "8px",
+                    "gutter": "16px",
+                    "container-max": "1280px"
+            },
+            "fontFamily": {
+                    "body-medium": ["Inter"],
+                    "headline-md": ["Geist"],
+                    "code-sm": ["JetBrains Mono"],
+                    "display-lg": ["Geist"],
+                    "headline-sm": ["Geist"],
+                    "body-base": ["Inter"],
+                    "label-caps": ["Geist"],
+                    "stat-lg": ["Geist"]
+            },
+            "fontSize": {
+                    "body-medium": ["14px", {"lineHeight": "20px", "letterSpacing": "0", "fontWeight": "500"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "code-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0", "fontWeight": "400"}],
+                    "display-lg": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-sm": ["18px", {"lineHeight": "24px", "letterSpacing": "0", "fontWeight": "600"}],
+                    "body-base": ["14px", {"lineHeight": "20px", "letterSpacing": "0", "fontWeight": "400"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "stat-lg": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #f7f9fb; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .custom-grid-pattern {
+            background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        .bento-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .bento-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px -2px rgba(0,0,0,0.05);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="text-on-background">
+<!-- Navigation Drawer (Desktop) -->
+<aside class="fixed left-0 top-0 z-40 h-screen w-72 bg-inverse-surface border-r border-outline-variant shadow-md hidden md:flex flex-col overflow-y-auto">
+<div class="px-lg py-xl">
+<h1 class="text-headline-md font-headline-md font-bold text-on-primary mb-md">PJU Ternate Admin</h1>
+<p class="text-body-medium font-body-medium text-surface-variant opacity-80">System Supervisor</p>
+</div>
+<nav class="flex-1 px-sm">
+<div class="flex items-center gap-md text-surface-variant hover:text-on-primary rounded-lg px-md py-sm mx-sm my-xs cursor-pointer active:scale-95 transition-colors duration-150">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-body-medium font-body-medium">Executive Dashboard</span>
+</div>
+<div class="flex items-center gap-md text-surface-variant hover:text-on-primary rounded-lg px-md py-sm mx-sm my-xs cursor-pointer active:scale-95 transition-colors duration-150">
+<span class="material-symbols-outlined">security</span>
+<span class="text-body-medium font-body-medium">Disaster Recovery</span>
+</div>
+<div class="flex items-center gap-md bg-primary-container text-on-primary-container rounded-lg px-md py-sm mx-sm my-xs cursor-pointer active:scale-95 transition-colors duration-150 shadow-sm">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+<span class="text-body-medium font-body-medium">Financial Reports</span>
+</div>
+<div class="flex items-center gap-md text-surface-variant hover:text-on-primary rounded-lg px-md py-sm mx-sm my-xs cursor-pointer active:scale-95 transition-colors duration-150">
+<span class="material-symbols-outlined">settings_applications</span>
+<span class="text-body-medium font-body-medium">Backend Config</span>
+</div>
+<div class="flex items-center gap-md text-surface-variant hover:text-on-primary rounded-lg px-md py-sm mx-sm my-xs cursor-pointer active:scale-95 transition-colors duration-150">
+<span class="material-symbols-outlined">hub</span>
+<span class="text-body-medium font-body-medium">API Integration</span>
+</div>
+<div class="flex items-center gap-md text-surface-variant hover:text-on-primary rounded-lg px-md py-sm mx-sm my-xs cursor-pointer active:scale-95 transition-colors duration-150">
+<span class="material-symbols-outlined">campaign</span>
+<span class="text-body-medium font-body-medium">Citizen Reports</span>
+</div>
+</nav>
+<div class="mt-auto p-lg border-t border-outline-variant/30">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-on-primary font-bold">PT</div>
+<div>
+<p class="text-label-caps font-label-caps text-on-primary">Admin</p>
+<p class="text-code-sm font-code-sm text-surface-variant">V1.2.0</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Top App Bar -->
+<header class="fixed top-0 right-0 left-0 md:left-72 z-30 bg-surface border-b border-outline-variant h-16 flex items-center justify-between px-lg">
+<div class="flex items-center gap-md">
+<button class="md:hidden p-sm hover:bg-surface-container-high rounded-full transition-all">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h2 class="text-headline-sm font-headline-sm font-bold text-primary">Smart PJU Ecosystem</h2>
+</div>
+<div class="flex items-center gap-md">
+<button class="p-sm text-on-surface-variant hover:bg-surface-container-high rounded-full relative transition-all">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="flex items-center gap-sm bg-primary text-on-primary px-md py-sm rounded-lg hover:opacity-90 active:scale-95 transition-all text-body-medium font-body-medium">
+<span class="material-symbols-outlined text-sm">download</span>
+                Export Audit PDF
+            </button>
+</div>
+</header>
+<!-- Main Content -->
+<main class="pt-20 pb-20 md:pb-10 px-md md:pl-80 md:pr-lg min-h-screen custom-grid-pattern">
+<!-- Header Section -->
+<section class="mb-lg">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-md">
+<div>
+<h3 class="text-display-lg font-display-lg text-on-surface">Laporan Keuangan Bulanan</h3>
+<p class="text-body-base font-body-base text-on-surface-variant">Periode: September 2023 • Status: Menunggu Verifikasi Audit</p>
+</div>
+<div class="flex gap-sm">
+<div class="bg-surface-container-lowest border border-outline-variant px-md py-sm rounded-lg flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary">calendar_today</span>
+<span class="text-body-medium font-body-medium text-on-surface">September 2023</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Bento Grid: Key Metrics -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-md mb-lg">
+<!-- Total Budget Card -->
+<div class="bento-card p-lg flex flex-col justify-between">
+<div class="flex justify-between items-start">
+<span class="text-label-caps font-label-caps text-on-surface-variant">Total Alokasi Anggaran</span>
+<div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">account_balance</span>
+</div>
+</div>
+<div class="mt-md">
+<p class="text-stat-lg font-stat-lg text-on-surface">Rp 850,0M</p>
+<p class="text-code-sm font-code-sm text-on-surface-variant">Target Fiskal TA 2023/2024</p>
+</div>
+</div>
+<!-- Total Realization Card -->
+<div class="bento-card p-lg border-primary/20 flex flex-col justify-between">
+<div class="flex justify-between items-start">
+<span class="text-label-caps font-label-caps text-on-surface-variant">Realisasi Pengeluaran</span>
+<div class="w-10 h-10 rounded-xl bg-secondary-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">payments</span>
+</div>
+</div>
+<div class="mt-md">
+<p class="text-stat-lg font-stat-lg text-primary">Rp 742,5M</p>
+<div class="flex items-center gap-xs text-secondary font-body-medium">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+<span>87.3% dari Pagu</span>
+</div>
+</div>
+</div>
+<!-- LED Savings Card (Smart Feature Highlight) -->
+<div class="bento-card p-lg border-tertiary/20 bg-tertiary-fixed/10 flex flex-col justify-between">
+<div class="flex justify-between items-start">
+<span class="text-label-caps font-label-caps text-tertiary">Penghematan LED Smart PJU</span>
+<div class="w-10 h-10 rounded-xl bg-tertiary/10 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined">energy_savings_leaf</span>
+</div>
+</div>
+<div class="mt-md">
+<p class="text-stat-lg font-stat-lg text-tertiary">Rp 107,5M</p>
+<p class="text-body-medium font-body-medium text-on-tertiary-fixed-variant">Efisiensi Konsumsi Daya 32%</p>
+</div>
+</div>
+<!-- Audit Status -->
+<div class="bento-card p-lg flex flex-col justify-between border-l-4 border-l-error">
+<div class="flex justify-between items-start">
+<span class="text-label-caps font-label-caps text-on-surface-variant">Deviasi Anggaran</span>
+<div class="w-10 h-10 rounded-xl bg-error-container flex items-center justify-center text-error">
+<span class="material-symbols-outlined">warning</span>
+</div>
+</div>
+<div class="mt-md">
+<p class="text-stat-lg font-stat-lg text-error">Rp 12,3M</p>
+<span class="bg-error/10 text-error text-[10px] px-2 py-0.5 rounded-full font-bold">REVISI DIBUTUHKAN</span>
+</div>
+</div>
+</div>
+<!-- Expense Detailed Breakdown & Trend Analysis -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-lg mb-lg">
+<!-- List of Expenses (Audit Focus) -->
+<div class="lg:col-span-2 bento-card flex flex-col">
+<div class="p-lg border-b border-outline-variant flex justify-between items-center">
+<h4 class="text-headline-sm font-headline-sm text-on-surface">Rincian Pengeluaran Operasional</h4>
+<button class="text-primary text-body-medium font-body-medium hover:underline">Lihat Semua</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-surface-container-low text-label-caps font-label-caps text-on-surface-variant">
+<tr>
+<th class="px-lg py-md">Komponen Biaya</th>
+<th class="px-lg py-md">Alokasi (Pagu)</th>
+<th class="px-lg py-md">Realisasi</th>
+<th class="px-lg py-md">Selisih (%)</th>
+<th class="px-lg py-md">Status</th>
+</tr>
+</thead>
+<tbody class="text-body-base font-body-base divide-y divide-outline-variant">
+<tr>
+<td class="px-lg py-md">
+<div class="flex items-center gap-sm">
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-sm">bolt</span>
+</div>
+<span>Tagihan Listrik PLN</span>
+</div>
+</td>
+<td class="px-lg py-md">Rp 450.000.000</td>
+<td class="px-lg py-md font-semibold">Rp 342.500.000</td>
+<td class="px-lg py-md text-emerald-600">-23.8%</td>
+<td class="px-lg py-md">
+<span class="px-2 py-1 bg-emerald-100 text-emerald-700 text-xs rounded-full font-bold">EFEKTIF</span>
+</td>
+</tr>
+<tr>
+<td class="px-lg py-md">
+<div class="flex items-center gap-sm">
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-sm">build</span>
+</div>
+<span>Pemeliharaan Rutin</span>
+</div>
+</td>
+<td class="px-lg py-md">Rp 120.000.000</td>
+<td class="px-lg py-md font-semibold">Rp 128.000.000</td>
+<td class="px-lg py-md text-error">+6.6%</td>
+<td class="px-lg py-md">
+<span class="px-2 py-1 bg-error-container text-on-error-container text-xs rounded-full font-bold">OVER</span>
+</td>
+</tr>
+<tr>
+<td class="px-lg py-md">
+<div class="flex items-center gap-sm">
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-sm">engineering</span>
+</div>
+<span>Gaji Teknisi &amp; Lembur</span>
+</div>
+</td>
+<td class="px-lg py-md">Rp 180.000.000</td>
+<td class="px-lg py-md font-semibold">Rp 175.000.000</td>
+<td class="px-lg py-md text-secondary">-2.7%</td>
+<td class="px-lg py-md">
+<span class="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded-full font-bold">STABIL</span>
+</td>
+</tr>
+<tr>
+<td class="px-lg py-md">
+<div class="flex items-center gap-sm">
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-sm">inventory_2</span>
+</div>
+<span>Pengadaan Suku Cadang</span>
+</div>
+</td>
+<td class="px-lg py-md">Rp 100.000.000</td>
+<td class="px-lg py-md font-semibold">Rp 97.000.000</td>
+<td class="px-lg py-md text-secondary">-3.0%</td>
+<td class="px-lg py-md">
+<span class="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded-full font-bold">STABIL</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="mt-auto p-lg bg-surface-container-lowest border-t border-outline-variant flex items-center justify-between">
+<p class="text-body-medium font-body-medium text-on-surface-variant italic">Note: Efisiensi listrik berkat implementasi sistem Smart Dimming pada pukul 23:00 - 04:00 WITA.</p>
+</div>
+</div>
+<!-- Trend Visual -->
+<div class="bento-card flex flex-col overflow-hidden relative">
+<div class="p-lg">
+<h4 class="text-headline-sm font-headline-sm text-on-surface">Tren Biaya 6 Bulan</h4>
+<p class="text-body-base font-body-base text-on-surface-variant mb-lg">Analisis efisiensi biaya bulanan</p>
+<div class="space-y-6">
+<!-- Simulated Chart -->
+<div class="flex items-end justify-between h-48 gap-xs">
+<div class="flex flex-col items-center flex-1">
+<div class="w-full bg-primary-container/20 rounded-t-sm relative h-[80%] group">
+<div class="absolute bottom-0 w-full bg-primary/40 h-[90%] rounded-t-sm transition-all group-hover:bg-primary"></div>
+</div>
+<span class="text-code-sm font-code-sm mt-sm">APR</span>
+</div>
+<div class="flex flex-col items-center flex-1">
+<div class="w-full bg-primary-container/20 rounded-t-sm relative h-[85%] group">
+<div class="absolute bottom-0 w-full bg-primary/40 h-[85%] rounded-t-sm transition-all group-hover:bg-primary"></div>
+</div>
+<span class="text-code-sm font-code-sm mt-sm">MEI</span>
+</div>
+<div class="flex flex-col items-center flex-1">
+<div class="w-full bg-primary-container/20 rounded-t-sm relative h-[90%] group">
+<div class="absolute bottom-0 w-full bg-primary/40 h-[75%] rounded-t-sm transition-all group-hover:bg-primary"></div>
+</div>
+<span class="text-code-sm font-code-sm mt-sm">JUN</span>
+</div>
+<div class="flex flex-col items-center flex-1">
+<div class="w-full bg-primary-container/20 rounded-t-sm relative h-[70%] group">
+<div class="absolute bottom-0 w-full bg-primary/40 h-[60%] rounded-t-sm transition-all group-hover:bg-primary"></div>
+</div>
+<span class="text-code-sm font-code-sm mt-sm">JUL</span>
+</div>
+<div class="flex flex-col items-center flex-1">
+<div class="w-full bg-primary-container/20 rounded-t-sm relative h-[65%] group">
+<div class="absolute bottom-0 w-full bg-primary/40 h-[55%] rounded-t-sm transition-all group-hover:bg-primary"></div>
+</div>
+<span class="text-code-sm font-code-sm mt-sm">AGU</span>
+</div>
+<div class="flex flex-col items-center flex-1">
+<div class="w-full bg-primary-container/20 rounded-t-sm relative h-[60%] group">
+<div class="absolute bottom-0 w-full bg-primary h-full rounded-t-sm transition-all"></div>
+</div>
+<span class="text-code-sm font-code-sm mt-sm">SEP</span>
+</div>
+</div>
+<!-- Progress indicator for LED implementation -->
+<div class="pt-md border-t border-outline-variant">
+<div class="flex justify-between items-center mb-xs">
+<span class="text-label-caps font-label-caps text-on-surface-variant">Penetrasi LED Smart</span>
+<span class="text-body-medium font-body-medium text-primary">82%</span>
+</div>
+<div class="w-full h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary" style="width: 82%"></div>
+</div>
+<p class="text-code-sm font-code-sm text-on-surface-variant mt-sm">Proyeksi penghematan Rp 150M saat penetrasi 100%.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Export & Document Actions -->
+<section class="grid grid-cols-1 md:grid-cols-2 gap-lg">
+<div class="bento-card p-lg flex flex-col md:flex-row items-center gap-lg">
+<div class="w-16 h-16 rounded-2xl bg-surface-container-highest flex items-center justify-center">
+<span class="material-symbols-outlined text-4xl text-on-surface-variant">picture_as_pdf</span>
+</div>
+<div class="flex-1 text-center md:text-left">
+<h5 class="text-headline-sm font-headline-sm text-on-surface">Laporan Resmi (PDF)</h5>
+<p class="text-body-base font-body-base text-on-surface-variant">Dokumen terkompresi dengan tanda tangan digital &amp; QR Code Audit.</p>
+</div>
+<button class="bg-on-surface text-surface px-lg py-md rounded-lg font-body-medium active:scale-95 transition-all w-full md:w-auto">
+                    Unduh PDF
+                </button>
+</div>
+<div class="bento-card p-lg flex flex-col md:flex-row items-center gap-lg">
+<div class="w-16 h-16 rounded-2xl bg-surface-container-highest flex items-center justify-center">
+<span class="material-symbols-outlined text-4xl text-on-surface-variant">description</span>
+</div>
+<div class="flex-1 text-center md:text-left">
+<h5 class="text-headline-sm font-headline-sm text-on-surface">Data Mentah (CSV/Excel)</h5>
+<p class="text-body-base font-body-base text-on-surface-variant">Ekspor semua baris transaksi untuk pengolahan data mandiri.</p>
+</div>
+<button class="border border-outline text-on-surface px-lg py-md rounded-lg font-body-medium hover:bg-surface-container-low active:scale-95 transition-all w-full md:w-auto">
+                    Unduh CSV
+                </button>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation (Mobile) -->
+<nav class="lg:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-16 bg-surface border-t border-outline-variant shadow-lg">
+<div class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all">
+<span class="material-symbols-outlined">monitoring</span>
+<span class="text-label-caps font-label-caps">Overview</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all">
+<span class="material-symbols-outlined">report_problem</span>
+<span class="text-label-caps font-label-caps">Alerts</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 transition-transform">
+<span class="material-symbols-outlined">storage</span>
+<span class="text-label-caps font-label-caps">DR Status</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all">
+<span class="material-symbols-outlined">tune</span>
+<span class="text-label-caps font-label-caps">Settings</span>
+</div>
+</nav>
+<script>
+        // Micro-interactions
+        document.querySelectorAll('.bento-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                // Potential for adding micro-animations if needed
+            });
+        });
+
+        // Search highlight or interaction could go here
+    </script>
+</body></html>

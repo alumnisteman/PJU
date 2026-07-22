@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+
+<html lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Verifikasi Penyelesaian Tugas - Sistem PJU Cerdas</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Geist:wght@400;600;700&family=JetBrains+Mono&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-fixed": "#2a1700",
+                    "secondary-container": "#c4dcff",
+                    "on-primary-fixed-variant": "#003ea8",
+                    "inverse-on-surface": "#eff1f3",
+                    "surface-variant": "#e0e3e5",
+                    "outline": "#737686",
+                    "on-primary-container": "#eeefff",
+                    "on-primary": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "surface-container-high": "#e6e8ea",
+                    "error": "#ba1a1a",
+                    "on-error": "#ffffff",
+                    "secondary-fixed": "#d2e4ff",
+                    "surface-bright": "#f7f9fb",
+                    "surface-container-highest": "#e0e3e5",
+                    "secondary-fixed-dim": "#b0c8eb",
+                    "surface": "#f7f9fb",
+                    "primary-fixed": "#dbe1ff",
+                    "surface-container-low": "#f2f4f6",
+                    "surface-container": "#eceef0",
+                    "on-secondary-container": "#49617f",
+                    "primary-container": "#2563eb",
+                    "inverse-primary": "#b4c5ff",
+                    "on-primary-fixed": "#00174b",
+                    "on-error-container": "#93000a",
+                    "inverse-surface": "#2d3133",
+                    "on-secondary-fixed": "#001c37",
+                    "on-tertiary-container": "#ffeedd",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "outline-variant": "#c3c6d7",
+                    "tertiary-fixed": "#ffddb8",
+                    "on-background": "#191c1e",
+                    "tertiary-container": "#996100",
+                    "surface-tint": "#0053db",
+                    "on-surface": "#191c1e",
+                    "secondary": "#49607e",
+                    "on-surface-variant": "#434655",
+                    "surface-dim": "#d8dadc",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary-fixed-variant": "#314865",
+                    "background": "#f7f9fb",
+                    "on-tertiary": "#ffffff",
+                    "on-secondary": "#ffffff",
+                    "tertiary": "#784b00",
+                    "primary": "#004ac6"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "12px",
+                    "xl": "12px",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "lg": "24px",
+                    "container-max": "1280px",
+                    "xs": "4px",
+                    "md": "16px",
+                    "form-max": "768px",
+                    "sm": "8px",
+                    "gutter": "16px",
+                    "xl": "32px",
+                    "base": "4px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Geist"],
+                    "display-lg": ["Geist"],
+                    "stat-lg": ["Geist"],
+                    "label-caps": ["Geist"],
+                    "headline-sm": ["Geist"],
+                    "code-sm": ["JetBrains Mono"],
+                    "body-base": ["Inter"],
+                    "body-medium": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "display-lg": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "stat-lg": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "headline-sm": ["18px", {"lineHeight": "24px", "letterSpacing": "0", "fontWeight": "600"}],
+                    "code-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0", "fontWeight": "400"}],
+                    "body-base": ["14px", {"lineHeight": "20px", "letterSpacing": "0", "fontWeight": "400"}],
+                    "body-medium": ["14px", {"lineHeight": "20px", "letterSpacing": "0", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .signature-pad {
+            background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body-base antialiased">
+<!-- TopAppBar -->
+<header class="w-full top-0 sticky bg-surface dark:bg-surface-dim border-b border-outline-variant dark:border-outline z-30">
+<div class="flex justify-between items-center px-md h-16 w-full max-w-container-max mx-auto">
+<div class="flex items-center gap-3">
+<button class="material-symbols-outlined text-primary dark:text-primary-fixed hover:bg-surface-container-low transition-colors p-2 rounded-full active:scale-95">menu</button>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">Sistem PJU Cerdas</h1>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden md:block text-right">
+<p class="font-body-medium text-on-surface">Teknisi Lapangan</p>
+<p class="text-xs text-on-surface-variant">ID: #9921</p>
+</div>
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold overflow-hidden ring-2 ring-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a technical engineer wearing a safety vest and a helmet, set against a clean, modern architectural background with soft natural lighting. The image maintains a high-contrast corporate aesthetic with cool blue and slate tones to match the engineering precision of the UI design system." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiXBCbxKhEvUK7P1qIcKcpKyOA-F_9S6tbFRZjWJ5Njyd6HXo5l7QMS8FnLZGhRbiAkb-_g5QD4ZPzXsW3Z2iQ1S_ufWyb5iDVsuZ-SSTAA3gcjyr0fvlEV4_C3QPD-pPIBVqyyyI2TjgFrrWLJeMf-ANwMTXG9_ljhHYLQ12xJpG46cqXmAJtl_A6mPNThLP3fUkTs-znFIWV7IGYaRGIijObzh2CwAW8ZL5u-IzjlpJ2aVL7hYkDJnmuvvjhnN_1ELjpwi3vCRZH"/>
+</div>
+</div>
+</div>
+</header>
+<div class="flex max-w-container-max mx-auto min-h-[calc(100vh-64px)]">
+<!-- NavigationDrawer (Desktop) -->
+<aside class="hidden md:flex flex-col w-72 bg-surface-container dark:bg-inverse-surface h-[calc(100vh-64px)] sticky top-16 p-md border-r border-outline-variant shadow-md">
+<div class="space-y-2">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-highest transition-all duration-150 rounded-full font-body-medium" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-secondary-container dark:bg-on-secondary-fixed-variant text-on-secondary-container dark:text-secondary-fixed rounded-full font-bold transition-all duration-150" href="#">
+<span class="material-symbols-outlined">assignment</span>
+<span>Tugas Saya</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-highest transition-all duration-150 rounded-full font-body-medium" href="#">
+<span class="material-symbols-outlined">distance</span>
+<span>Peta Aset</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-highest transition-all duration-150 rounded-full font-body-medium" href="#">
+<span class="material-symbols-outlined">campaign</span>
+<span>Laporan Warga</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-highest transition-all duration-150 rounded-full font-body-medium" href="#">
+<span class="material-symbols-outlined">history</span>
+<span>Riwayat Kerja</span>
+</a>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 p-lg pb-32">
+<div class="max-w-form-max mx-auto">
+<header class="mb-8">
+<div class="flex items-center gap-2 text-primary mb-2">
+<span class="material-symbols-outlined text-sm">arrow_back</span>
+<span class="font-label-caps text-label-caps uppercase tracking-widest">Detail Penugasan #TR-772</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Verifikasi Penyelesaian Tugas</h2>
+<p class="text-on-surface-variant font-body-base mt-1">Lengkapi data perbaikan teknis dan unggah bukti foto untuk menutup tiket tugas.</p>
+</header>
+<form class="space-y-lg" id="verificationForm">
+<!-- Section: Bukti Foto (Asymmetric Bento Style) -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden p-lg">
+<div class="flex items-center gap-2 mb-md">
+<span class="material-symbols-outlined text-primary">photo_camera</span>
+<h3 class="font-headline-sm text-headline-sm">Dokumentasi Visual</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<!-- Foto Sebelum -->
+<div class="relative group cursor-pointer border-2 border-dashed border-outline-variant rounded-lg p-xs hover:border-primary transition-colors flex flex-col items-center justify-center min-h-[200px] bg-surface-container-low">
+<div class="absolute inset-0 opacity-10 pointer-events-none overflow-hidden rounded-lg">
+<div class="w-full h-full" style="background-image: radial-gradient(#2563eb 0.5px, transparent 0.5px); background-size: 10px 10px;"></div>
+</div>
+<div class="text-center z-10 p-md">
+<span class="material-symbols-outlined text-4xl text-outline mb-2">image</span>
+<p class="font-body-medium text-on-surface">Foto Sebelum Perbaikan</p>
+<p class="text-xs text-on-surface-variant mt-1">Klik untuk unggah atau ambil foto</p>
+</div>
+<input class="absolute inset-0 opacity-0 cursor-pointer" type="file"/>
+</div>
+<!-- Foto Sesudah -->
+<div class="relative group cursor-pointer border-2 border-dashed border-outline-variant rounded-lg p-xs hover:border-primary transition-colors flex flex-col items-center justify-center min-h-[200px] bg-surface-container-low">
+<div class="absolute inset-0 opacity-10 pointer-events-none overflow-hidden rounded-lg">
+<div class="w-full h-full" style="background-image: radial-gradient(#2563eb 0.5px, transparent 0.5px); background-size: 10px 10px;"></div>
+</div>
+<div class="text-center z-10 p-md">
+<span class="material-symbols-outlined text-4xl text-outline mb-2">add_a_photo</span>
+<p class="font-body-medium text-on-surface">Foto Sesudah Perbaikan</p>
+<p class="text-xs text-on-surface-variant mt-1">Wajib diunggah sebagai verifikasi</p>
+</div>
+<input class="absolute inset-0 opacity-0 cursor-pointer" required="" type="file"/>
+</div>
+</div>
+</section>
+<!-- Section: Parameter Teknis -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg">
+<div class="flex items-center gap-2 mb-lg">
+<span class="material-symbols-outlined text-primary">analytics</span>
+<h3 class="font-headline-sm text-headline-sm">Parameter Teknis Hasil Perbaikan</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
+<div class="space-y-1.5">
+<label class="font-body-medium text-on-surface-variant ml-1">Arus Listrik (Ampere)</label>
+<div class="relative group">
+<input class="w-full h-10 px-md border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all font-body-base bg-surface-bright" placeholder="0.0" required="" step="0.1" type="number"/>
+<div class="absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant font-code-sm">A</div>
+</div>
+</div>
+<div class="space-y-1.5">
+<label class="font-body-medium text-on-surface-variant ml-1">Tingkat Kecerahan (Lux)</label>
+<div class="relative group">
+<input class="w-full h-10 px-md border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all font-body-base bg-surface-bright" placeholder="400" required="" type="number"/>
+<div class="absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant font-code-sm">Lx</div>
+</div>
+</div>
+<div class="md:col-span-2 space-y-1.5">
+<label class="font-body-medium text-on-surface-variant ml-1">Catatan Tambahan (Opsional)</label>
+<textarea class="w-full p-md border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all font-body-base bg-surface-bright resize-none" placeholder="Deskripsikan tindakan perbaikan yang dilakukan..." rows="3"></textarea>
+</div>
+</div>
+</section>
+<!-- Section: Tanda Tangan Digital -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg">
+<div class="flex items-center justify-between mb-lg">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">draw</span>
+<h3 class="font-headline-sm text-headline-sm">Tanda Tangan Digital</h3>
+</div>
+<button class="text-xs font-label-caps text-error uppercase hover:underline" onclick="clearSignature()" type="button">Hapus</button>
+</div>
+<div class="relative border border-outline-variant rounded-lg bg-surface-bright min-h-[160px] cursor-crosshair signature-pad overflow-hidden">
+<canvas class="w-full h-full touch-none" id="signatureCanvas"></canvas>
+<div class="absolute bottom-2 right-4 pointer-events-none">
+<p class="text-[10px] text-outline font-label-caps uppercase italic">Teknisi: ID#9921 - Ternate Utara</p>
+</div>
+</div>
+<p class="text-xs text-on-surface-variant mt-3 italic flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">info</span>
+                            Dengan menandatangani, Anda menyatakan bahwa data perbaikan di atas adalah akurat.
+                        </p>
+</section>
+<!-- Action Buttons -->
+<div class="flex flex-col md:flex-row gap-md pt-lg">
+<button class="flex-1 h-11 border border-outline-variant text-on-surface font-body-medium rounded-lg hover:bg-surface-container-high transition-colors active:scale-95 duration-200" type="button">
+                            Simpan Draft
+                        </button>
+<button class="flex-[2] h-11 bg-primary text-on-primary font-headline-sm rounded-lg hover:bg-opacity-90 transition-all shadow-md flex items-center justify-center gap-2 active:scale-95 duration-200" type="submit">
+<span>Selesaikan & Kirim Notifikasi</span>
+<span class="material-symbols-outlined">send</span>
+</button>
+</div>
+</form>
+<!-- Status Feedback Overlay (Hidden by default) -->
+<div class="fixed inset-0 bg-inverse-surface/60 backdrop-blur-sm z-[100] hidden flex items-center justify-center p-md" id="successOverlay">
+<div class="bg-surface-container-lowest max-w-sm w-full rounded-2xl p-xl text-center shadow-lg transform scale-90 transition-transform duration-300">
+<div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-md">
+<span class="material-symbols-outlined text-4xl">check_circle</span>
+</div>
+<h4 class="font-headline-md text-headline-md text-on-surface">Tugas Diselesaikan!</h4>
+<p class="text-on-surface-variant font-body-base mt-2 mb-lg">Notifikasi otomatis telah dikirimkan kepada warga pelapor melalui dashboard mereka.</p>
+<button class="w-full h-10 bg-primary text-on-primary rounded-lg font-body-medium active:scale-95" onclick="window.location.reload()">Kembali ke Daftar Tugas</button>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- BottomNavBar (Mobile) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 py-2 bg-surface-container-lowest dark:bg-inverse-surface border-t border-outline-variant z-50 shadow-lg">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-caps text-[10px] mt-0.5">Beranda</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container dark:bg-primary text-on-primary-container dark:text-on-primary rounded-xl px-4 py-1" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">list_alt</span>
+<span class="font-label-caps text-[10px] mt-0.5">Tugas</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant" href="#">
+<span class="material-symbols-outlined">lightbulb</span>
+<span class="font-label-caps text-[10px] mt-0.5">Aset</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-caps text-[10px] mt-0.5">Profil</span>
+</a>
+</nav>
+<script>
+        // Signature Pad Logic
+        const canvas = document.getElementById('signatureCanvas');
+        const ctx = canvas.getContext('2d');
+        let drawing = false;
+
+        function resizeCanvas() {
+            const rect = canvas.parentNode.getBoundingClientRect();
+            canvas.width = rect.width;
+            canvas.height = rect.height;
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        function startDrawing(e) {
+            drawing = true;
+            draw(e);
+        }
+
+        function stopDrawing() {
+            drawing = false;
+            ctx.beginPath();
+        }
+
+        function draw(e) {
+            if (!drawing) return;
+            const rect = canvas.getBoundingClientRect();
+            const x = (e.clientX || e.touches[0].clientX) - rect.left;
+            const y = (e.clientY || e.touches[0].clientY) - rect.top;
+
+            ctx.lineWidth = 2;
+            ctx.lineCap = 'round';
+            ctx.strokeStyle = '#0f172a';
+
+            ctx.lineTo(x, y);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+        }
+
+        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('mousemove', draw);
+        window.addEventListener('mouseup', stopDrawing);
+
+        canvas.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            startDrawing(e);
+        });
+        canvas.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            draw(e);
+        });
+        window.addEventListener('touchend', stopDrawing);
+
+        function clearSignature() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        // Form Submission Logic
+        document.getElementById('verificationForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const overlay = document.getElementById('successOverlay');
+            overlay.classList.remove('hidden');
+            overlay.querySelector('div').classList.remove('scale-90');
+            overlay.querySelector('div').classList.add('scale-100');
+        });
+    </script>
+</body></html>

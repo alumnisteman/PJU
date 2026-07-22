@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+
+<html lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Manajemen Stok Kendaraan - Sistem PJU Cerdas</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="/js/api-client.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono&amp;family=Geist:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-bright": "#f7f9fb",
+                    "surface-container": "#eceef0",
+                    "on-secondary-fixed-variant": "#314865",
+                    "on-error": "#ffffff",
+                    "on-primary-container": "#eeefff",
+                    "secondary-fixed-dim": "#b0c8eb",
+                    "inverse-primary": "#b4c5ff",
+                    "secondary-container": "#c4dcff",
+                    "on-secondary-fixed": "#001c37",
+                    "on-background": "#191c1e",
+                    "on-primary": "#ffffff",
+                    "background": "#f7f9fb",
+                    "primary-fixed": "#dbe1ff",
+                    "surface-dim": "#d8dadc",
+                    "surface-container-low": "#f2f4f6",
+                    "on-secondary-container": "#49617f",
+                    "surface-variant": "#e0e3e5",
+                    "primary": "#004ac6",
+                    "inverse-surface": "#2d3133",
+                    "surface-container-high": "#e6e8ea",
+                    "on-primary-fixed": "#00174b",
+                    "surface-container-highest": "#e0e3e5",
+                    "outline-variant": "#c3c6d7",
+                    "outline": "#737686",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "tertiary-fixed": "#ffddb8",
+                    "on-tertiary-container": "#ffeedd",
+                    "on-secondary": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "on-surface": "#191c1e",
+                    "secondary": "#49607e",
+                    "on-tertiary": "#ffffff",
+                    "surface-tint": "#0053db",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "error": "#ba1a1a",
+                    "tertiary": "#784b00",
+                    "surface": "#f7f9fb",
+                    "secondary-fixed": "#d2e4ff",
+                    "primary-container": "#2563eb",
+                    "on-surface-variant": "#434655",
+                    "tertiary-container": "#996100",
+                    "on-tertiary-fixed": "#2a1700",
+                    "on-primary-fixed-variant": "#003ea8",
+                    "on-error-container": "#93000a",
+                    "error-container": "#ffdad6",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "inverse-on-surface": "#eff1f3"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "12px",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "base": "4px",
+                    "md": "16px",
+                    "lg": "24px",
+                    "xs": "4px",
+                    "form-max": "768px",
+                    "container-max": "1280px",
+                    "xl": "32px",
+                    "sm": "8px",
+                    "gutter": "16px"
+            },
+            "fontFamily": {
+                    "stat-lg": ["Geist"],
+                    "display-lg": ["Geist"],
+                    "body-medium": ["Inter"],
+                    "label-caps": ["Geist"],
+                    "headline-sm": ["Geist"],
+                    "headline-md": ["Geist"],
+                    "body-base": ["Inter"],
+                    "code-sm": ["JetBrains Mono"]
+            },
+            "fontSize": {
+                    "stat-lg": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "display-lg": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-medium": ["14px", {"lineHeight": "20px", "letterSpacing": "0", "fontWeight": "500"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "headline-sm": ["18px", {"lineHeight": "24px", "letterSpacing": "0", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "body-base": ["14px", {"lineHeight": "20px", "letterSpacing": "0", "fontWeight": "400"}],
+                    "code-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #f8fafc;
+            color: #191c1e;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .grid-blueprint {
+            background-image: linear-gradient(#e2e8f0 1px, transparent 1px), linear-gradient(90deg, #e2e8f0 1px, transparent 1px);
+            background-size: 24px 24px;
+            opacity: 0.2;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-base overflow-x-hidden">
+<!-- Navigation Drawer (SideNav) - Desktop Only -->
+<nav class="hidden md:flex fixed left-0 top-0 bottom-0 z-40 flex flex-col p-md bg-surface-container dark:bg-inverse-surface h-full w-72 rounded-r-xl shadow-md">
+<div class="mb-xl px-2">
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary">Sistem PJU Cerdas</h1>
+</div>
+<div class="flex items-center gap-md p-md mb-xl bg-surface-container-low rounded-xl border border-outline-variant">
+<div class="w-12 h-12 rounded-full overflow-hidden bg-primary-fixed">
+<img class="w-full h-full object-cover" data-alt="A professional portrait of an electrical technician wearing a high-visibility navy blue uniform with safety gear. The lighting is crisp and studio-quality, emphasizing a professional engineering environment with a clean, light-mode corporate background. The aesthetic is modern, reliable, and clinically clear." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDLafCXyZSqPi4u7WHW0DFE4QCQhLv7Hx7tLFfGaGfBpLCXZ5CAObtbO4zDmxpvndN5enp4Tisrh3r7yrUuAq3wtNGWO6eHyenspSKnVGk06dRQXM65UpHfZOtb6fJQtSwnIkNFQ6JrTxoQHiGEMT3HjtJOSlm-bBCA8SoiSb9Mj53aNN1bsZ6PkFLNiTCPEFtgdLab2sgFLfyIrz8ishbyfx1CPsRww28DbJcDTlfdDy6YAtn9OcIh7W15I1ovBKxHW4EG4msH0Q7q"/>
+</div>
+<div>
+<p class="font-body-medium text-body-medium text-on-surface">Teknisi Lapangan</p>
+<p class="text-xs text-on-surface-variant">ID: #9921 • Ternate Utara</p>
+</div>
+</div>
+<ul class="space-y-1">
+<li>
+<a class="flex items-center gap-md px-md py-3 transition-all duration-150 ease-in-out text-on-surface-variant hover:bg-surface-container-highest rounded-full" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-medium text-body-medium">Dashboard</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-md px-md py-3 transition-all duration-150 ease-in-out text-on-surface-variant hover:bg-surface-container-highest rounded-full" href="#">
+<span class="material-symbols-outlined">assignment</span>
+<span class="font-body-medium text-body-medium">Tugas Saya</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-md px-md py-3 transition-all duration-150 ease-in-out bg-secondary-container dark:bg-on-secondary-fixed-variant text-on-secondary-container dark:text-secondary-fixed rounded-full font-bold" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-body-medium text-body-medium">Peta Aset</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-md px-md py-3 transition-all duration-150 ease-in-out text-on-surface-variant hover:bg-surface-container-highest rounded-full" href="#">
+<span class="material-symbols-outlined">campaign</span>
+<span class="font-body-medium text-body-medium">Laporan Warga</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-md px-md py-3 transition-all duration-150 ease-in-out text-on-surface-variant hover:bg-surface-container-highest rounded-full" href="#">
+<span class="material-symbols-outlined">history</span>
+<span class="font-body-medium text-body-medium">Riwayat Kerja</span>
+</a>
+</li>
+</ul>
+</nav>
+<!-- Main Content Canvas -->
+<main class="md:ml-72 min-h-screen pb-32 md:pb-12">
+<!-- TopAppBar -->
+<header class="w-full top-0 sticky z-30 bg-surface dark:bg-surface-dim border-b border-outline-variant flex justify-between items-center px-md h-16 max-w-container-max mx-auto">
+<div class="flex items-center gap-md">
+<button class="md:hidden p-2 hover:bg-surface-container-low transition-colors rounded-full">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h2 class="font-headline-sm text-headline-sm text-primary font-bold">Stok Kendaraan</h2>
+</div>
+<div class="flex items-center gap-sm">
+<span class="hidden md:inline text-on-surface-variant text-xs font-medium bg-surface-container-high px-3 py-1 rounded-full">Unit Mobil #04</span>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A small, professional avatar of a technician in a light-mode corporate design. The technician is wearing a blue uniform. The lighting is soft and neutral, consistent with an administrative utility management dashboard style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwBgMgV2-vpZEP0sEavbzX5z1Y_WFQu_EkYPkA6noTuL9CYhfcxI8Yat3G0_S7p5a4vj_qOkTPkpGX5Poxj_WOuHqfJc-EEaQxs8g7JrrQ_a5iMu8LnIGH6G7R1atEGoXglNSp3NW50IvCOoAKOEsi8GLejegzQAuEErnSVDftFr8jKHN87CdxCHHUj5tZl6vISxBlmdij_Erg-5TcGQYJ9LSfTyhrGG65deYnC620xAHTRWILRjDlfnvhLaPN0oaGXoHjhzdVFlct"/>
+</div>
+</div>
+</header>
+<div class="max-w-container-max mx-auto px-md pt-lg">
+<!-- Summary Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-lg mb-lg">
+<!-- Stat Card: Overall Status -->
+<div class="md:col-span-4 bg-surface-container-lowest border border-outline-variant rounded-xl p-lg flex flex-col justify-between">
+<div class="flex justify-between items-start">
+<div>
+<p class="font-label-caps text-label-caps text-on-surface-variant mb-1">STATUS INVENTARIS</p>
+<h3 class="font-stat-lg text-stat-lg text-on-surface">Optimal</h3>
+</div>
+<div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">check_circle</span>
+</div>
+</div>
+<div class="mt-md">
+<div class="h-1.5 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[85%]"></div>
+</div>
+<p class="text-[11px] text-on-surface-variant mt-2 uppercase tracking-wider">85% Kapasitas Terisi</p>
+</div>
+</div>
+<!-- Stat Card: Items Low -->
+<div class="md:col-span-4 bg-surface-container-lowest border border-outline-variant rounded-xl p-lg flex flex-col justify-between">
+<div class="flex justify-between items-start">
+<div>
+<p class="font-label-caps text-label-caps text-on-surface-variant mb-1">STOK RENDAH</p>
+<h3 class="font-stat-lg text-stat-lg text-error">02 Item</h3>
+</div>
+<div class="w-10 h-10 rounded-xl bg-error/10 flex items-center justify-center text-error">
+<span class="material-symbols-outlined">warning</span>
+</div>
+</div>
+<div class="mt-md">
+<p class="text-body-base text-on-surface-variant">Bohlam LED &amp; Fuse memerlukan pengisian segera.</p>
+</div>
+</div>
+<!-- Action Card -->
+<div class="md:col-span-4 bg-primary text-on-primary rounded-xl p-lg flex flex-col justify-between relative overflow-hidden group transition-all active:scale-95 duration-200 cursor-pointer">
+<div class="grid-blueprint absolute inset-0 pointer-events-none opacity-10"></div>
+<div class="relative z-10">
+<h3 class="font-headline-sm text-headline-sm mb-2">Requisisi Material</h3>
+<p class="text-sm opacity-90 leading-relaxed">Ajukan permintaan penambahan stok baru ke gudang pusat untuk unit mobil ini.</p>
+</div>
+<div class="relative z-10 mt-md flex justify-end">
+<span class="bg-white/20 px-4 py-2 rounded-lg font-bold text-sm flex items-center gap-2">
+                            Buat Permintaan
+                            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-lg items-start">
+<!-- Inventory List Table -->
+<div class="lg:col-span-8 bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden">
+<div class="px-lg py-md border-b border-outline-variant flex justify-between items-center">
+<h4 class="font-headline-sm text-headline-sm">Daftar Material Kendaraan</h4>
+<button class="text-primary font-bold text-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-lg">filter_list</span>
+                            Filter
+                        </button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-surface-container-low border-b border-outline-variant">
+<tr>
+<th class="px-lg py-3 font-label-caps text-label-caps text-on-surface-variant">NAMA MATERIAL</th>
+<th class="px-lg py-3 font-label-caps text-label-caps text-on-surface-variant text-center">JUMLAH</th>
+<th class="px-lg py-3 font-label-caps text-label-caps text-on-surface-variant">STATUS</th>
+<th class="px-lg py-3 font-label-caps text-label-caps text-on-surface-variant">AKSI</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<!-- Bohlam LED -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-lg py-4">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant">lightbulb</span>
+</div>
+<div>
+<p class="font-body-medium text-body-medium">Bohlam LED 120W</p>
+<p class="text-[11px] text-on-surface-variant font-code-sm">SKU: EL-L120-PJU</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-4 text-center font-bold font-stat-lg text-lg">04 <span class="text-xs font-normal text-on-surface-variant">Pcs</span></td>
+<td class="px-lg py-4">
+<span class="px-3 py-1 rounded-full text-[11px] font-bold bg-error/10 text-error flex items-center gap-1 w-fit">
+<span class="w-1.5 h-1.5 rounded-full bg-error animate-pulse"></span>
+                                            RENDAH
+                                        </span>
+</td>
+<td class="px-lg py-4">
+<button class="p-2 hover:bg-primary/10 rounded-lg transition-colors text-primary">
+<span class="material-symbols-outlined">add_circle</span>
+</button>
+</td>
+</tr>
+<!-- Kabel NYY -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-lg py-4">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant">cable</span>
+</div>
+<div>
+<p class="font-body-medium text-body-medium">Kabel NYY 4x6mm</p>
+<p class="text-[11px] text-on-surface-variant font-code-sm">SKU: CB-NYY46</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-4 text-center font-bold font-stat-lg text-lg">150 <span class="text-xs font-normal text-on-surface-variant">Mtr</span></td>
+<td class="px-lg py-4">
+<span class="px-3 py-1 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-700 flex items-center gap-1 w-fit">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                                            CUKUP
+                                        </span>
+</td>
+<td class="px-lg py-4">
+<button class="p-2 hover:bg-primary/10 rounded-lg transition-colors text-primary">
+<span class="material-symbols-outlined">add_circle</span>
+</button>
+</td>
+</tr>
+<!-- Smart Controller -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-lg py-4">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant">developer_board</span>
+</div>
+<div>
+<p class="font-body-medium text-body-medium">Smart Controller V2</p>
+<p class="text-[11px] text-on-surface-variant font-code-sm">SKU: SC-V2-IOT</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-4 text-center font-bold font-stat-lg text-lg">08 <span class="text-xs font-normal text-on-surface-variant">Pcs</span></td>
+<td class="px-lg py-4">
+<span class="px-3 py-1 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-700 flex items-center gap-1 w-fit">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                                            CUKUP
+                                        </span>
+</td>
+<td class="px-lg py-4">
+<button class="p-2 hover:bg-primary/10 rounded-lg transition-colors text-primary">
+<span class="material-symbols-outlined">add_circle</span>
+</button>
+</td>
+</tr>
+<!-- Fuse -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-lg py-4">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant">bolt</span>
+</div>
+<div>
+<p class="font-body-medium text-body-medium">Fuse Ceramic 10A</p>
+<p class="text-[11px] text-on-surface-variant font-code-sm">SKU: FS-C10A</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-4 text-center font-bold font-stat-lg text-lg">02 <span class="text-xs font-normal text-on-surface-variant">Pcs</span></td>
+<td class="px-lg py-4">
+<span class="px-3 py-1 rounded-full text-[11px] font-bold bg-error/10 text-error flex items-center gap-1 w-fit">
+<span class="w-1.5 h-1.5 rounded-full bg-error animate-pulse"></span>
+                                            RENDAH
+                                        </span>
+</td>
+<td class="px-lg py-4">
+<button class="p-2 hover:bg-primary/10 rounded-lg transition-colors text-primary">
+<span class="material-symbols-outlined">add_circle</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Recent Usage History Card -->
+<div class="lg:col-span-4 bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden flex flex-col h-full">
+<div class="px-lg py-md border-b border-outline-variant">
+<h4 class="font-headline-sm text-headline-sm">Riwayat Pemakaian</h4>
+</div>
+<div class="p-lg flex-1">
+<div class="space-y-6">
+<!-- Entry 1 -->
+<div class="relative pl-8">
+<div class="absolute left-[3px] top-1 bottom-[-24px] w-0.5 bg-outline-variant"></div>
+<div class="absolute left-0 top-1 w-2 h-2 rounded-full bg-primary ring-4 ring-primary/10"></div>
+<div>
+<p class="text-xs font-bold text-primary mb-1">HARI INI, 09:45</p>
+<p class="font-body-medium text-body-medium mb-1">Perbaikan PJU Jl. Merdeka</p>
+<div class="flex flex-wrap gap-2 mt-2">
+<span class="bg-surface-container px-2 py-1 rounded text-[10px] text-on-surface-variant border border-outline-variant">-1 Bohlam LED</span>
+<span class="bg-surface-container px-2 py-1 rounded text-[10px] text-on-surface-variant border border-outline-variant">-5m Kabel NYY</span>
+</div>
+</div>
+</div>
+<!-- Entry 2 -->
+<div class="relative pl-8">
+<div class="absolute left-[3px] top-1 bottom-[-24px] w-0.5 bg-outline-variant"></div>
+<div class="absolute left-0 top-1 w-2 h-2 rounded-full bg-outline-variant"></div>
+<div>
+<p class="text-xs font-bold text-on-surface-variant mb-1">KEMARIN, 16:20</p>
+<p class="font-body-medium text-body-medium mb-1">Pemeliharaan Rutin Area 02</p>
+<div class="flex flex-wrap gap-2 mt-2">
+<span class="bg-surface-container px-2 py-1 rounded text-[10px] text-on-surface-variant border border-outline-variant">-3 Fuse Ceramic</span>
+</div>
+</div>
+</div>
+<!-- Entry 3 -->
+<div class="relative pl-8 pb-4">
+<div class="absolute left-0 top-1 w-2 h-2 rounded-full bg-outline-variant"></div>
+<div>
+<p class="text-xs font-bold text-on-surface-variant mb-1">20 OKT, 11:05</p>
+<p class="font-body-medium text-body-medium mb-1">Penambahan Stok (Gudang)</p>
+<div class="flex flex-wrap gap-2 mt-2">
+<span class="bg-emerald-50 px-2 py-1 rounded text-[10px] text-emerald-700 border border-emerald-200">+10 Smart Controller</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="p-lg mt-auto border-t border-outline-variant">
+<button class="w-full py-2 bg-surface-container-high hover:bg-surface-container-highest transition-colors rounded-lg font-bold text-sm text-on-surface-variant">
+                            Lihat Semua Riwayat
+                        </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Bar - Mobile Only -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 py-2 bg-surface-container-lowest dark:bg-inverse-surface border-t border-outline-variant z-50">
+<a class="flex flex-col items-center justify-center text-on-surface-variant py-1" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-caps text-[10px] uppercase mt-1">Beranda</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant py-1" href="#">
+<span class="material-symbols-outlined">list_alt</span>
+<span class="font-label-caps text-[10px] uppercase mt-1">Tugas</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl px-4 py-1" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-label-caps text-[10px] uppercase mt-1">Aset</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant py-1" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-caps text-[10px] uppercase mt-1">Profil</span>
+</a>
+</nav>
+<!-- Requisition FAB - Mobile Only context -->
+<div class="md:hidden fixed bottom-20 right-4 z-40">
+<button class="w-14 h-14 bg-primary text-white rounded-full shadow-lg flex items-center justify-center active:scale-90 transition-transform">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+
+<script>
+        // Load real inventory data from API
+        async function loadInventoryData() {
+            try {
+                const response = await window.PJUAPI.getInventory();
+                if (response.success && response.data) {
+                    const inventory = response.data;
+                    console.log('Loaded inventory:', inventory);
+                    
+                    // Update UI with real data if elements exist
+                    const inventoryCount = document.querySelector('[data-inventory-count]');
+                    if (inventoryCount) {
+                        inventoryCount.textContent = inventory.length;
+                    }
+                }
+            } catch (error) {
+                console.error('Failed to load inventory data:', error);
+            }
+        }
+
+        // Load data on page load
+        document.addEventListener('DOMContentLoaded', loadInventoryData);
+    </script>
+</div>
+</body></html>

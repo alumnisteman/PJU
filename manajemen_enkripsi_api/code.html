@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>API Encryption &amp; Key Management | PJU Security Suite</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Geist:wght@400;600;700&amp;family=JetBrains+Mono:wght@400&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f9fb;
+        }
+        .sidebar-grid-pattern {
+            background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        .workspace-grid-pattern {
+            background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid #e2e8f0;
+        }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-bright": "#f7f9fb",
+                    "on-secondary-fixed-variant": "#314865",
+                    "inverse-primary": "#b4c5ff",
+                    "primary-fixed": "#dbe1ff",
+                    "on-secondary": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "on-surface": "#191c1e",
+                    "on-error-container": "#93000a",
+                    "on-secondary-container": "#49617f",
+                    "surface-tint": "#0053db",
+                    "secondary-container": "#c4dcff",
+                    "inverse-on-surface": "#eff1f3",
+                    "secondary": "#49607e",
+                    "on-tertiary-container": "#ffeedd",
+                    "surface-container-highest": "#e0e3e5",
+                    "on-background": "#191c1e",
+                    "tertiary-fixed": "#ffddb8",
+                    "secondary-fixed-dim": "#b0c8eb",
+                    "primary": "#004ac6",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "surface-dim": "#d8dadc",
+                    "surface-container-high": "#e6e8ea",
+                    "on-primary-fixed-variant": "#003ea8",
+                    "on-surface-variant": "#434655",
+                    "outline": "#737686",
+                    "on-error": "#ffffff",
+                    "surface-container-low": "#f2f4f6",
+                    "tertiary-container": "#996100",
+                    "surface-container-lowest": "#ffffff",
+                    "error": "#ba1a1a",
+                    "inverse-surface": "#2d3133",
+                    "surface-variant": "#e0e3e5",
+                    "surface": "#f7f9fb",
+                    "secondary-fixed": "#d2e4ff",
+                    "background": "#f7f9fb",
+                    "primary-container": "#2563eb",
+                    "on-tertiary-fixed": "#2a1700",
+                    "surface-container": "#eceef0",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "outline-variant": "#c3c6d7",
+                    "on-secondary-fixed": "#001c37",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-container": "#eeefff",
+                    "error-container": "#ffdad6",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "tertiary": "#784b00",
+                    "on-primary-fixed": "#00174b"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xs": "4px",
+                    "lg": "24px",
+                    "gutter": "16px",
+                    "sm": "8px",
+                    "base": "4px",
+                    "container-max": "1280px",
+                    "md": "16px",
+                    "form-max": "768px",
+                    "xl": "32px"
+            },
+            "fontFamily": {
+                    "headline-sm": ["Geist"],
+                    "headline-md": ["Geist"],
+                    "label-caps": ["Geist"],
+                    "body-base": ["Inter"],
+                    "stat-lg": ["Geist"],
+                    "display-lg": ["Geist"],
+                    "body-medium": ["Inter"],
+                    "code-sm": ["JetBrains Mono"]
+            },
+            "fontSize": {
+                    "headline-sm": ["18px", {"lineHeight": "24px", "letterSpacing": "0", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "body-base": ["14px", {"lineHeight": "20px", "letterSpacing": "0", "fontWeight": "400"}],
+                    "stat-lg": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "display-lg": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-medium": ["14px", {"lineHeight": "20px", "letterSpacing": "0", "fontWeight": "500"}],
+                    "code-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background min-h-screen">
+<!-- Navigation Drawer -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-inverse-surface border-r border-on-secondary-fixed-variant flex flex-col py-6 z-50 sidebar-grid-pattern">
+<div class="px-6 mb-8">
+<div class="font-headline-md text-headline-md font-bold text-primary-fixed">PJU Security</div>
+<div class="mt-4 flex items-center gap-3">
+<img class="w-10 h-10 rounded-lg object-cover" data-alt="A professional headshot of a middle-aged security administrator with a neutral expression, set against a dark architectural background with subtle blue accent lighting, reflecting a corporate and high-security engineering environment. The lighting is crisp and clinical, emphasizing reliability and professional authority." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAblV3Wqv5qZpBBc07J3KJiOzSB6TnozFTfFSRND3LRQyBmuvE2qqPLEKUZfnREXofj79wftqVysR4_GpsjyIlLFUs-2sXuQdWxW-NrbyKqflzm0N6wE2pDQgW361KQS0M_ZPSqTdHZ-Z-usCJ0FSYeMqVs5KhnuuDLvOVHAFwNmBgZKEx2qXMV7Tci0YISS0AuGwbBVvLDXIV09oF0EbK324IRwfY46yWYTpmKiE94UCnSuJ4l06LThmVX0rJIrurOC7GqHVJ3_a7c"/>
+<div>
+<p class="font-headline-sm text-headline-sm text-primary-fixed-dim leading-none">SecOps Admin</p>
+<p class="text-[10px] text-outline-variant font-label-caps tracking-widest uppercase mt-1">Node: PJU-HQ-01</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-surface-variant hover:text-on-primary-fixed-variant transition-colors mx-2 rounded-lg" href="#">
+<span class="material-symbols-outlined">security</span>
+<span class="font-label-caps text-label-caps">Security Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-primary-container text-on-primary-container rounded-lg mx-2 transition-transform scale-[0.98]" href="#">
+<span class="material-symbols-outlined">vpn_key</span>
+<span class="font-label-caps text-label-caps">API Encryption</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-surface-variant hover:text-on-primary-fixed-variant transition-colors mx-2 rounded-lg" href="#">
+<span class="material-symbols-outlined">database</span>
+<span class="font-label-caps text-label-caps">Database Security</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-surface-variant hover:text-on-primary-fixed-variant transition-colors mx-2 rounded-lg" href="#">
+<span class="material-symbols-outlined">history_edu</span>
+<span class="font-label-caps text-label-caps">Audit Logs</span>
+</a>
+</nav>
+<div class="px-6 mt-auto">
+<div class="p-4 bg-on-secondary-fixed-variant/20 rounded-xl border border-on-secondary-fixed-variant/30">
+<p class="text-[10px] font-label-caps text-primary-fixed-dim mb-2">SYSTEM UPTIME</p>
+<div class="w-full bg-on-secondary-fixed-variant/40 h-1 rounded-full overflow-hidden">
+<div class="bg-primary-fixed h-full w-[99.9%]" id="uptime-bar"></div>
+</div>
+<p class="text-[12px] font-code-sm text-surface-variant mt-2">99.998%</p>
+</div>
+</div>
+</aside>
+<!-- Top App Bar -->
+<header class="flex justify-between items-center px-gutter h-16 ml-64 bg-surface-bright border-b border-outline-variant sticky top-0 z-40">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">shield_lock</span>
+<h1 class="font-headline-md text-headline-md font-bold text-primary">API Encryption &amp; Key Management</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-all rounded-full hover:bg-surface-container-high">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-primary transition-all rounded-full hover:bg-surface-container-high">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+</header>
+<!-- Main Workspace -->
+<main class="ml-64 p-lg workspace-grid-pattern min-h-[calc(100vh-64px)]">
+<div class="max-w-container-max mx-auto space-y-lg">
+<!-- Master Key Management Banner -->
+<section class="bg-primary rounded-xl p-8 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
+<div class="absolute inset-0 opacity-10 pointer-events-none">
+
+</div>
+<div class="z-10">
+<h2 class="font-display-lg text-display-lg text-on-primary mb-2">Master Encryption Key</h2>
+<p class="font-body-base text-body-base text-primary-fixed-dim max-w-lg">Current Key Version: <span class="font-code-sm px-2 py-0.5 bg-on-primary/10 rounded">v4.2.0-SEC</span>. Last rotated 42 days ago. It is recommended to rotate keys every 90 days for peak compliance.</p>
+</div>
+<button class="z-10 flex items-center gap-3 bg-on-primary text-primary px-8 py-4 rounded-xl font-headline-sm text-headline-sm hover:bg-primary-fixed transition-all active:scale-95 shadow-lg group" onclick="handleRotation()">
+<span class="material-symbols-outlined group-hover:rotate-180 transition-transform duration-500">sync</span>
+                    Rotate Master Encryption Key
+                </button>
+</section>
+<!-- Bento Grid Section -->
+<div class="grid grid-cols-12 gap-lg">
+<!-- API Clients Table (Span 8) -->
+<div class="col-span-12 lg:col-span-8 bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden shadow-sm">
+<div class="px-6 py-4 border-b border-outline-variant flex justify-between items-center bg-surface-container-low">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Registered API Clients</h3>
+<span class="px-3 py-1 bg-secondary-container text-on-secondary-container text-[10px] font-label-caps rounded-full">12 Active Clients</span>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low/50">
+<th class="px-6 py-4 font-label-caps text-label-caps text-on-surface-variant">Client Name</th>
+<th class="px-6 py-4 font-label-caps text-label-caps text-on-surface-variant">Protocol</th>
+<th class="px-6 py-4 font-label-caps text-label-caps text-on-surface-variant">Last Access</th>
+<th class="px-6 py-4 font-label-caps text-label-caps text-on-surface-variant text-right">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<tr class="hover:bg-surface-container-low/30 transition-colors">
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="font-body-medium text-body-medium text-on-surface">PJU Mobile App v2</span>
+<span class="text-xs text-outline font-code-sm">CID: app_mob_7721</span>
+</div>
+</td>
+<td class="px-6 py-4 font-code-sm text-secondary">AES-256-GCM</td>
+<td class="px-6 py-4 font-body-base text-body-base text-on-surface-variant">2 mins ago</td>
+<td class="px-6 py-4 text-right">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800">
+                                            Encrypted
+                                        </span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/30 transition-colors">
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="font-body-medium text-body-medium text-on-surface">Regional Control Node</span>
+<span class="text-xs text-outline font-code-sm">CID: node_reg_0012</span>
+</div>
+</td>
+<td class="px-6 py-4 font-code-sm text-secondary">ChaCha20-Poly1305</td>
+<td class="px-6 py-4 font-body-base text-body-base text-on-surface-variant">Just now</td>
+<td class="px-6 py-4 text-right">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800">
+                                            Encrypted
+                                        </span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/30 transition-colors">
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="font-body-medium text-body-medium text-on-surface">Third-party Audit Tool</span>
+<span class="text-xs text-outline font-code-sm">CID: ext_aud_9901</span>
+</div>
+</td>
+<td class="px-6 py-4 font-code-sm text-secondary">AES-128-CBC</td>
+<td class="px-6 py-4 font-body-base text-body-base text-on-surface-variant">15 hours ago</td>
+<td class="px-6 py-4 text-right">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800">
+                                            Legacy
+                                        </span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/30 transition-colors">
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="font-body-medium text-body-medium text-on-surface">Billing Analytics API</span>
+<span class="text-xs text-outline font-code-sm">CID: api_bill_4422</span>
+</div>
+</td>
+<td class="px-6 py-4 font-code-sm text-secondary">AES-256-GCM</td>
+<td class="px-6 py-4 font-body-base text-body-base text-on-surface-variant">5 days ago</td>
+<td class="px-6 py-4 text-right">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-200 text-slate-700">
+                                            Inactive
+                                        </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- JWT Configuration (Span 4) -->
+<div class="col-span-12 lg:col-span-4 space-y-lg">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm">
+<div class="flex items-center gap-3 mb-6">
+<div class="p-3 bg-secondary-container rounded-lg">
+<span class="material-symbols-outlined text-on-secondary-container">token</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface leading-tight">JWT Settings</h3>
+<p class="text-xs text-on-surface-variant">Global Auth Config</p>
+</div>
+</div>
+<form class="space-y-gutter">
+<div>
+<label class="block font-label-caps text-label-caps text-on-surface-variant mb-1.5">Signing Algorithm</label>
+<select class="w-full bg-surface-container border border-outline-variant rounded-lg px-3 py-2 text-body-base focus:ring-2 focus:ring-primary focus:border-primary transition-all">
+<option>RS256 (Recommended)</option>
+<option>HS256</option>
+<option>ES256</option>
+<option>PS256</option>
+</select>
+</div>
+<div>
+<label class="block font-label-caps text-label-caps text-on-surface-variant mb-1.5">Token Expiry (Minutes)</label>
+<div class="relative">
+<input class="w-full bg-surface-container border border-outline-variant rounded-lg px-3 py-2 text-body-base focus:ring-2 focus:ring-primary focus:border-primary transition-all" type="number" value="60"/>
+<span class="absolute right-3 top-1/2 -translate-y-1/2 text-outline-variant font-code-sm">MINS</span>
+</div>
+</div>
+<div>
+<label class="block font-label-caps text-label-caps text-on-surface-variant mb-1.5">Refresh Token Policy</label>
+<div class="flex items-center gap-2">
+<input checked="" class="rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/>
+<span class="text-body-base text-on-surface">Enable sliding expiration</span>
+</div>
+</div>
+<button class="w-full py-2 bg-secondary text-on-secondary font-body-medium rounded-lg hover:bg-on-secondary-fixed-variant transition-colors mt-4" type="button">
+                                Update JWT Config
+                            </button>
+</form>
+</div>
+<!-- Security Pulse Micro-Card -->
+<div class="bg-inverse-surface rounded-xl p-6 text-on-primary-fixed border border-on-secondary-fixed-variant overflow-hidden relative group cursor-pointer">
+<div class="relative z-10">
+<h4 class="font-label-caps text-label-caps text-primary-fixed-dim mb-4">ENTROPY RATING</h4>
+<div class="flex items-end gap-2 mb-2">
+<span class="font-stat-lg text-stat-lg text-white">99.8%</span>
+<span class="text-emerald-400 font-label-caps mb-1">+0.2%</span>
+</div>
+<p class="text-xs text-outline-variant">Cryptographic strength is optimal. Last audit log check 0.4s ago.</p>
+</div>
+<div class="absolute -right-4 -bottom-4 opacity-10 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[80px]" style="font-variation-settings: 'FILL' 1;">analytics</span>
+</div>
+</div>
+</div>
+<!-- SSL/TLS Certificate Management (Span 12) -->
+<div class="col-span-12 bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm overflow-hidden">
+<div class="grid grid-cols-1 md:grid-cols-2">
+<div class="p-8 border-b md:border-b-0 md:border-r border-outline-variant">
+<div class="flex items-center gap-3 mb-6">
+<div class="p-3 bg-tertiary-container rounded-lg">
+<span class="material-symbols-outlined text-white">verified_user</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Backend SSL/TLS Certificates</h3>
+</div>
+<div class="space-y-4">
+<div class="p-4 bg-surface rounded-xl border border-outline-variant flex items-start gap-4">
+<span class="material-symbols-outlined text-emerald-500 mt-1">lock</span>
+<div class="flex-1">
+<p class="font-body-medium text-body-medium">api.pju-infrastructure.gov</p>
+<p class="text-xs text-on-surface-variant">Issuer: DigiCert Global G2 CA</p>
+<div class="mt-3 flex items-center gap-2">
+<div class="h-1.5 flex-1 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-emerald-500 w-[75%]"></div>
+</div>
+<span class="text-[10px] font-label-caps text-on-surface-variant whitespace-nowrap">224 DAYS LEFT</span>
+</div>
+</div>
+<button class="p-2 text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined">download</span>
+</button>
+</div>
+<div class="p-4 bg-surface rounded-xl border border-outline-variant border-dashed flex items-center justify-center gap-2 text-on-surface-variant hover:bg-surface-container-low cursor-pointer transition-colors group">
+<span class="material-symbols-outlined group-hover:text-primary">add_circle</span>
+<span class="font-body-medium">Provision New Certificate</span>
+</div>
+</div>
+</div>
+<div class="p-8 bg-surface-container-low/30">
+<h4 class="font-label-caps text-label-caps text-on-surface-variant mb-6 uppercase tracking-wider">Renew or Upload Certificate</h4>
+<div class="space-y-gutter">
+<div class="border-2 border-dashed border-outline-variant rounded-xl p-8 flex flex-col items-center justify-center text-center bg-white/50 group hover:border-primary transition-all">
+<span class="material-symbols-outlined text-4xl text-outline-variant group-hover:text-primary mb-3">cloud_upload</span>
+<p class="font-body-medium text-on-surface mb-1">Drag and drop certificate files (.crt, .pem)</p>
+<p class="text-xs text-outline">or click to browse from your secure hardware module</p>
+</div>
+<div class="flex gap-4">
+<button class="flex-1 py-3 border border-outline-variant rounded-lg font-body-medium text-on-surface hover:bg-surface transition-colors">
+                                        Cancel
+                                    </button>
+<button class="flex-1 py-3 bg-primary text-on-primary rounded-lg font-body-medium shadow-md hover:bg-primary-container transition-all active:scale-95">
+                                        Renew via ACME
+                                    </button>
+</div>
+<p class="text-[10px] text-center text-outline-variant italic">Auto-renewal scheduled for: Nov 14, 2024</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Micro-interactions Script -->
+<script>
+        function handleRotation() {
+            const btn = event.currentTarget;
+            const originalContent = btn.innerHTML;
+            btn.innerHTML = '<span class="material-symbols-outlined animate-spin">sync</span> Rotating...';
+            btn.disabled = true;
+            
+            // Simulate rotation process
+            setTimeout(() => {
+                btn.innerHTML = '<span class="material-symbols-outlined text-emerald-500">check_circle</span> Success';
+                btn.classList.add('bg-emerald-50', 'text-emerald-700', 'border-emerald-200');
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalContent;
+                    btn.classList.remove('bg-emerald-50', 'text-emerald-700', 'border-emerald-200');
+                    btn.disabled = false;
+                }, 2000);
+            }, 2500);
+        }
+
+        // Animate uptime bar slightly to feel alive
+        const bar = document.getElementById('uptime-bar');
+        setInterval(() => {
+            const fluctuation = 99.98 + (Math.random() * 0.015);
+            bar.style.width = fluctuation + '%';
+        }, 3000);
+    </script>
+</body></html>

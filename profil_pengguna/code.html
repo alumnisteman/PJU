@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Profile - PLN Mobile</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Geist:wght@400;600;700&family=JetBrains+Mono:wght@400&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-fixed-dim": "#b0c8eb",
+                    "secondary-container": "#c4dcff",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "tertiary-fixed": "#ffddb8",
+                    "on-surface-variant": "#434655",
+                    "primary": "#004ac6",
+                    "surface-dim": "#d8dadc",
+                    "primary-container": "#2563eb",
+                    "outline": "#737686",
+                    "inverse-surface": "#2d3133",
+                    "inverse-on-surface": "#eff1f3",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "surface-variant": "#e0e3e5",
+                    "on-tertiary-fixed": "#2a1700",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "surface-container-low": "#f2f4f6",
+                    "surface-container-highest": "#e0e3e5",
+                    "error": "#ba1a1a",
+                    "tertiary": "#784b00",
+                    "on-tertiary": "#ffffff",
+                    "outline-variant": "#c3c6d7",
+                    "on-secondary-fixed-variant": "#314865",
+                    "primary-fixed": "#dbe1ff",
+                    "on-secondary": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "on-primary-fixed-variant": "#003ea8",
+                    "background": "#f7f9fb",
+                    "on-primary-container": "#eeefff",
+                    "on-tertiary-container": "#ffeedd",
+                    "on-primary": "#ffffff",
+                    "surface-container-high": "#e6e8ea",
+                    "on-error-container": "#93000a",
+                    "on-secondary-fixed": "#001c37",
+                    "on-error": "#ffffff",
+                    "surface-tint": "#0053db",
+                    "on-surface": "#191c1e",
+                    "on-background": "#191c1e",
+                    "surface": "#f7f9fb",
+                    "surface-bright": "#f7f9fb",
+                    "secondary-fixed": "#d2e4ff",
+                    "on-secondary-container": "#49617f",
+                    "surface-container": "#eceef0",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary-fixed": "#00174b",
+                    "tertiary-container": "#996100",
+                    "inverse-primary": "#b4c5ff",
+                    "secondary": "#49607e"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "12px",
+                    "xl": "16px",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "sm": "8px",
+                    "xs": "4px",
+                    "md": "16px",
+                    "form-max": "768px",
+                    "gutter": "16px",
+                    "container-max": "1280px",
+                    "base": "4px",
+                    "xl": "32px",
+                    "lg": "24px"
+            },
+            "fontFamily": {
+                    "label-caps": ["Geist"],
+                    "code-sm": ["JetBrains Mono"],
+                    "display-lg": ["Geist"],
+                    "body-base": ["Inter"],
+                    "headline-sm": ["Geist"],
+                    "headline-md": ["Geist"],
+                    "body-medium": ["Inter"],
+                    "stat-lg": ["Geist"]
+            },
+            "fontSize": {
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "code-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0", "fontWeight": "400"}],
+                    "display-lg": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-base": ["14px", {"lineHeight": "20px", "letterSpacing": "0", "fontWeight": "400"}],
+                    "headline-sm": ["18px", {"lineHeight": "24px", "letterSpacing": "0", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "body-medium": ["14px", {"lineHeight": "20px", "letterSpacing": "0", "fontWeight": "500"}],
+                    "stat-lg": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #f7f9fb;
+            color: #191c1e;
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid #e2e8f0;
+        }
+        .scroll-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .profile-mesh {
+            background: linear-gradient(135deg, #004ac6 0%, #2563eb 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .profile-mesh::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.05) 1px, transparent 0);
+            background-size: 24px 24px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background min-h-screen flex flex-col items-center">
+<!-- TopAppBar -->
+<header class="w-full top-0 sticky z-50 bg-background border-b border-outline-variant">
+<div class="flex items-center justify-between px-md h-16 w-full max-w-container-max mx-auto">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary-container">
+<img class="w-full h-full object-cover" data-alt="A professional high-resolution studio portrait of a modern energy consultant with a friendly smile. The background is a clean, corporate office with soft blue lighting and engineering-grade precision aesthetics. The image uses a high-contrast professional color palette of deep blues and bright whites to match a corporate UI design." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCNakNpueoWIt1zjd-jb0mrYm1dgfYLUWJFz0vPQFM8O0SBHNjH4xGXnpGU0oc0_uY_8H_I2rSRcNepiMM5oJQhUc9v0eFnaNXewMgf62vyM9fRypSNFK1vfaOb_yxAXwIElFB9Y2j1sN3InY7lYieMfrb621MsMjRhFbxxTczQ_EXmwsm7qq91y-ZuZzadGArnTwohx9tu9rwY3jai3vpOIEkCADmtz7yb7ehdFwT4BUfmlKmk6PHjOMQzpdgt6ATO-tYIKcvHpRTa"/>
+</div>
+<h1 class="font-headline-md text-headline-md font-bold text-primary">PLN Mobile</h1>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-high transition-colors active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-primary">notifications</span>
+</button>
+</div>
+</header>
+<!-- Main Content -->
+<main class="w-full max-w-form-max px-md pt-lg pb-32 flex-1">
+<!-- Profile Hero Section -->
+<section class="profile-mesh rounded-xl p-lg mb-lg shadow-sm">
+<div class="flex flex-col items-center text-center">
+<div class="relative mb-md">
+<div class="w-24 h-24 rounded-full border-4 border-white/20 p-1 overflow-hidden">
+<img class="w-full h-full object-cover rounded-full" data-alt="Close up portrait of a male professional in a clean white business shirt, looking confident. The lighting is crisp and clinical, reflecting a modern corporate engineering environment. The background is slightly blurred with hints of industrial blue and white architecture." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCEn3J8Ygw8m7odtl66Zbv0kpNsdbKLJ0xOayPeCzNRRDffS3vVDgofd4zUNB9F7SHWMU0dwnd4TMSDnVPetrf0c6ai6vYpEMWqCbgTkm7e53UZHifV_NhGKUq_C2QLld6jzsiu0a8dJ0PoP-sll5OgRWhuEDsxmFMfMU1VPUcfePDfw11Rh7sxEDpAgMH20P3lh_rLt9q4UOqhwnWPg8H157CIfHT-l-LXb2ty0zkt_q9plodWUkseP7uVGUQUKcib6sA6HUwmWPAZ"/>
+</div>
+<button class="absolute bottom-0 right-0 bg-white text-primary w-8 h-8 rounded-full flex items-center justify-center shadow-md active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+</div>
+<h2 class="font-display-lg text-display-lg text-white mb-xs">Bambang Wijaya</h2>
+<div class="flex items-center gap-xs px-md py-1 bg-white/10 rounded-full border border-white/20">
+<span class="font-code-sm text-code-sm text-white/90">ID: 51209934812</span>
+<span class="material-symbols-outlined text-[14px] text-white/70">content_copy</span>
+</div>
+</div>
+</section>
+<!-- Account Settings List -->
+<div class="space-y-sm">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant px-xs mb-sm uppercase tracking-wider">Account Settings</h3>
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden">
+<!-- Account Info -->
+<button class="w-full flex items-center justify-between p-md hover:bg-surface-container-high transition-colors active:scale-[0.99] transition-transform border-b border-outline-variant last:border-0 group">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-lg bg-primary-fixed flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">person</span>
+</div>
+<span class="font-body-medium text-body-medium text-on-surface">Account Info</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:translate-x-1 transition-transform">chevron_right</span>
+</button>
+<!-- Linked Meters -->
+<button class="w-full flex items-center justify-between p-md hover:bg-surface-container-high transition-colors active:scale-[0.99] transition-transform border-b border-outline-variant last:border-0 group">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-lg bg-secondary-fixed flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined">electric_meter</span>
+</div>
+<span class="font-body-medium text-body-medium text-on-surface">Linked Meters</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:translate-x-1 transition-transform">chevron_right</span>
+</button>
+<!-- Payment Methods -->
+<button class="w-full flex items-center justify-between p-md hover:bg-surface-container-high transition-colors active:scale-[0.99] transition-transform border-b border-outline-variant last:border-0 group">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-lg bg-tertiary-fixed flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+</div>
+<span class="font-body-medium text-body-medium text-on-surface">Payment Methods</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:translate-x-1 transition-transform">chevron_right</span>
+</button>
+</div>
+<h3 class="font-label-caps text-label-caps text-on-surface-variant px-xs mb-sm mt-xl uppercase tracking-wider">Support</h3>
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden">
+<!-- Help Center -->
+<button class="w-full flex items-center justify-between p-md hover:bg-surface-container-high transition-colors active:scale-[0.99] transition-transform border-b border-outline-variant last:border-0 group">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">help</span>
+</div>
+<span class="font-body-medium text-body-medium text-on-surface">Help Center</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:translate-x-1 transition-transform">chevron_right</span>
+</button>
+</div>
+<!-- Logout -->
+<div class="mt-xl">
+<button class="w-full flex items-center justify-center gap-sm p-md bg-white border border-error text-error rounded-xl font-body-medium text-body-medium hover:bg-error-container/20 transition-colors active:scale-[0.98] transition-transform">
+<span class="material-symbols-outlined">logout</span>
+                    Logout
+                </button>
+</div>
+<!-- Version Info -->
+<div class="mt-lg text-center">
+<p class="font-code-sm text-code-sm text-outline">App Version 5.2.4 (Stable)</p>
+<p class="font-body-base text-body-base text-on-surface-variant/60 mt-xs">© 2024 PT PLN (Persero)</p>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 bg-surface-container-lowest border-t border-outline-variant shadow-md md:max-w-form-max md:rounded-t-xl">
+<div class="flex justify-around items-center h-20 px-sm w-full">
+<!-- Home -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high active:scale-90 transition-all duration-150 rounded-lg px-4 py-1" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-caps text-label-caps">Home</span>
+</a>
+<!-- History -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high active:scale-90 transition-all duration-150 rounded-lg px-4 py-1" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="font-label-caps text-label-caps">History</span>
+</a>
+<!-- Updates -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high active:scale-90 transition-all duration-150 rounded-lg px-4 py-1" href="#">
+<span class="material-symbols-outlined">campaign</span>
+<span class="font-label-caps text-label-caps">Updates</span>
+</a>
+<!-- Profile (Active) -->
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 active:scale-90 transition-all duration-150" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="font-label-caps text-label-caps">Profile</span>
+</a>
+</div>
+</nav>
+<!-- Micro-interaction Script -->
+<script>
+        document.querySelectorAll('button, a').forEach(el => {
+            el.addEventListener('click', (e) => {
+                // Subtle ripple-like effect could be added here
+                // For now, handling the scale animation via Tailwind classes
+            });
+        });
+    </script>
+</body></html>

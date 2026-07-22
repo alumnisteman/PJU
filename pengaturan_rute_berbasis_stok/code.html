@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+
+<html class="light" lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pengaturan Rute Berbasis Stok</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Geist:wght@400;600;700;800&family=JetBrains+Mono&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .blueprint-grid {
+            background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body-base antialiased min-h-screen pb-24">
+<!-- Tailwind Config Injection -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "background": "#f7f9fb",
+                    "secondary-container": "#c4dcff",
+                    "on-background": "#191c1e",
+                    "on-secondary": "#ffffff",
+                    "surface-variant": "#e0e3e5",
+                    "on-secondary-container": "#49617f",
+                    "surface-container": "#eceef0",
+                    "tertiary-fixed": "#ffddb8",
+                    "surface-dim": "#d8dadc",
+                    "on-tertiary-fixed": "#2a1700",
+                    "surface": "#f7f9fb",
+                    "primary-container": "#2563eb",
+                    "inverse-on-surface": "#eff1f3",
+                    "secondary-fixed": "#d2e4ff",
+                    "on-primary-container": "#eeefff",
+                    "secondary": "#49607e",
+                    "surface-tint": "#0053db",
+                    "surface-bright": "#f7f9fb",
+                    "primary": "#004ac6",
+                    "on-tertiary-container": "#ffeedd",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary": "#784b00",
+                    "outline": "#737686",
+                    "surface-container-highest": "#e0e3e5",
+                    "surface-container-high": "#e6e8ea",
+                    "primary-fixed": "#dbe1ff",
+                    "tertiary-container": "#996100",
+                    "on-primary-fixed": "#00174b",
+                    "on-secondary-fixed": "#001c37",
+                    "on-error": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "error": "#ba1a1a",
+                    "inverse-primary": "#b4c5ff",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "on-tertiary": "#ffffff",
+                    "outline-variant": "#c3c6d7",
+                    "error-container": "#ffdad6",
+                    "surface-container-low": "#f2f4f6",
+                    "inverse-surface": "#2d3133",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "on-surface": "#191c1e",
+                    "secondary-fixed-dim": "#b0c8eb",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "on-primary-fixed-variant": "#003ea8",
+                    "on-surface-variant": "#434655",
+                    "on-secondary-fixed-variant": "#314865",
+                    "on-error-container": "#93000a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "12px",
+                    "lg": "12px",
+                    "xl": "16px",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "md": "16px",
+                    "gutter": "16px",
+                    "sm": "8px",
+                    "lg": "24px",
+                    "form-max": "768px",
+                    "xl": "32px",
+                    "container-max": "1280px",
+                    "base": "4px",
+                    "xs": "4px"
+            },
+            "fontFamily": {
+                    "label-caps": ["Geist"],
+                    "stat-lg": ["Geist"],
+                    "code-sm": ["JetBrains Mono"],
+                    "body-base": ["Inter"],
+                    "headline-sm": ["Geist"],
+                    "body-medium": ["Inter"],
+                    "display-lg": ["Geist"],
+                    "headline-md": ["Geist"]
+            },
+            "fontSize": {
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "stat-lg": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "code-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0", "fontWeight": "400"}],
+                    "body-base": ["14px", {"lineHeight": "20px", "letterSpacing": "0", "fontWeight": "400"}],
+                    "headline-sm": ["18px", {"lineHeight": "24px", "letterSpacing": "0", "fontWeight": "600"}],
+                    "body-medium": ["14px", {"lineHeight": "20px", "letterSpacing": "0", "fontWeight": "500"}],
+                    "display-lg": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<!-- TopAppBar -->
+<header class="bg-background dark:bg-on-surface-variant w-full top-0 sticky z-50 border-b border-outline-variant dark:border-on-surface-variant">
+<div class="flex items-center justify-between px-md h-16 w-full max-w-container-max mx-auto">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-high overflow-hidden flex items-center justify-center border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="Professional headshot of a power network technician in a clean blue uniform, high-key studio lighting with soft shadows, corporate modernism style, clean background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDPmwIkuyWB_cza4jp9ZR4URl4GyxHQ4nkaXWH8r8C9ODD_x3DbZB-Sj9Px5t-qDnXCQVYQaQjdinlf92obLI4ImMTTvO-GxaQVDnBCK9jeWuao8Uncnkva56yRg3sZ9gVGvdCYyOrYxWNeygB_aONWws6eJcaqZa3O4LF6flkKi-2DhTPN3x3cicsmc7MTCCxMzE5dGPf2rEyPgJHED3KVhj82hxn__o9dYlmR-KPW2TmV0Mf_MK5pPlnw0cbsuOskvgmeuVtMr_Hq"/>
+</div>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim">Rute & Stok</h1>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-high transition-colors active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-primary">notifications</span>
+</button>
+</div>
+</header>
+<main class="max-w-container-max mx-auto p-md lg:p-lg">
+<!-- Grid Layout for Desktop Optimization -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-lg">
+<!-- Inventory Status & Route Config (Left Panel) -->
+<div class="lg:col-span-4 space-y-lg">
+<!-- Summary Card -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl p-md shadow-sm blueprint-grid">
+<div class="flex justify-between items-start mb-md">
+<div>
+<h2 class="font-label-caps text-label-caps text-on-surface-variant mb-1">STATUS INVENTARIS KENDARAAN</h2>
+<p class="font-headline-sm text-headline-sm text-on-surface">Unit: VAN-042</p>
+</div>
+<div class="bg-primary/10 p-2 rounded-lg">
+<span class="material-symbols-outlined text-primary">inventory_2</span>
+</div>
+</div>
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-secondary-container bg-secondary-fixed p-1.5 rounded-md text-[20px]">lightbulb</span>
+<span class="font-body-medium text-body-medium">LED Bulbs 12W</span>
+</div>
+<span class="font-code-sm text-code-sm bg-surface-container-high px-2 py-1 rounded border border-outline-variant">2 Pcs</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-secondary-container bg-secondary-fixed p-1.5 rounded-md text-[20px]">settings_input_component</span>
+<span class="font-body-medium text-body-medium">Kabel NYY 2x1.5</span>
+</div>
+<span class="font-code-sm text-code-sm bg-surface-container-high px-2 py-1 rounded border border-outline-variant">10m</span>
+</div>
+</div>
+<div class="mt-lg pt-md border-t border-outline-variant">
+<div class="flex items-end justify-between">
+<div>
+<p class="text-[11px] font-bold text-secondary uppercase tracking-widest mb-1">Estimasi Kapasitas</p>
+<p class="font-stat-lg text-stat-lg text-on-surface">4 <span class="text-body-base font-normal text-on-surface-variant">Tugas</span></p>
+</div>
+<div class="text-right">
+<p class="text-[11px] font-bold text-on-surface-variant uppercase tracking-widest mb-1">Utilisasi Stok</p>
+<p class="font-body-medium text-body-medium text-primary">85% Efisien</p>
+</div>
+</div>
+<div class="w-full bg-surface-container-high h-1.5 rounded-full mt-2 overflow-hidden">
+<div class="bg-primary h-full w-[85%] rounded-full"></div>
+</div>
+</div>
+</section>
+<!-- Task Filter / Legend -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl p-md">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant mb-md">OPTIMASI PARAMETER</h3>
+<div class="space-y-3">
+<label class="flex items-center gap-3 p-3 bg-surface-container-low rounded-lg border border-outline-variant cursor-pointer hover:bg-surface-container-high transition-colors">
+<input checked="" class="rounded border-outline text-primary focus:ring-primary h-4 w-4" type="checkbox"/>
+<span class="font-body-base text-body-base text-on-surface">Prioritaskan Stok Cukup</span>
+</label>
+<label class="flex items-center gap-3 p-3 bg-background rounded-lg border border-outline-variant cursor-pointer hover:bg-surface-container-high transition-colors">
+<input class="rounded border-outline text-primary focus:ring-primary h-4 w-4" type="checkbox"/>
+<span class="font-body-base text-body-base text-on-surface">Minimalkan Jarak Tempuh</span>
+</label>
+</div>
+</section>
+</div>
+<!-- Map View (Right Panel) -->
+<div class="lg:col-span-8 space-y-lg">
+<section class="relative h-[400px] lg:h-[500px] bg-surface-container border border-outline-variant rounded-xl overflow-hidden shadow-inner">
+<!-- Map Placeholder -->
+<div class="absolute inset-0 z-0 bg-cover bg-center" data-alt="A clean, highly detailed technical mapping interface showing a top-down view of a city grid. The map uses a muted slate and light grey color palette with primary blue lines indicating optimized routes. Glowing blue and amber node points represent technician tasks. Professional GIS software aesthetic with subtle grid overlays." data-location="Jakarta Pusat" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuADCAL8bu1nYtaZpjtHVXHdgdouKZFeA03yA__8AkIx65LRbRd4Okn08lGa6qVJL9FfnbuORhkU7hlsz4zmK1sZjPcuIUxG8duupFaxQ0O6b2W6mYDbjZTKv8sTr5KmqBk7TLupc7bVDQJYBWpvOF3HoiD2tv06zsk0WcmzfFYCMZy-qOk8KDqigYsB7d5nkCjjQhZBCtWw4jz_1mELNl78pOU6YMmkvwVN6cRIkztURV5fr3SX8hGavaDSeeWUavrzasl4OGdd7zk7')">
+</div>
+<!-- Map Controls -->
+<div class="absolute top-4 right-4 flex flex-col gap-2 z-10">
+<button class="w-10 h-10 bg-white border border-outline-variant rounded-lg shadow-sm flex items-center justify-center hover:bg-surface-container-high active:scale-95 transition-all">
+<span class="material-symbols-outlined text-on-surface">add</span>
+</button>
+<button class="w-10 h-10 bg-white border border-outline-variant rounded-lg shadow-sm flex items-center justify-center hover:bg-surface-container-high active:scale-95 transition-all">
+<span class="material-symbols-outlined text-on-surface">remove</span>
+</button>
+</div>
+<!-- Floating Route Summary -->
+<div class="absolute bottom-4 left-4 right-4 lg:left-4 lg:right-auto lg:w-72 z-10 glass-panel border border-white/50 rounded-xl p-3 shadow-lg">
+<div class="flex items-center gap-2 mb-2">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+<p class="font-label-caps text-label-caps text-primary">RUTE TEROPTIMASI</p>
+</div>
+<p class="font-body-medium text-body-medium text-on-surface mb-1">Jakarta Pusat - Harmoni Area</p>
+<p class="text-[12px] text-on-surface-variant">8.4 KM • 4 Perhentian • 110 Menit</p>
+</div>
+</section>
+<!-- Task List Section -->
+<section class="space-y-md">
+<div class="flex items-center justify-between">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Urutan Tugas Optimal</h3>
+<span class="font-label-caps text-label-caps text-on-surface-variant bg-surface-container-high px-3 py-1 rounded-full">4 TUGAS DITEMUKAN</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<!-- Task Item 1 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-md flex flex-col gap-3 hover:border-primary/50 transition-colors cursor-pointer group">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-sm">1</div>
+<div>
+<p class="font-body-medium text-body-medium text-on-surface group-hover:text-primary transition-colors">Gardu Distribusi GD-12</p>
+<p class="text-xs text-on-surface-variant">Jl. Medan Merdeka Barat</p>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-700 border border-emerald-200">Stok Cukup</span>
+</div>
+<div class="flex items-center gap-4 text-xs text-on-surface-variant pt-2 border-t border-outline-variant/30">
+<div class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">schedule</span> 15m</div>
+<div class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">distance</span> 1.2km</div>
+</div>
+</div>
+<!-- Task Item 2 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-md flex flex-col gap-3 hover:border-primary/50 transition-colors cursor-pointer group">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-sm">2</div>
+<div>
+<p class="font-body-medium text-body-medium text-on-surface group-hover:text-primary transition-colors">Perbaikan Tiang TR-09</p>
+<p class="text-xs text-on-surface-variant">Jl. Kebon Sirih Raya</p>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-700 border border-emerald-200">Stok Cukup</span>
+</div>
+<div class="flex items-center gap-4 text-xs text-on-surface-variant pt-2 border-t border-outline-variant/30">
+<div class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">schedule</span> 45m</div>
+<div class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">distance</span> 3.1km</div>
+</div>
+</div>
+<!-- Task Item 3 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-md flex flex-col gap-3 hover:border-primary/50 transition-colors cursor-pointer group">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high text-on-surface-variant flex items-center justify-center font-bold text-sm">3</div>
+<div>
+<p class="font-body-medium text-body-medium text-on-surface group-hover:text-primary transition-colors">Panel LP-X4 Substation</p>
+<p class="text-xs text-on-surface-variant">Jl. Veteran III</p>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-amber-100 text-amber-700 border border-amber-200">Stok Kurang</span>
+</div>
+<div class="flex items-center gap-4 text-xs text-on-surface-variant pt-2 border-t border-outline-variant/30">
+<div class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">schedule</span> 30m</div>
+<div class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">distance</span> 0.8km</div>
+</div>
+</div>
+<!-- Task Item 4 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-md flex flex-col gap-3 hover:border-primary/50 transition-colors cursor-pointer group">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-sm">4</div>
+<div>
+<p class="font-body-medium text-body-medium text-on-surface group-hover:text-primary transition-colors">Penerangan Jalan PJU-77</p>
+<p class="text-xs text-on-surface-variant">Monas Barat Daya</p>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-700 border border-emerald-200">Stok Cukup</span>
+</div>
+<div class="flex items-center gap-4 text-xs text-on-surface-variant pt-2 border-t border-outline-variant/30">
+<div class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">schedule</span> 20m</div>
+<div class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">distance</span> 2.3km</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+</div>
+</main>
+<!-- Bottom Action Bar -->
+<div class="fixed bottom-20 md:bottom-24 left-0 right-0 p-md lg:px-lg flex justify-center z-40 pointer-events-none">
+<button class="pointer-events-auto bg-primary hover:bg-surface-tint text-white h-14 px-10 rounded-full font-bold shadow-lg shadow-primary/20 flex items-center gap-3 active:scale-95 transition-all group">
+<span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">navigation</span>
+            Mulai Rute Optimal
+        </button>
+</div>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 bg-surface-container-lowest dark:bg-inverse-surface border-t border-outline-variant dark:border-on-surface-variant shadow-md">
+<div class="flex justify-around items-center h-20 px-sm w-full max-w-container-max mx-auto">
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-label-caps text-label-caps">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-colors active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="font-label-caps text-label-caps">History</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-colors active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined">campaign</span>
+<span class="font-label-caps text-label-caps">Updates</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-colors active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-caps text-label-caps">Profile</span>
+</a>
+</div>
+</nav>
+<script>
+        // Micro-interaction for task selection
+        document.querySelectorAll('.group').forEach(item => {
+            item.addEventListener('click', () => {
+                document.querySelectorAll('.group').forEach(el => el.classList.remove('border-primary'));
+                item.classList.add('border-primary');
+            });
+        });
+    </script>
+</body></html>

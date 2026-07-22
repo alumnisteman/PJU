@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Public Safety &amp; Emergency Mesh - Ternate Command Center</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#0052CC",
+                        "on-primary": "#FFFFFF",
+                        "primary-container": "#D6E4FF",
+                        "on-primary-container": "#001A41",
+                        secondary: "#535F70",
+                        surface: "#F9FAFB",
+                        "on-surface": "#1A1C1E",
+                        "surface-variant": "#E1E2EC",
+                        "on-surface-variant": "#44474E",
+                        "outline": "#74777F",
+                        "outline-variant": "#C4C6D0",
+                        error: "#BA1A1A",
+                        "on-error": "#FFFFFF",
+                        "error-container": "#FFDAD6",
+                        "on-error-container": "#410002",
+                        success: "#2E7D32",
+                        warning: "#F9A825"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                    fontFamily: {
+                        headline: ["Public Sans", "sans-serif"],
+                        display: ["Public Sans", "sans-serif"],
+                        body: ["Public Sans", "sans-serif"],
+                        label: ["Public Sans", "sans-serif"],
+                        mono: ["JetBrains Mono", "monospace"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .emergency-pulse {
+            animation: pulse-red 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse-red {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: .7; transform: scale(1.05); }
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 1rem;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .scanline {
+            width: 100%;
+            height: 2px;
+            background: rgba(0, 82, 204, 0.2);
+            position: absolute;
+            animation: scan 4s linear infinite;
+        }
+        @keyframes scan {
+            from { top: 0%; }
+            to { top: 100%; }
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface font-body text-on-surface antialiased overflow-x-hidden pb-20 md:pb-0">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline flex justify-between items-center w-full px-4 h-16 fixed top-0 z-50">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed text-2xl" style="font-variation-settings: 'FILL' 1;">bolt</span>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-inverse-primary tracking-tight">Smart PJU Control</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high transition-colors p-2 rounded-full active:scale-95 duration-150">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="h-8 w-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold text-xs">
+                TC
+            </div>
+</div>
+</header>
+<main class="pt-20 px-4 max-w-7xl mx-auto pb-24">
+<!-- Header Section -->
+<section class="mb-8">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<span class="text-xs font-mono font-bold text-primary uppercase tracking-widest bg-primary-container px-2 py-1 rounded">System Status: Active</span>
+<h2 class="text-3xl font-bold mt-2 font-headline tracking-tighter">Public Safety &amp; Emergency Mesh</h2>
+<p class="text-on-surface-variant max-w-xl mt-1">High-precision monitoring and response interface for Ternate's intelligent streetlight network.</p>
+</div>
+<div class="flex gap-2">
+<div class="px-4 py-2 bg-white border border-outline-variant rounded-lg flex items-center gap-3 shadow-sm">
+<div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+<span class="text-sm font-medium">Command Center Live</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Bento Grid Content -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-4">
+<!-- SOS Trigger - High Priority -->
+<div class="md:col-span-4 bg-white border border-outline-variant rounded-2xl p-6 flex flex-col justify-between overflow-hidden relative group">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-9xl">emergency_home</span>
+</div>
+<div>
+<h3 class="text-lg font-bold flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-error" style="font-variation-settings: 'FILL' 1;">emergency</span>
+                        Emergency Protocol
+                    </h3>
+<p class="text-sm text-on-surface-variant mb-6">Immediate deployment of SOS mesh alerts and visual beacon sequence.</p>
+</div>
+<div class="flex flex-col gap-3">
+<button class="emergency-pulse w-full bg-error text-on-error font-bold py-6 rounded-xl flex flex-col items-center justify-center gap-1 active:scale-95 transition-transform hover:bg-red-700">
+<span class="material-symbols-outlined text-3xl">sos</span>
+<span class="uppercase tracking-widest text-xs">Trigger Panic Signal</span>
+</button>
+<p class="text-[10px] text-center text-on-surface-variant italic">Requires 2-factor verification if initiated remotely.</p>
+</div>
+</div>
+<!-- Ambient Noise Sensor Cluster -->
+<div class="md:col-span-8 bg-white border border-outline-variant rounded-2xl p-6">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-lg font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">graphic_eq</span>
+                        Ambient Noise Analysis
+                    </h3>
+<div class="text-xs font-mono bg-surface p-1 px-2 border border-outline-variant rounded">Refresh: 250ms</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+<div class="bg-surface p-4 rounded-xl border border-outline-variant">
+<div class="flex justify-between items-start mb-2">
+<span class="text-xs font-bold uppercase text-on-surface-variant">Decibel Level</span>
+<span class="text-success text-xs font-bold">NORMAL</span>
+</div>
+<div class="text-2xl font-mono font-bold">54.2 <span class="text-sm font-normal">dB</span></div>
+<div class="mt-4 h-12 flex items-end gap-1">
+<div class="w-full bg-primary h-[40%] rounded-t-sm"></div>
+<div class="w-full bg-primary h-[35%] rounded-t-sm"></div>
+<div class="w-full bg-primary h-[50%] rounded-t-sm"></div>
+<div class="w-full bg-primary h-[45%] rounded-t-sm"></div>
+<div class="w-full bg-primary h-[60%] rounded-t-sm"></div>
+<div class="w-full bg-primary h-[30%] rounded-t-sm"></div>
+</div>
+</div>
+<div class="bg-surface p-4 rounded-xl border border-outline-variant">
+<div class="flex justify-between items-start mb-2">
+<span class="text-xs font-bold uppercase text-on-surface-variant">Accident Detect</span>
+<span class="text-on-surface-variant text-xs font-bold">NONE</span>
+</div>
+<div class="text-2xl font-mono font-bold">0.02 <span class="text-sm font-normal">prob</span></div>
+<div class="mt-4 flex flex-col gap-2">
+<div class="w-full bg-surface-variant h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[5%]"></div>
+</div>
+<span class="text-[10px] text-on-surface-variant">AI Confidence Level</span>
+</div>
+</div>
+<div class="bg-surface p-4 rounded-xl border border-outline-variant">
+<div class="flex justify-between items-start mb-2">
+<span class="text-xs font-bold uppercase text-on-surface-variant">Scream Detection</span>
+<span class="text-on-surface-variant text-xs font-bold">STANDBY</span>
+</div>
+<div class="text-2xl font-mono font-bold text-error">-- <span class="text-sm font-normal text-on-surface">events</span></div>
+<div class="mt-4 flex gap-1">
+<div class="w-2 h-2 rounded-full bg-outline-variant"></div>
+<div class="w-2 h-2 rounded-full bg-outline-variant"></div>
+<div class="w-2 h-2 rounded-full bg-outline-variant"></div>
+<div class="w-2 h-2 rounded-full bg-outline-variant"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Live Link Command Center -->
+<div class="md:col-span-7 h-80 relative rounded-2xl overflow-hidden border border-outline-variant group shadow-lg">
+<div class="absolute inset-0 bg-slate-900">
+<img class="w-full h-full object-cover opacity-60" data-alt="A highly detailed cinematic view of a futuristic city command center in Ternate at night. Multiple glowing high-resolution wall screens display real-time data maps, thermal imaging grids, and security camera feeds. Technicians in sleek dark uniforms are silhouetted against the vibrant blue and amber neon glow of the workstations. The atmosphere is intense, professional, and technologically sophisticated, with a shallow depth of field focusing on the primary display." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDoNcapgoh5I4pmqy3rxNhts7ItrESNN7cru_zOj-4OfMxz26BScEJBplIRuqQLGWxY8fBwi7F5GL0Y7koulv953iv9P09uXo2OzhWMcbN86FgbYV8DKTKhvcELqCuun0UDhGKH3_YXAlZIG_WkR2FDbu3abUtPujsuoiPgtoXWDmd9AGORpLZlOdAXSBrdSBD4IIfMpvqUjjp_8gRfeLPTZDf_G1ZCKW_Hgf3aQuTRkqo-k_G0-xe76F0HZCm1HpD1rNWZeIV-yCVC"/>
+<div class="scanline"></div>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent"></div>
+<div class="absolute top-4 left-4 flex items-center gap-2">
+<div class="w-3 h-3 bg-red-600 rounded-full animate-pulse"></div>
+<span class="text-white text-xs font-mono font-bold uppercase tracking-widest drop-shadow-md">Live Stream: Ternate CC-04</span>
+</div>
+<div class="absolute bottom-4 left-4 right-4">
+<div class="flex items-center justify-between">
+<div>
+<h4 class="text-white font-bold text-lg">Central Hub Oversight</h4>
+<p class="text-slate-300 text-xs">Coordinates: 0.7893° N, 127.3700° E</p>
+</div>
+<button class="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white p-2 rounded-lg transition-colors">
+<span class="material-symbols-outlined">fullscreen</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Visual Beacon Control -->
+<div class="md:col-span-5 bg-white border border-outline-variant rounded-2xl p-6 flex flex-col gap-4">
+<h3 class="text-lg font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-warning" style="font-variation-settings: 'FILL' 1;">light</span>
+                    Visual Beacon Controls
+                </h3>
+<div class="space-y-4">
+<div class="p-4 border border-outline-variant rounded-xl flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="p-2 bg-yellow-50 rounded-lg">
+<span class="material-symbols-outlined text-warning">brightness_6</span>
+</div>
+<div>
+<div class="text-sm font-bold">Manual Overdrive</div>
+<div class="text-[10px] text-on-surface-variant">Set intensity to 150%</div>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="p-4 border border-outline-variant rounded-xl">
+<div class="flex items-center justify-between mb-3">
+<div class="text-sm font-bold">Strobe Pattern Selector</div>
+<span class="text-xs font-mono px-1.5 py-0.5 bg-surface-variant rounded">SEC-LEVEL 2</span>
+</div>
+<div class="flex gap-2">
+<button class="flex-1 py-2 text-xs font-bold border border-primary text-primary rounded-lg hover:bg-primary/5 transition-colors">SOS FLASH</button>
+<button class="flex-1 py-2 text-xs font-bold bg-error text-on-error rounded-lg hover:bg-error/90 transition-colors shadow-sm">CRITICAL RED</button>
+<button class="flex-1 py-2 text-xs font-bold border border-outline text-on-surface-variant rounded-lg hover:bg-surface-variant transition-colors">SWEEP</button>
+</div>
+</div>
+<div class="mt-2">
+<div class="flex justify-between text-[10px] uppercase font-bold text-on-surface-variant mb-1">
+<span>Beacon Radius</span>
+<span>450m</span>
+</div>
+<input class="w-full h-1.5 bg-surface-variant rounded-lg appearance-none cursor-pointer accent-primary" type="range"/>
+</div>
+</div>
+</div>
+<!-- Quick Stats/Info Grid -->
+<div class="md:col-span-12 grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="p-4 bg-primary-container/30 border border-primary-container rounded-xl">
+<div class="text-[10px] font-bold text-primary uppercase mb-1">Active PJU Units</div>
+<div class="text-2xl font-bold font-mono">1,402</div>
+</div>
+<div class="p-4 bg-white border border-outline-variant rounded-xl">
+<div class="text-[10px] font-bold text-on-surface-variant uppercase mb-1">Network Latency</div>
+<div class="text-2xl font-bold font-mono">12ms</div>
+</div>
+<div class="p-4 bg-white border border-outline-variant rounded-xl">
+<div class="text-[10px] font-bold text-on-surface-variant uppercase mb-1">Response Time</div>
+<div class="text-2xl font-bold font-mono">3.4s</div>
+</div>
+<div class="p-4 bg-white border border-outline-variant rounded-xl">
+<div class="text-[10px] font-bold text-on-surface-variant uppercase mb-1">Battery Reserve</div>
+<div class="text-2xl font-bold font-mono">98%</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 py-2 bg-surface dark:bg-inverse-surface border-t border-outline-variant dark:border-outline z-50">
+<div class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2 hover:text-primary dark:hover:text-primary-fixed active:scale-90 transition-transform">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-caps text-[10px] uppercase font-bold mt-1">Dashboard</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2 hover:text-primary dark:hover:text-primary-fixed active:scale-90 transition-transform">
+<span class="material-symbols-outlined">map</span>
+<span class="font-label-caps text-[10px] uppercase font-bold mt-1">Map</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2 hover:text-primary dark:hover:text-primary-fixed active:scale-90 transition-transform">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-caps text-[10px] uppercase font-bold mt-1">Analytics</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl p-2 active:scale-90 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">warning</span>
+<span class="font-label-caps text-[10px] uppercase font-bold mt-1">Alerts</span>
+</div>
+</nav>
+<!-- Desktop Sidebar/Nav (Hidden on Mobile) -->
+<div class="hidden md:flex fixed left-0 top-16 h-[calc(100vh-4rem)] w-20 flex-col items-center py-8 gap-8 border-r border-outline-variant bg-white z-40">
+<button class="p-3 text-on-surface-variant hover:bg-surface-container-high rounded-xl transition-colors">
+<span class="material-symbols-outlined">dashboard</span>
+</button>
+<button class="p-3 text-on-surface-variant hover:bg-surface-container-high rounded-xl transition-colors">
+<span class="material-symbols-outlined">map</span>
+</button>
+<button class="p-3 text-on-surface-variant hover:bg-surface-container-high rounded-xl transition-colors">
+<span class="material-symbols-outlined">analytics</span>
+</button>
+<button class="p-3 bg-primary-container text-on-primary-container rounded-xl shadow-sm">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">warning</span>
+</button>
+<div class="mt-auto">
+<button class="p-3 text-on-surface-variant hover:bg-surface-container-high rounded-xl transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+</div>
+<script>
+        // Micro-interaction for SOS button
+        const sosBtn = document.querySelector('.emergency-pulse');
+        if (sosBtn) {
+            sosBtn.addEventListener('mousedown', () => {
+                sosBtn.classList.remove('emergency-pulse');
+                sosBtn.style.transform = 'scale(0.92)';
+            });
+            sosBtn.addEventListener('mouseup', () => {
+                sosBtn.classList.add('emergency-pulse');
+                sosBtn.style.transform = 'scale(1)';
+            });
+        }
+
+        // Fake noise graph animation
+        const bars = document.querySelectorAll('.h-12 .w-full');
+        setInterval(() => {
+            bars.forEach(bar => {
+                const height = Math.floor(Math.random() * 70) + 20;
+                bar.style.height = `${height}%`;
+                bar.style.transition = 'height 0.3s ease-in-out';
+            });
+        }, 500);
+    </script>
+</body></html>

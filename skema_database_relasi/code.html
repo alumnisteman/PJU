@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+
+<html class="light" lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Skema Database & Relasi - PJU Smart City Ternate</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Geist:wght@400;600;700&family=JetBrains+Mono:wght@400&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f9fb;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .db-canvas {
+            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        .relation-line {
+            stroke: #94a3b8;
+            stroke-width: 2;
+            fill: none;
+            transition: stroke 0.3s ease;
+        }
+        .relation-line:hover {
+            stroke: #0053db;
+            stroke-width: 3;
+        }
+        .table-card {
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed": "#dbe1ff",
+                        "primary-container": "#2563eb",
+                        "on-error": "#ffffff",
+                        "secondary-fixed": "#d2e4ff",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "tertiary-container": "#996100",
+                        "surface-container-low": "#f2f4f6",
+                        "surface": "#f7f9fb",
+                        "secondary-fixed-dim": "#b0c8eb",
+                        "inverse-surface": "#2d3133",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed-variant": "#314865",
+                        "surface-container-highest": "#e0e3e5",
+                        "outline": "#737686",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "primary": "#004ac6",
+                        "on-background": "#191c1e",
+                        "inverse-primary": "#b4c5ff",
+                        "surface-bright": "#f7f9fb",
+                        "surface-container": "#eceef0",
+                        "secondary": "#49607e",
+                        "on-secondary-fixed": "#001c37",
+                        "on-error-container": "#93000a",
+                        "on-secondary-container": "#49617f",
+                        "surface-variant": "#e0e3e5",
+                        "outline-variant": "#c3c6d7",
+                        "on-surface-variant": "#434655",
+                        "on-primary": "#ffffff",
+                        "on-surface": "#191c1e",
+                        "surface-dim": "#d8dadc",
+                        "secondary-container": "#c4dcff",
+                        "on-tertiary-container": "#ffeedd",
+                        "error-container": "#ffdad6",
+                        "surface-container-high": "#e6e8ea",
+                        "on-tertiary": "#ffffff",
+                        "surface-tint": "#0053db",
+                        "tertiary-fixed": "#ffddb8",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "error": "#ba1a1a",
+                        "background": "#f7f9fb",
+                        "tertiary": "#784b00",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed": "#00174b",
+                        "on-tertiary-fixed": "#2a1700",
+                        "on-primary-container": "#eeefff",
+                        "inverse-on-surface": "#eff1f3"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "12px",
+                        "xl": "16px",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xs": "4px",
+                        "sm": "8px",
+                        "lg": "24px",
+                        "base": "4px",
+                        "form-max": "768px",
+                        "xl": "32px",
+                        "gutter": "16px",
+                        "md": "16px",
+                        "container-max": "1280px"
+                    },
+                    "fontFamily": {
+                        "code-sm": ["JetBrains Mono"],
+                        "stat-lg": ["Geist"],
+                        "display-lg": ["Geist"],
+                        "body-base": ["Inter"],
+                        "label-caps": ["Geist"],
+                        "body-medium": ["Inter"],
+                        "headline-sm": ["Geist"],
+                        "headline-md": ["Geist"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="w-full top-0 sticky bg-surface border-b border-outline-variant z-50">
+<div class="flex justify-between items-center px-gutter py-md max-w-container-max mx-auto">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="foggy">foggy</span>
+<h1 class="font-headline-md text-headline-md font-bold text-primary">PJU Smart City Ternate</h1>
+</div>
+<div class="flex items-center gap-4">
+<span class="text-on-surface-variant font-body-medium">Skema Database & Relasi</span>
+<button class="material-symbols-outlined text-on-surface-variant p-2 hover:bg-surface-container-high rounded-full transition-colors active:scale-95 duration-150" data-icon="notifications">notifications</button>
+</div>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden">
+<!-- NavigationDrawer (Desktop) -->
+<aside class="hidden md:flex h-full w-72 bg-surface border-r border-outline-variant shadow-md flex-col flex-shrink-0">
+<div class="p-lg flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</div>
+<div class="overflow-hidden">
+<p class="font-headline-sm text-headline-sm font-bold text-primary truncate">Ternate Field Unit</p>
+<p class="text-body-medium text-on-surface-variant truncate">Zone A - North Ternate</p>
+</div>
+</div>
+<nav class="flex-1 px-sm space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-low mx-2 rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-body-medium">Command Center</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-low mx-2 rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="font-body-medium">Asset Inventory</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-secondary-container text-on-secondary-container font-bold rounded-lg mx-2 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="schema">schema</span>
+<span class="font-body-medium">Database Schema</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-low mx-2 rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="route">route</span>
+<span class="font-body-medium">Route Optimization</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-low mx-2 rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="local_gas_station">local_gas_station</span>
+<span class="font-body-medium">Fuel Logs</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-low mx-2 rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="campaign">campaign</span>
+<span class="font-body-medium">Citizen Reports</span>
+</a>
+</nav>
+<div class="p-lg mt-auto border-t border-outline-variant">
+<span class="text-label-caps text-on-surface-variant block mb-2">System Status</span>
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-emerald-500"></div>
+<span class="text-body-base font-medium">Database Live</span>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 relative overflow-auto db-canvas p-xl">
+<!-- Documentation Header -->
+<div class="max-w-4xl mx-auto mb-lg">
+<div class="bg-white/80 backdrop-blur-sm p-lg rounded-xl border border-outline-variant shadow-sm">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-2">Relational Data Flow</h2>
+<p class="text-on-surface-variant font-body-base leading-relaxed">
+                        Referensi arsitektur data untuk pengelolaan PJU Ternate. Skema ini mendefinisikan bagaimana laporan masyarakat (Citizen Reports) berubah menjadi tugas teknisi (Tasks) yang berdampak pada status operasional infrastruktur (Assets).
+                    </p>
+</div>
+</div>
+<!-- Database Visualizer Canvas -->
+<div class="relative w-full min-h-[800px] flex justify-center items-center">
+<svg class="absolute inset-0 w-full h-full pointer-events-none" id="relation-svg">
+<!-- Lines will be drawn by JS or defined statically -->
+<path class="relation-line" d="M 300,200 L 500,200" id="rel-users-reports"></path>
+<path class="relation-line" d="M 500,250 L 500,450" id="rel-reports-tasks"></path>
+<path class="relation-line" d="M 500,550 L 300,550" id="rel-tasks-assets"></path>
+<path class="relation-line" d="M 300,500 L 300,250" id="rel-assets-users"></path>
+</svg>
+<!-- Grid Layout for Tables -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-x-64 gap-y-32 relative z-10">
+<!-- Table: Users -->
+<div class="table-card bg-white border border-slate-200 rounded-lg w-64 overflow-hidden" id="table-users">
+<div class="bg-slate-800 text-white p-3 flex justify-between items-center">
+<span class="font-code-sm text-code-sm uppercase tracking-wider">Users</span>
+<span class="material-symbols-outlined text-sm" data-icon="person">person</span>
+</div>
+<div class="p-0 font-code-sm text-code-sm">
+<div class="flex justify-between px-3 py-2 border-b border-slate-100 bg-slate-50 font-bold">
+<span>user_id</span>
+<span class="text-primary italic">PK</span>
+</div>
+<div class="flex justify-between px-3 py-2 border-b border-slate-50">
+<span>username</span>
+<span class="text-slate-400">varchar</span>
+</div>
+<div class="flex justify-between px-3 py-2 border-b border-slate-50">
+<span>email</span>
+<span class="text-slate-400">varchar</span>
+</div>
+<div class="flex justify-between px-3 py-2 border-b border-slate-50">
+<span>role_type</span>
+<span class="text-slate-400">enum</span>
+</div>
+</div>
+</div>
+<!-- Table: Reports -->
+<div class="table-card bg-white border border-slate-200 rounded-lg w-64 overflow-hidden" id="table-reports">
+<div class="bg-primary text-white p-3 flex justify-between items-center">
+<span class="font-code-sm text-code-sm uppercase tracking-wider">Reports</span>
+<span class="material-symbols-outlined text-sm" data-icon="campaign">campaign</span>
+</div>
+<div class="p-0 font-code-sm text-code-sm">
+<div class="flex justify-between px-3 py-2 border-b border-slate-100 bg-slate-50 font-bold">
+<span>report_id</span>
+<span class="text-primary italic">PK</span>
+</div>
+<div class="flex justify-between px-3 py-2 border-b border-slate-100 font-medium">
+<span>user_id</span>
+<span class="text-secondary italic">FK</span>
+</div>
+<div class="flex justify-between px-3 py-2 border-b border-slate-50">
+<span>description</span>
+<span class="text-slate-400">text</span>
+</div>
+<div class="flex justify-between px-3 py-2 border-b border-slate-50">
+<span>location_gps</span>
+<span class="text-slate-400">point</span>
+</div>
+<div class="flex justify-between px-3 py-2 border-b border-slate-50">
+<span>status</span>
+<span class="text-slate-400">varchar</span>
+</div>
+</div>
+</div>
+<!-- Table: Assets -->
+<div class="table-card bg-white border border-slate-200 rounded-lg w-64 overflow-hidden" id="table-assets">
+<div class="bg-tertiary-container text-white p-3 flex justify-between items-center">
+<span class="font-code-sm text-code-sm uppercase tracking-wider">Assets</span>
+<span class="material-symbols-outlined text-sm" data-icon="lightbulb">lightbulb</span>
+</div>
+<div class="p-0 font-code-sm text-code-sm">
+<div class="flex justify-between px-3 py-2 border-b border-slate-100 bg-slate-50 font-bold">
+<span>asset_id</span>
+<span class="text-primary italic">PK</span>
+</div>
+<div class="flex justify-between px-3 py-2 border-b border-slate-50">
+<span>pole_serial</span>
+<span class="text-slate-400">varchar</span>
+</div>
+<div class="flex justify-between px-3 py-2 border-b border-slate-50">
+<span>model_type</span>
+<span class="text-slate-400">varchar</span>
+</div>
+<div class="flex justify-between px-3 py-2 border-b border-slate-50">
+<span>last_maint</span>
+<span class="text-slate-400">datetime</span>
+</div>
+<div class="flex justify-between px-3 py-2 border-b border-slate-50">
+<span>is_active</span>
+<span class="text-slate-400">boolean</span>
+</div>
+</div>
+</div>
+<!-- Table: Tasks -->
+<div class="table-card bg-white border border-slate-200 rounded-lg w-64 overflow-hidden" id="table-tasks">
+<div class="bg-secondary text-white p-3 flex justify-between items-center">
+<span class="font-code-sm text-code-sm uppercase tracking-wider">Tasks</span>
+<span class="material-symbols-outlined text-sm" data-icon="assignment">assignment</span>
+</div>
+<div class="p-0 font-code-sm text-code-sm">
+<div class="flex justify-between px-3 py-2 border-b border-slate-100 bg-slate-50 font-bold">
+<span>task_id</span>
+<span class="text-primary italic">PK</span>
+</div>
+<div class="flex justify-between px-3 py-2 border-b border-slate-100 font-medium">
+<span>report_id</span>
+<span class="text-secondary italic">FK</span>
+</div>
+<div class="flex justify-between px-3 py-2 border-b border-slate-100 font-medium">
+<span>asset_id</span>
+<span class="text-secondary italic">FK</span>
+</div>
+<div class="flex justify-between px-3 py-2 border-b border-slate-100 font-medium">
+<span>technician_id</span>
+<span class="text-secondary italic">FK</span>
+</div>
+<div class="flex justify-between px-3 py-2 border-b border-slate-50">
+<span>priority</span>
+<span class="text-slate-400">enum</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Interaction Sidebar/Legend -->
+<div class="fixed right-lg bottom-xl w-64 space-y-md">
+<div class="bg-white p-md rounded-xl border border-outline-variant shadow-lg">
+<h3 class="font-headline-sm text-headline-sm mb-3">Legend</h3>
+<div class="space-y-2">
+<div class="flex items-center gap-3">
+<div class="w-3 h-3 rounded-full bg-primary"></div>
+<span class="text-body-base text-on-surface-variant font-medium">Primary Key (PK)</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-3 h-3 rounded-full bg-secondary"></div>
+<span class="text-body-base text-on-surface-variant font-medium">Foreign Key (FK)</span>
+</div>
+<hr class="border-outline-variant my-2"/>
+<div class="flex items-center gap-3">
+<div class="w-8 h-1 bg-slate-400"></div>
+<span class="text-body-base text-on-surface-variant">Relationship Line</span>
+</div>
+</div>
+</div>
+<div class="bg-primary p-md rounded-xl text-white shadow-lg">
+<p class="font-body-medium">Developer Tip:</p>
+<p class="text-sm opacity-90 mt-1">Gunakan 'report_id' untuk menelusuri akar penyebab kerusakan aset secara historis.</p>
+</div>
+</div>
+</main>
+</div>
+<!-- BottomNavBar (Mobile) -->
+<footer class="md:hidden fixed bottom-0 w-full z-50 border-t border-outline-variant bg-surface">
+<div class="flex justify-around items-center h-16 px-4 pb-safe">
+<button class="flex flex-col items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="assignment">assignment</span>
+<span class="text-label-caps font-label-caps uppercase">Tasks</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="lightbulb">lightbulb</span>
+<span class="text-label-caps font-label-caps uppercase">Assets</span>
+</button>
+<button class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl px-4 py-1">
+<span class="material-symbols-outlined" data-icon="schema">schema</span>
+<span class="text-label-caps font-label-caps uppercase">Map</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="text-label-caps font-label-caps uppercase">Reports</span>
+</button>
+</div>
+</footer>
+<script>
+        // Simple Dynamic Line Connection logic
+        window.addEventListener('load', () => {
+            const svg = document.getElementById('relation-svg');
+            const drawLines = () => {
+                const u = document.getElementById('table-users').getBoundingClientRect();
+                const r = document.getElementById('table-reports').getBoundingClientRect();
+                const t = document.getElementById('table-tasks').getBoundingClientRect();
+                const a = document.getElementById('table-assets').getBoundingClientRect();
+                const offset = { x: window.scrollX, y: window.scrollY };
+
+                const getCenter = (rect) => ({
+                    x: rect.left + rect.width / 2 + offset.x,
+                    y: rect.top + rect.height / 2 + offset.y
+                });
+
+                const users = getCenter(u);
+                const reports = getCenter(r);
+                const tasks = getCenter(t);
+                const assets = getCenter(a);
+
+                // Update paths
+                document.getElementById('rel-users-reports').setAttribute('d', `M ${u.right + offset.x},${u.top + 30 + offset.y} C ${u.right + 100 + offset.x},${u.top + 30 + offset.y} ${r.left - 100 + offset.x},${r.top + 50 + offset.y} ${r.left + offset.x},${r.top + 50 + offset.y}`);
+                
+                document.getElementById('rel-reports-tasks').setAttribute('d', `M ${r.left + 50 + offset.x},${r.bottom + offset.y} C ${r.left + 50 + offset.x},${r.bottom + 100 + offset.y} ${t.left + 50 + offset.x},${t.top - 100 + offset.y} ${t.left + 50 + offset.x},${t.top + offset.y}`);
+                
+                document.getElementById('rel-tasks-assets').setAttribute('d', `M ${t.left + offset.x},${t.top + 100 + offset.y} C ${t.left - 100 + offset.x},${t.top + 100 + offset.y} ${a.right + 100 + offset.x},${a.top + 30 + offset.y} ${a.right + offset.x},${a.top + 30 + offset.y}`);
+                
+                document.getElementById('rel-assets-users').setAttribute('d', `M ${a.left + 50 + offset.x},${a.top + offset.y} C ${a.left + 50 + offset.x},${a.top - 100 + offset.y} ${u.left + 50 + offset.x},${u.bottom + 100 + offset.y} ${u.left + 50 + offset.x},${u.bottom + offset.y}`);
+            };
+
+            drawLines();
+            window.addEventListener('resize', drawLines);
+        });
+
+        // Hover micro-interactions
+        document.querySelectorAll('.table-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-4px) scale(1.02)';
+                card.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AR Asset Inspector - Smart PJU Control</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Geist:wght@400;600;700&family=JetBrains+Mono:wght@400&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed": "#001c37",
+                        "surface-container-highest": "#e0e3e5",
+                        "secondary-fixed": "#d2e4ff",
+                        "on-secondary-fixed-variant": "#314865",
+                        "tertiary-fixed": "#ffddb8",
+                        "outline": "#737686",
+                        "outline-variant": "#c3c6d7",
+                        "surface-container-high": "#e6e8ea",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "on-tertiary-fixed": "#2a1700",
+                        "on-primary-container": "#eeefff",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#f2f4f6",
+                        "surface-dim": "#d8dadc",
+                        "on-background": "#191c1e",
+                        "inverse-surface": "#2d3133",
+                        "primary-container": "#2563eb",
+                        "primary": "#004ac6",
+                        "secondary-container": "#c4dcff",
+                        "on-tertiary": "#ffffff",
+                        "tertiary": "#784b00",
+                        "on-surface-variant": "#434655",
+                        "secondary": "#49607e",
+                        "on-primary-fixed": "#00174b",
+                        "on-error-container": "#93000a",
+                        "error": "#ba1a1a",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "tertiary-container": "#996100",
+                        "surface-container": "#eceef0",
+                        "background": "#f7f9fb",
+                        "on-tertiary-container": "#ffeedd",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "surface": "#f7f9fb",
+                        "primary-fixed": "#dbe1ff",
+                        "error-container": "#ffdad6",
+                        "surface-tint": "#0053db",
+                        "inverse-primary": "#b4c5ff",
+                        "inverse-on-surface": "#eff1f3",
+                        "on-error": "#ffffff",
+                        "surface-bright": "#f7f9fb",
+                        "on-surface": "#191c1e",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "on-secondary-container": "#49617f",
+                        "on-secondary": "#ffffff",
+                        "surface-variant": "#e0e3e5",
+                        "on-primary": "#ffffff",
+                        "secondary-fixed-dim": "#b0c8eb"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["Geist"],
+                        "headline-sm": ["Geist"],
+                        "code-sm": ["JetBrains Mono"],
+                        "stat-lg": ["Geist"],
+                        "display-lg": ["Geist"],
+                        "body-base": ["Inter"],
+                        "headline-md": ["Geist"],
+                        "body-medium": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                        "headline-sm": ["18px", {"lineHeight": "24px", "letterSpacing": "0", "fontWeight": "600"}],
+                        "code-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0", "fontWeight": "400"}],
+                        "stat-lg": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "display-lg": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-base": ["14px", {"lineHeight": "20px", "letterSpacing": "0", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "body-medium": ["14px", {"lineHeight": "20px", "letterSpacing": "0", "fontWeight": "500"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        
+        .ar-scan-line {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #2563eb, transparent);
+            box-shadow: 0 0 15px #2563eb;
+            animation: scan 3s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { top: 10%; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { top: 90%; opacity: 0; }
+        }
+
+        .floating-label {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .blueprint-grid {
+            background-image: radial-gradient(circle, #e2e8f0 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(226, 232, 240, 0.5);
+        }
+
+        .ar-overlay-active {
+            border: 2px solid #2563eb;
+            box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface font-body-base text-on-surface overflow-hidden h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center w-full px-4 h-16 bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline docked full-width top-0 z-50">
+<div class="flex items-center gap-3">
+<button class="material-symbols-outlined text-primary dark:text-primary-fixed hover:bg-surface-container-high transition-colors p-2 rounded-full">arrow_back</button>
+<span class="font-headline-md text-headline-md font-bold text-primary dark:text-inverse-primary">Smart PJU Control</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-label-caps text-label-caps text-primary border border-primary px-2 py-1 rounded">AR MODE ACTIVE</span>
+<button class="material-symbols-outlined text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high transition-colors p-2 rounded-full">notifications</button>
+</div>
+</header>
+<!-- Main Viewport (The "Camera") -->
+<main class="flex-1 relative overflow-hidden blueprint-grid">
+<!-- Background Simulated Camera View -->
+<div class="absolute inset-0 z-0">
+<div class="w-full h-full bg-cover bg-center grayscale-[0.2]" data-alt="A high-resolution view of a modern urban street at dusk, focusing on a tall, sleek aluminum light pole. The scene is crisp and professional, with high-end corporate lighting. Deep blues of the twilight sky contrast with the warm glow of city lights in the background. The aesthetic is clean, technological, and engineering-focused, representing a real-world field maintenance scenario." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBnXlm4IG3Iu9NCvT6EYAghKq-koRT42LuNt9j3SxtqD2oi7GoScgka04gO8c0N-Ziha43pUzyaxxbBVGcbE7-FJ5Doh5-8Gr-aMY1dzPspgMSU91pOPAef0lYv3OGRmh1QILF7fNQg1LZ8LFYc8eluAJkzUa9Mb8L9fx_WBl1i5qgslM02MqrQNwzO8VrIvu3X2j81UuNmKCXK2MsR8irs4y_UEWSSlYzB1_JfS15VFOlq-nqveDH4wj_h83xc7bzu-2IQQj7B7oX7')"></div>
+</div>
+<!-- AR Overlay Layer -->
+<div class="absolute inset-0 z-10 flex items-center justify-center pointer-events-none">
+<!-- Center Crosshair/Scanner Box -->
+<div class="w-80 h-3/4 border-2 border-primary/40 rounded-xl relative ar-overlay-active">
+<div class="absolute -top-1 -left-1 w-6 h-6 border-t-4 border-l-4 border-primary"></div>
+<div class="absolute -top-1 -right-1 w-6 h-6 border-t-4 border-r-4 border-primary"></div>
+<div class="absolute -bottom-1 -left-1 w-6 h-6 border-b-4 border-l-4 border-primary"></div>
+<div class="absolute -bottom-1 -right-1 w-6 h-6 border-b-4 border-r-4 border-primary"></div>
+<div class="absolute top-0 left-0 w-full ar-scan-line"></div>
+<!-- Targeted Asset Data -->
+<div class="absolute -right-64 top-1/4 w-56 flex flex-col gap-4 pointer-events-auto">
+<div class="glass-panel p-4 rounded-xl shadow-lg border-l-4 border-primary floating-label">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">bolt</span>
+<h3 class="font-headline-sm text-headline-sm">PJU-772-B</h3>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between">
+<span class="text-on-surface-variant font-label-caps text-label-caps">VOLTAGE</span>
+<span class="font-code-sm text-code-sm font-bold">231.4V</span>
+</div>
+<div class="flex justify-between">
+<span class="text-on-surface-variant font-label-caps text-label-caps">CURRENT</span>
+<span class="font-code-sm text-code-sm font-bold text-primary">0.82A</span>
+</div>
+<div class="h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[82%]"></div>
+</div>
+</div>
+</div>
+<div class="glass-panel p-4 rounded-xl shadow-lg border-l-4 border-tertiary-container floating-label" style="animation-delay: 0.5s;">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-tertiary" style="font-variation-settings: 'FILL' 1;">history</span>
+<h3 class="font-headline-sm text-headline-sm">Repair History</h3>
+</div>
+<div class="text-body-base space-y-3">
+<div class="pb-2 border-b border-outline-variant">
+<div class="flex justify-between items-center">
+<span class="font-bold text-[12px]">Capacitor Swap</span>
+<span class="bg-surface-container text-on-surface-variant px-1.5 rounded font-code-sm">Oct 24</span>
+</div>
+<p class="text-[11px] text-on-surface-variant mt-1">Technician: R. Jenkins</p>
+</div>
+<div class="pb-2">
+<div class="flex justify-between items-center">
+<span class="font-bold text-[12px]">LED Driver Fix</span>
+<span class="bg-surface-container text-on-surface-variant px-1.5 rounded font-code-sm">Aug 24</span>
+</div>
+<p class="text-[11px] text-on-surface-variant mt-1">Routine inspection and recalibration.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Digital Twin Overlay (Mockup SVG representation) -->
+<div class="absolute -left-72 top-1/3 w-64 glass-panel p-4 rounded-xl shadow-lg pointer-events-auto">
+<div class="flex items-center justify-between mb-4">
+<span class="font-label-caps text-label-caps">DIGITAL TWIN VIEW</span>
+<span class="material-symbols-outlined text-primary text-sm">view_in_ar</span>
+</div>
+<div class="aspect-square bg-surface-container-low rounded-lg border border-outline-variant flex items-center justify-center relative overflow-hidden">
+<div class="w-full h-full bg-contain bg-no-repeat bg-center opacity-80" data-alt="A 3D CAD technical drawing of a light pole assembly, showing internal components like the LED driver, wiring, and heat sink in a ghosted, semi-transparent blue blueprint style. The image is clean, technical, and high-contrast against a white background, suggesting a professional engineering asset management tool. Clinical clarity and precision geometries are key." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAB-JUjgOiYJT2BKr1xN92fR-fShHi6xUVDA-T1qXwumt8X3VvGVv1OzEtP3Gs_FI8iJAajTsS7atFF267q6F_tuJx4tEZAk8Mv4P0BH67ItKLil_Pjp6H9QfJHz0REWKH92eOnHGlmx9Mn0Mr1yIZOBmh9EycCP2pKpxRnHRp4S7adyXMVf_6VxiNTlfu6PdNylSnd0_XNp7w6I6MIFDU02RoXBq-HQjEXMlzfbTmgqSudhILqT_9quZDUOaBA7ne4zcmqfQEPv7oa')"></div>
+<div class="absolute bottom-2 left-2 flex gap-1">
+<span class="bg-primary/10 text-primary p-1 rounded material-symbols-outlined text-sm">refresh</span>
+<span class="bg-primary/10 text-primary p-1 rounded material-symbols-outlined text-sm">layers</span>
+</div>
+</div>
+<div class="mt-4 grid grid-cols-2 gap-2">
+<div class="p-2 bg-surface-container rounded">
+<div class="text-[10px] text-on-surface-variant font-label-caps">TEMP</div>
+<div class="font-code-sm font-bold">42.5°C</div>
+</div>
+<div class="p-2 bg-surface-container rounded">
+<div class="text-[10px] text-on-surface-variant font-label-caps">LUMENS</div>
+<div class="font-code-sm font-bold">9,400</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- HUD Controls (Top Left) -->
+<div class="absolute top-6 left-6 z-20 flex flex-col gap-4">
+<div class="glass-panel p-3 rounded-xl flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary">location_on</span>
+</div>
+<div>
+<p class="font-label-caps text-label-caps text-on-surface-variant">CURRENT LOCATION</p>
+<p class="font-headline-sm text-headline-sm">Sektor 7-B, Thamrin</p>
+</div>
+</div>
+</div>
+<!-- Floating Action Cluster (Bottom Right) -->
+<div class="absolute bottom-12 right-6 z-20 flex flex-col gap-3">
+<button class="w-14 h-14 bg-surface dark:bg-inverse-surface rounded-full shadow-lg flex items-center justify-center border border-outline-variant hover:bg-surface-container-high transition-all active:scale-90">
+<span class="material-symbols-outlined text-primary">photo_camera</span>
+</button>
+<button class="w-14 h-14 bg-surface dark:bg-inverse-surface rounded-full shadow-lg flex items-center justify-center border border-outline-variant hover:bg-surface-container-high transition-all active:scale-90">
+<span class="material-symbols-outlined text-primary">videocam</span>
+</button>
+<button class="w-14 h-14 bg-primary text-on-primary rounded-full shadow-lg flex items-center justify-center hover:brightness-110 transition-all active:scale-90">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">build</span>
+</button>
+</div>
+<!-- Bottom Status Bar -->
+<div class="absolute bottom-0 w-full h-8 bg-surface/50 backdrop-blur-sm z-20 flex items-center px-6 gap-6">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+<span class="text-[10px] font-label-caps">5G SIGNAL: STABLE</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[14px]">battery_charging_80</span>
+<span class="text-[10px] font-label-caps">HMD: 84%</span>
+</div>
+<div class="ml-auto text-[10px] font-label-caps text-on-surface-variant">
+                FOV: 110° | OFFSET: 0.02mm
+            </div>
+</div>
+</main>
+<!-- BottomNavBar (Hidden on desktop as per instructions, but here for the Shell mandate) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 py-2 bg-surface dark:bg-inverse-surface border-t border-outline-variant dark:border-outline z-50">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2 hover:text-primary dark:hover:text-primary-fixed active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-caps text-label-caps">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl p-2 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">map</span>
+<span class="font-label-caps text-label-caps">Map</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2 hover:text-primary dark:hover:text-primary-fixed active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-caps text-label-caps">Analytics</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2 hover:text-primary dark:hover:text-primary-fixed active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">warning</span>
+<span class="font-label-caps text-label-caps">Alerts</span>
+</a>
+</nav>
+<!-- UI Interactions Script -->
+<script>
+        // Micro-interaction for AR elements
+        document.querySelectorAll('.glass-panel').forEach(panel => {
+            panel.addEventListener('mouseenter', () => {
+                panel.style.transform = 'scale(1.02)';
+                panel.style.transition = 'transform 0.2s ease-out';
+            });
+            panel.addEventListener('mouseleave', () => {
+                panel.style.transform = 'scale(1)';
+            });
+        });
+
+        // Simulating Dynamic Value Changes
+        setInterval(() => {
+            const currentVal = document.querySelector('.font-code-sm.text-primary');
+            if (currentVal) {
+                const base = 0.82;
+                const variation = (Math.random() * 0.05 - 0.025);
+                currentVal.textContent = (base + variation).toFixed(2) + 'A';
+            }
+        }, 2000);
+    </script>
+</body></html>

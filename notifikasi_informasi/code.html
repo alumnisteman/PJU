@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PLN Mobile - Notifications</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&amp;family=Geist:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-fixed-dim": "#b0c8eb",
+                    "secondary-container": "#c4dcff",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "tertiary-fixed": "#ffddb8",
+                    "on-surface-variant": "#434655",
+                    "primary": "#004ac6",
+                    "surface-dim": "#d8dadc",
+                    "primary-container": "#2563eb",
+                    "outline": "#737686",
+                    "inverse-surface": "#2d3133",
+                    "inverse-on-surface": "#eff1f3",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "surface-variant": "#e0e3e5",
+                    "on-tertiary-fixed": "#2a1700",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "surface-container-low": "#f2f4f6",
+                    "surface-container-highest": "#e0e3e5",
+                    "error": "#ba1a1a",
+                    "tertiary": "#784b00",
+                    "on-tertiary": "#ffffff",
+                    "outline-variant": "#c3c6d7",
+                    "on-secondary-fixed-variant": "#314865",
+                    "primary-fixed": "#dbe1ff",
+                    "on-secondary": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "on-primary-fixed-variant": "#003ea8",
+                    "background": "#f7f9fb",
+                    "on-primary-container": "#eeefff",
+                    "on-tertiary-container": "#ffeedd",
+                    "on-primary": "#ffffff",
+                    "surface-container-high": "#e6e8ea",
+                    "on-error-container": "#93000a",
+                    "on-secondary-fixed": "#001c37",
+                    "on-error": "#ffffff",
+                    "surface-tint": "#0053db",
+                    "on-surface": "#191c1e",
+                    "on-background": "#191c1e",
+                    "surface": "#f7f9fb",
+                    "surface-bright": "#f7f9fb",
+                    "secondary-fixed": "#d2e4ff",
+                    "on-secondary-container": "#49617f",
+                    "surface-container": "#eceef0",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary-fixed": "#00174b",
+                    "tertiary-container": "#996100",
+                    "inverse-primary": "#b4c5ff",
+                    "secondary": "#49607e"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "sm": "8px",
+                    "xs": "4px",
+                    "md": "16px",
+                    "form-max": "768px",
+                    "gutter": "16px",
+                    "container-max": "1280px",
+                    "base": "4px",
+                    "xl": "32px",
+                    "lg": "24px"
+            },
+            "fontFamily": {
+                    "label-caps": ["Geist"],
+                    "code-sm": ["JetBrains Mono"],
+                    "display-lg": ["Geist"],
+                    "body-base": ["Inter"],
+                    "headline-sm": ["Geist"],
+                    "headline-md": ["Geist"],
+                    "body-medium": ["Inter"],
+                    "stat-lg": ["Geist"]
+            },
+            "fontSize": {
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "code-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0", "fontWeight": "400"}],
+                    "display-lg": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-base": ["14px", {"lineHeight": "20px", "letterSpacing": "0", "fontWeight": "400"}],
+                    "headline-sm": ["18px", {"lineHeight": "24px", "letterSpacing": "0", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "body-medium": ["14px", {"lineHeight": "20px", "letterSpacing": "0", "fontWeight": "500"}],
+                    "stat-lg": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #f7f9fb;
+            font-family: 'Inter', sans-serif;
+            color: #191c1e;
+        }
+        .micro-grid {
+            background-image: radial-gradient(#e2e8e0 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="min-h-screen pb-24 micro-grid">
+<!-- TopAppBar -->
+<header class="bg-background dark:bg-on-surface-variant w-full top-0 sticky z-50 border-b border-outline-variant dark:border-on-surface-variant">
+<div class="flex items-center justify-between px-md h-16 w-full max-w-container-max mx-auto">
+<div class="flex items-center gap-sm">
+<div class="w-10 h-10 rounded-full overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a corporate utility manager, lit with soft natural lighting, dressed in business casual attire. The image has a clean, high-contrast aesthetic with a neutral studio background, matching a modern light-mode UI design system." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCyJ2xx_gwsGg7JebFMN-UAI-hrjqp_XnI431LxmSvMFvo8PG6oZUTRhUX85yDLctP3USbh2fao-GpWxveMVKDo27dGvmTX2HbhJIjI1ZtB9tf_m124gzTgOVyfp8aaE7wsr19Qz2jf3_VbJkoAUQaYR-rP0ZH3xmNtNx2_RTMAchu1N-YYV0_4HeSWjww_M2wH2qtaQuJ4pqBkjVxX-YqjBInp37PARynUbJ0piWuCotHnE7eWwC-YO_Wr54hUhgp_9lXCTsqVpuvN"/>
+</div>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim">PLN Mobile</h1>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-high transition-colors text-primary active:scale-95 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">notifications</span>
+</button>
+</div>
+</header>
+<main class="max-w-[768px] mx-auto px-md py-lg">
+<!-- Page Title -->
+<div class="mb-lg">
+<h2 class="font-headline-md text-headline-md text-on-surface">Updates</h2>
+<p class="font-body-base text-on-surface-variant">Stay informed about your electricity services and payments.</p>
+</div>
+<!-- Filter Chips -->
+<div class="flex gap-sm mb-lg overflow-x-auto pb-xs scrollbar-hide">
+<button class="px-md py-sm bg-primary text-on-primary rounded-full font-label-caps text-label-caps whitespace-nowrap">All</button>
+<button class="px-md py-sm bg-surface-container-lowest border border-outline-variant text-on-surface-variant rounded-full font-label-caps text-label-caps whitespace-nowrap hover:bg-surface-container-high transition-colors">Service Updates</button>
+<button class="px-md py-sm bg-surface-container-lowest border border-outline-variant text-on-surface-variant rounded-full font-label-caps text-label-caps whitespace-nowrap hover:bg-surface-container-high transition-colors">Payments</button>
+<button class="px-md py-sm bg-surface-container-lowest border border-outline-variant text-on-surface-variant rounded-full font-label-caps text-label-caps whitespace-nowrap hover:bg-surface-container-high transition-colors">Promos</button>
+</div>
+<!-- Notifications List -->
+<div class="space-y-md">
+<!-- Category: Today -->
+<div class="pt-sm">
+<h3 class="font-label-caps text-label-caps text-outline mb-sm">TODAY</h3>
+<!-- Item 1: Maintenance -->
+<div class="group relative bg-surface-container-lowest border border-outline-variant rounded-xl p-md flex gap-md hover:bg-surface-container-low transition-colors cursor-pointer active:scale-[0.98] transition-transform duration-150">
+<div class="w-12 h-12 flex-shrink-0 bg-tertiary-fixed flex items-center justify-center rounded-xl">
+<span class="material-symbols-outlined text-on-tertiary-fixed-variant" style="font-variation-settings: 'FILL' 1;">engineering</span>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start mb-xs">
+<span class="font-headline-sm text-headline-sm text-on-surface">Scheduled Maintenance</span>
+<span class="font-code-sm text-code-sm text-outline">10:30 AM</span>
+</div>
+<p class="font-body-base text-on-surface-variant line-clamp-2">Technical improvement for the Gambir substation will be conducted tomorrow from 09:00 to 12:00. Expect brief interruptions.</p>
+</div>
+<div class="absolute right-md bottom-md opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-primary">chevron_right</span>
+</div>
+</div>
+</div>
+<!-- Item 2: Payment Reminder -->
+<div class="group relative bg-surface-container-lowest border border-outline-variant rounded-xl p-md flex gap-md hover:bg-surface-container-low transition-colors cursor-pointer active:scale-[0.98] transition-transform duration-150">
+<div class="w-12 h-12 flex-shrink-0 bg-secondary-fixed flex items-center justify-center rounded-xl">
+<span class="material-symbols-outlined text-on-secondary-fixed-variant" style="font-variation-settings: 'FILL' 1;">receipt_long</span>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start mb-xs">
+<div class="flex items-center gap-xs">
+<span class="font-headline-sm text-headline-sm text-on-surface">Bill Reminder</span>
+<span class="w-2 h-2 rounded-full bg-error"></span>
+</div>
+<span class="font-code-sm text-code-sm text-outline">08:15 AM</span>
+</div>
+<p class="font-body-base text-on-surface-variant line-clamp-2">Your electricity bill for ID: 5321008829 is due in 3 days. Total: Rp 842.000. Pay now to avoid penalties.</p>
+<div class="mt-md flex items-center gap-xs text-primary font-body-medium">
+<span>Quick Pay</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</div>
+</div>
+</div>
+<!-- Category: Earlier -->
+<div class="pt-lg">
+<h3 class="font-label-caps text-label-caps text-outline mb-sm">EARLIER THIS WEEK</h3>
+<!-- Item 3: Promo -->
+<div class="group relative bg-surface-container-lowest border border-outline-variant rounded-xl p-md flex gap-md hover:bg-surface-container-low transition-colors cursor-pointer opacity-80 hover:opacity-100 transition-all">
+<div class="w-12 h-12 flex-shrink-0 bg-primary-fixed flex items-center justify-center rounded-xl">
+<span class="material-symbols-outlined text-on-primary-fixed-variant" style="font-variation-settings: 'FILL' 1;">campaign</span>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start mb-xs">
+<span class="font-headline-sm text-headline-sm text-on-surface">Double Token Promo</span>
+<span class="font-code-sm text-code-sm text-outline">Mon</span>
+</div>
+<p class="font-body-base text-on-surface-variant">Get 10% bonus for every prepaid token purchase above Rp 500.000 using PLN Pay. Valid until end of month.</p>
+</div>
+</div>
+<!-- Item 4: Success Message -->
+<div class="mt-md group relative bg-surface-container-lowest border border-outline-variant rounded-xl p-md flex gap-md hover:bg-surface-container-low transition-colors cursor-pointer opacity-80 hover:opacity-100 transition-all">
+<div class="w-12 h-12 flex-shrink-0 bg-surface-container flex items-center justify-center rounded-xl">
+<span class="material-symbols-outlined text-on-surface-variant" style="font-variation-settings: 'FILL' 1;">task_alt</span>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start mb-xs">
+<span class="font-headline-sm text-headline-sm text-on-surface">Service Restored</span>
+<span class="font-code-sm text-code-sm text-outline">Sun</span>
+</div>
+<p class="font-body-base text-on-surface-variant">The power outage in Sudirman area has been resolved. Thank you for your patience.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Empty State Illustration Placeholder (Invisible if content exists) -->
+<!-- Added for design completeness -->
+<div class="hidden flex-col items-center justify-center py-xl text-center">
+
+<h4 class="font-headline-sm text-headline-sm text-on-surface">All caught up!</h4>
+<p class="font-body-base text-on-surface-variant">Check back later for new updates.</p>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="bg-surface-container-lowest dark:bg-inverse-surface fixed bottom-0 w-full z-50 rounded-t-xl border-t border-outline-variant dark:border-on-surface-variant shadow-md">
+<div class="flex justify-around items-center h-20 px-sm w-full">
+<!-- Home -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-colors px-4 py-1 active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-caps text-label-caps mt-1">Home</span>
+</a>
+<!-- History -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-colors px-4 py-1 active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="font-label-caps text-label-caps mt-1">History</span>
+</a>
+<!-- Updates (Active) -->
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">campaign</span>
+<span class="font-label-caps text-label-caps mt-1">Updates</span>
+</a>
+<!-- Profile -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-colors px-4 py-1 active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-caps text-label-caps mt-1">Profile</span>
+</a>
+</div>
+</nav>
+<!-- Interactive script for ripples or micro-interactions -->
+<script>
+        document.querySelectorAll('a, button').forEach(el => {
+            el.addEventListener('click', (e) => {
+                // Subtle feedback handled by active:scale Tailwind classes
+            });
+        });
+    </script>
+</body></html>

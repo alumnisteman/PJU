@@ -1,0 +1,394 @@
+<!DOCTYPE html><html lang="id" class="light"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Geist:wght@400;600;700;800&amp;family=JetBrains+Mono&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet"><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">try{
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-surface-variant": "#434655",
+                    "tertiary": "#784b00",
+                    "surface-container-highest": "#e0e3e5",
+                    "surface": "#f7f9fb",
+                    "on-error-container": "#93000a",
+                    "on-secondary-fixed": "#001c37",
+                    "inverse-primary": "#b4c5ff",
+                    "on-primary-container": "#eeefff",
+                    "on-secondary-container": "#49617f",
+                    "tertiary-container": "#996100",
+                    "surface-bright": "#f7f9fb",
+                    "on-primary": "#ffffff",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "background": "#f7f9fb",
+                    "on-tertiary": "#ffffff",
+                    "on-surface": "#191c1e",
+                    "surface-dim": "#d8dadc",
+                    "inverse-surface": "#2d3133",
+                    "primary": "#004ac6",
+                    "surface-container-low": "#f2f4f6",
+                    "surface-container-high": "#e6e8ea",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-fixed": "#d2e4ff",
+                    "surface-tint": "#0053db",
+                    "on-tertiary-fixed": "#2a1700",
+                    "on-primary-fixed-variant": "#003ea8",
+                    "secondary": "#49607e",
+                    "outline": "#737686",
+                    "secondary-fixed-dim": "#b0c8eb",
+                    "on-error": "#ffffff",
+                    "on-secondary": "#ffffff",
+                    "inverse-on-surface": "#eff1f3",
+                    "error": "#ba1a1a",
+                    "secondary-container": "#c4dcff",
+                    "on-background": "#191c1e",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "surface-variant": "#e0e3e5",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "primary-container": "#2563eb",
+                    "tertiary-fixed": "#ffddb8",
+                    "primary-fixed": "#dbe1ff",
+                    "error-container": "#ffdad6",
+                    "surface-container": "#eceef0",
+                    "on-tertiary-container": "#ffeedd",
+                    "on-secondary-fixed-variant": "#314865",
+                    "outline-variant": "#c3c6d7",
+                    "on-primary-fixed": "#00174b"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "12px",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xl": "32px",
+                    "sm": "8px",
+                    "container-max": "1280px",
+                    "gutter": "16px",
+                    "base": "4px",
+                    "form-max": "768px",
+                    "md": "16px",
+                    "lg": "24px",
+                    "xs": "4px"
+            },
+            "fontFamily": {
+                    "headline-sm": ["Geist"],
+                    "headline-md": ["Geist"],
+                    "code-sm": ["JetBrains Mono"],
+                    "display-lg": ["Geist"],
+                    "body-medium": ["Inter"],
+                    "stat-lg": ["Geist"],
+                    "label-caps": ["Geist"],
+                    "body-base": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-sm": ["18px", {"lineHeight": "24px", "letterSpacing": "0", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "code-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0", "fontWeight": "400"}],
+                    "display-lg": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-medium": ["14px", {"lineHeight": "20px", "letterSpacing": "0", "fontWeight": "500"}],
+                    "stat-lg": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "body-base": ["14px", {"lineHeight": "20px", "letterSpacing": "0", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    }catch(_e){}</script></head><body class="bg-surface font-body-base text-on-surface min-h-screen grid-bg">
+
+    <!-- TopAppBar -->
+    <header class="bg-surface border-b border-outline-variant flex justify-between items-center w-full px-4 h-16 sticky top-0 z-50">
+        <div class="flex items-center gap-3">
+            <div class="bg-primary p-2 rounded-lg flex items-center justify-center">
+                <span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">bolt</span>
+            </div>
+            <h1 class="font-headline-md text-headline-md font-bold text-primary">Smart PJU Control</h1>
+        </div>
+        <div class="flex items-center gap-4">
+            <button class="p-2 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-full active:scale-95 duration-150 relative">
+                <span class="material-symbols-outlined" data-original-icon="notifications">notifications</span>
+                <span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full border-2 border-surface"></span>
+            </button>
+            <div class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full border border-outline-variant bg-surface-container-lowest">
+                <div class="w-6 h-6 rounded-full bg-primary-fixed-dim"></div>
+                <span class="font-body-medium text-body-medium text-on-surface">Admin Utama</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-container-max mx-auto p-4 md:p-6 lg:p-8 pb-24 md:pb-8">
+        
+        <!-- Header Section -->
+        <div class="mb-8">
+            <h2 class="font-display-lg text-display-lg text-on-surface tracking-tight">Analitik &amp; Alerts</h2>
+            <p class="text-on-surface-variant font-body-medium mt-1">Pemantauan real-time infrastruktur penerangan jalan pintar.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+            
+            <!-- Bento Grid Left: Energy Analytics -->
+            <div class="md:col-span-8 flex flex-col gap-6">
+                
+                <!-- Summary Stats -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div class="bg-surface-container-lowest p-5 rounded-xl border border-outline-variant flex flex-col justify-between h-32">
+                        <div class="flex justify-between items-start">
+                            <span class="text-label-caps font-label-caps text-on-surface-variant">TOTAL ENERGI</span>
+                            <div class="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+                                <span class="material-symbols-outlined text-[18px]">bolt</span>
+                            </div>
+                        </div>
+                        <div class="">
+                            <div class="font-stat-lg text-stat-lg text-on-surface">1.240 <span class="text-headline-sm font-headline-sm">kWh</span></div>
+                            <div class="text-[12px] text-primary font-medium flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[14px]" data-original-icon="trending_down">trending_down</span>
+                                4.2% dari kemarin
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-surface-container-lowest p-5 rounded-xl border border-outline-variant flex flex-col justify-between h-32">
+                        <div class="flex justify-between items-start">
+                            <span class="text-label-caps font-label-caps text-on-surface-variant">PENGHEMATAN</span>
+                            <div class="w-8 h-8 rounded-lg bg-tertiary/10 flex items-center justify-center text-tertiary">
+                                <span class="material-symbols-outlined text-[18px]">eco</span>
+                            </div>
+                        </div>
+                        <div class="">
+                            <div class="font-stat-lg text-stat-lg text-tertiary">15%</div>
+                            <p class="text-[12px] text-on-surface-variant font-medium">Adaptive Dimming Active</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-surface-container-lowest p-5 rounded-xl border border-outline-variant flex flex-col justify-between h-32">
+                        <div class="flex justify-between items-start">
+                            <span class="text-label-caps font-label-caps text-on-surface-variant">NODE AKTIF</span>
+                            <div class="w-8 h-8 rounded-lg bg-secondary/10 flex items-center justify-center text-secondary">
+                                <span class="material-symbols-outlined text-[18px]">hub</span>
+                            </div>
+                        </div>
+                        <div class="">
+                            <div class="font-stat-lg text-stat-lg text-on-surface">98.2%</div>
+                            <p class="text-[12px] text-on-surface-variant font-medium">1,245 dari 1,268 Unit</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chart: Energy Comparison -->
+                <div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
+                        <div>
+                            <h3 class="font-headline-sm text-headline-sm text-on-surface">Penggunaan Energi Mingguan</h3>
+                            <p class="text-body-base text-on-surface-variant">Perbandingan minggu ini vs minggu lalu</p>
+                        </div>
+                        <div class="flex items-center gap-4 text-label-caps font-label-caps">
+                            <div class="flex items-center gap-2">
+                                <span class="w-3 h-3 rounded-full bg-primary"></span>
+                                Minggu Ini
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="w-3 h-3 rounded-full bg-outline-variant"></span>
+                                Minggu Lalu
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="h-64 flex items-end justify-between gap-2 px-2">
+                        <!-- Monday -->
+                        <div class="flex-1 flex flex-col items-center gap-2 group">
+                            <div class="w-full flex items-end justify-center gap-1 h-48">
+                                <div class="w-4 bg-outline-variant rounded-t-sm h-[70%]"></div>
+                                <div class="w-4 bg-primary rounded-t-sm h-[65%] group-hover:h-[68%] transition-all duration-300"></div>
+                            </div>
+                            <span class="text-label-caps font-label-caps text-on-surface-variant">Sen</span>
+                        </div>
+                        <!-- Tuesday -->
+                        <div class="flex-1 flex flex-col items-center gap-2 group">
+                            <div class="w-full flex items-end justify-center gap-1 h-48">
+                                <div class="w-4 bg-outline-variant rounded-t-sm h-[75%]"></div>
+                                <div class="w-4 bg-primary rounded-t-sm h-[60%] group-hover:h-[63%] transition-all duration-300"></div>
+                            </div>
+                            <span class="text-label-caps font-label-caps text-on-surface-variant">Sel</span>
+                        </div>
+                        <!-- Wednesday -->
+                        <div class="flex-1 flex flex-col items-center gap-2 group">
+                            <div class="w-full flex items-end justify-center gap-1 h-48">
+                                <div class="w-4 bg-outline-variant rounded-t-sm h-[80%]"></div>
+                                <div class="w-4 bg-primary rounded-t-sm h-[55%] group-hover:h-[58%] transition-all duration-300"></div>
+                            </div>
+                            <span class="text-label-caps font-label-caps text-on-surface-variant">Rab</span>
+                        </div>
+                        <!-- Thursday -->
+                        <div class="flex-1 flex flex-col items-center gap-2 group">
+                            <div class="w-full flex items-end justify-center gap-1 h-48">
+                                <div class="w-4 bg-outline-variant rounded-t-sm h-[70%]"></div>
+                                <div class="w-4 bg-primary rounded-t-sm h-[62%] group-hover:h-[65%] transition-all duration-300"></div>
+                            </div>
+                            <span class="text-label-caps font-label-caps text-on-surface-variant">Kam</span>
+                        </div>
+                        <!-- Friday -->
+                        <div class="flex-1 flex flex-col items-center gap-2 group">
+                            <div class="w-full flex items-end justify-center gap-1 h-48">
+                                <div class="w-4 bg-outline-variant rounded-t-sm h-[65%]"></div>
+                                <div class="w-4 bg-primary rounded-t-sm h-[50%] group-hover:h-[53%] transition-all duration-300"></div>
+                            </div>
+                            <span class="text-label-caps font-label-caps text-on-surface-variant">Jum</span>
+                        </div>
+                        <!-- Saturday -->
+                        <div class="flex-1 flex flex-col items-center gap-2 group">
+                            <div class="w-full flex items-end justify-center gap-1 h-48">
+                                <div class="w-4 bg-outline-variant rounded-t-sm h-[55%]"></div>
+                                <div class="w-4 bg-primary rounded-t-sm h-[40%] group-hover:h-[43%] transition-all duration-300"></div>
+                            </div>
+                            <span class="text-label-caps font-label-caps text-on-surface-variant">Sab</span>
+                        </div>
+                        <!-- Sunday -->
+                        <div class="flex-1 flex flex-col items-center gap-2 group">
+                            <div class="w-full flex items-end justify-center gap-1 h-48">
+                                <div class="w-4 bg-outline-variant rounded-t-sm h-[50%]"></div>
+                                <div class="w-4 bg-primary rounded-t-sm h-[45%] group-hover:h-[48%] transition-all duration-300"></div>
+                            </div>
+                            <span class="text-label-caps font-label-caps text-on-surface-variant">Min</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Report Section -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div class="bg-inverse-surface text-inverse-on-surface p-6 rounded-xl relative overflow-hidden">
+                        <div class="relative z-10">
+                            <h4 class="font-headline-sm text-headline-sm mb-2">Laporan Penghematan</h4>
+                            <p class="text-body-base text-surface-variant mb-6">Implementasi adaptive dimming berhasil mereduksi biaya operasional secara signifikan bulan ini.</p>
+                            <div class="flex items-center gap-4">
+                                <div class="text-stat-lg font-stat-lg text-primary-fixed-dim">Rp 4.2M</div>
+                                <div class="px-2 py-1 bg-tertiary-container text-on-tertiary-container rounded text-[12px] font-bold">SAVED</div>
+                            </div>
+                        </div>
+                        <div class="absolute -right-4 -bottom-4 opacity-10">
+                            <span class="material-symbols-outlined text-[120px]">analytics</span>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-primary p-6 rounded-xl text-white flex flex-col justify-between">
+                        <div class="flex items-start justify-between">
+                            <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
+                                <span class="material-symbols-outlined">lightbulb</span>
+                            </div>
+                            <span class="text-[12px] font-bold tracking-widest opacity-80 uppercase">Maintenance Priority</span>
+                        </div>
+                        <div>
+                            <h4 class="font-headline-sm text-headline-sm mt-4">Jadwal Perawatan</h4>
+                            <p class="text-body-base opacity-80 mb-4">Jl. Pahlawan Revolusi dijadwalkan inspeksi rutin pada 24 Okt 2023.</p>
+                            <button class="w-full py-2 bg-white text-primary font-bold rounded-lg hover:bg-surface transition-colors active:scale-95 duration-150">Cek Detail Jadwal</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bento Grid Right: Alerts & Real-time Info -->
+            <div class="md:col-span-4 flex flex-col gap-6">
+                <!-- Alerts Sidebar -->
+                <div class="bg-surface-container-lowest rounded-xl border border-outline-variant flex flex-col h-full">
+                    <div class="p-6 border-b border-outline-variant flex justify-between items-center">
+                        <div class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-error" style="font-variation-settings: 'FILL' 1;">warning</span>
+                            <h3 class="font-headline-sm text-headline-sm text-on-surface">Notifikasi Gangguan</h3>
+                        </div>
+                        <span class="px-2 py-0.5 bg-error-container text-on-error-container text-[11px] font-bold rounded-full">4 AKTIF</span>
+                    </div>
+                    
+                    <div class="flex-1 overflow-y-auto p-2 space-y-2 max-h-[600px]">
+                        <!-- Alert Item 1 -->
+                        <div class="p-4 rounded-lg bg-error-container/20 border border-error/10 hover:border-error transition-colors cursor-pointer group">
+                            <div class="flex justify-between items-start mb-1">
+                                <span class="text-[11px] font-bold text-error uppercase tracking-wider">Critical Failure</span>
+                                <span class="text-[11px] text-on-surface-variant font-code-sm">Baru saja</span>
+                            </div>
+                            <h5 class="font-body-medium text-on-surface font-semibold group-hover:text-error transition-colors">Lampu Putus di Jl. Nukila</h5>
+                            <p class="text-body-base text-on-surface-variant text-[13px] mt-1">Koordinat: 0.7893, 127.3833. Node ID: NUK-012</p>
+                        </div>
+
+                        <!-- Alert Item 2 -->
+                        <div class="p-4 rounded-lg bg-surface hover:bg-surface-container-high border border-outline-variant transition-colors cursor-pointer group">
+                            <div class="flex justify-between items-start mb-1">
+                                <span class="text-[11px] font-bold text-tertiary uppercase tracking-wider">Voltage Alert</span>
+                                <span class="text-[11px] text-on-surface-variant font-code-sm">15 menit lalu</span>
+                            </div>
+                            <h5 class="font-body-medium text-on-surface font-semibold group-hover:text-primary transition-colors">Overvoltage Tiang P-08</h5>
+                            <p class="text-body-base text-on-surface-variant text-[13px] mt-1">Tegangan terdeteksi 248V (Normal: 220V). Lokasi: Kawasan Pelabuhan Ahmad Yani.</p>
+                        </div>
+
+                        <!-- Alert Item 3 -->
+                        <div class="p-4 rounded-lg bg-surface hover:bg-surface-container-high border border-outline-variant transition-colors cursor-pointer group">
+                            <div class="flex justify-between items-start mb-1">
+                                <span class="text-[11px] font-bold text-on-surface-variant uppercase tracking-wider">Communication Lost</span>
+                                <span class="text-[11px] text-on-surface-variant font-code-sm">1 jam lalu</span>
+                            </div>
+                            <h5 class="font-body-medium text-on-surface font-semibold group-hover:text-primary transition-colors">Node Offline: Bastiong</h5>
+                            <p class="text-body-base text-on-surface-variant text-[13px] mt-1">Gagal sinkronisasi data selama 3 siklus. Periksa koneksi gateway BST-02.</p>
+                        </div>
+
+                        <!-- Alert Item 4 -->
+                        <div class="p-4 rounded-lg bg-surface hover:bg-surface-container-high border border-outline-variant transition-colors cursor-pointer group">
+                            <div class="flex justify-between items-start mb-1">
+                                <span class="text-[11px] font-bold text-tertiary uppercase tracking-wider">Efficiency Warning</span>
+                                <span class="text-[11px] text-on-surface-variant font-code-sm">2 jam lalu</span>
+                            </div>
+                            <h5 class="font-body-medium text-on-surface font-semibold group-hover:text-primary transition-colors">Low Efficiency: Maliaro</h5>
+                            <p class="text-body-base text-on-surface-variant text-[13px] mt-1">Konsumsi daya di atas rata-rata pada mode dimming 50%.</p>
+                        </div>
+                    </div>
+
+                    <div class="p-4 border-t border-outline-variant">
+                        <button class="w-full py-2.5 text-primary font-headline-sm hover:bg-primary-container/10 rounded-lg transition-colors flex items-center justify-center gap-2">
+                            Lihat Semua Riwayat
+                            <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Weather/Conditions Card -->
+                <div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant relative overflow-hidden group">
+                    <div class="relative z-10 flex items-center gap-4">
+                        <div class="w-14 h-14 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container">
+                            <span class="material-symbols-outlined text-[32px]">cloudy_snowing</span>
+                        </div>
+                        <div>
+                            <h4 class="font-headline-sm text-headline-sm text-on-surface">Kondisi Cuaca</h4>
+                            <p class="text-body-base text-on-surface-variant">Cerah Berawan - 31°C</p>
+                        </div>
+                    </div>
+                    <div class="mt-6 pt-6 border-t border-outline-variant flex justify-between">
+                        <div class="text-center">
+                            <div class="text-[10px] font-bold text-on-surface-variant uppercase">Visibility</div>
+                            <div class="font-body-medium font-bold">92%</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-[10px] font-bold text-on-surface-variant uppercase">Dimming</div>
+                            <div class="font-body-medium font-bold">70%</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-[10px] font-bold text-on-surface-variant uppercase">Sensors</div>
+                            <div class="font-body-medium font-bold text-emerald-600">Active</div>
+                        </div>
+                    </div>
+                    <!-- Background decoration -->
+                    <div class="absolute top-0 right-0 p-2 opacity-5 translate-x-4 -translate-y-4">
+                        <span class="material-symbols-outlined text-[120px]">wb_sunny</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- BottomNavBar (Mobile) -->
+    <nav class="md:hidden fixed bottom-0 left-0 w-full bg-surface border-t border-outline-variant flex justify-around items-center px-4 py-2 z-50">
+        <a href="#" class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:text-primary transition-transform active:scale-90">
+            <span class="material-symbols-outlined">dashboard</span>
+            <span class="text-label-caps font-label-caps">Dashboard</span>
+        </a>
+        <a href="#" class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:text-primary transition-transform active:scale-90">
+            <span class="material-symbols-outlined">map</span>
+            <span class="text-label-caps font-label-caps">Map</span>
+        </a>
+        <div class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl p-2 transition-transform active:scale-90">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">analytics</span>
+            <span class="text-label-caps font-label-caps"></span></div></nav></body></html>

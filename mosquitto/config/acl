@@ -1,0 +1,14 @@
+# Mosquitto ACL Configuration
+
+# Admin user can access everything
+user pju_admin
+topic readwrite #
+
+# Device user can only publish sensor data and subscribe to commands
+user pju_device
+topic write pju/sensors/+/data
+topic write pju/devices/+/status
+topic read pju/commands/+
+
+# Anonymous users (if enabled) can only read public topics
+pattern read pju/public/#

@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Smart PJU Control - Fiscal Simulation</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Geist:wght@400;600;700&amp;family=JetBrains+Mono&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-highest": "#e0e3e5",
+                        "secondary-container": "#c4dcff",
+                        "outline-variant": "#c3c6d7",
+                        "surface": "#f7f9fb",
+                        "on-background": "#191c1e",
+                        "on-error": "#ffffff",
+                        "on-tertiary-fixed": "#2a1700",
+                        "on-tertiary": "#ffffff",
+                        "surface-dim": "#d8dadc",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "tertiary-fixed": "#ffddb8",
+                        "background": "#f7f9fb",
+                        "on-tertiary-container": "#ffeedd",
+                        "surface-container-low": "#f2f4f6",
+                        "primary-container": "#2563eb",
+                        "on-surface-variant": "#434655",
+                        "on-secondary-fixed-variant": "#314865",
+                        "inverse-surface": "#2d3133",
+                        "secondary-fixed": "#d2e4ff",
+                        "surface-tint": "#0053db",
+                        "secondary-fixed-dim": "#b0c8eb",
+                        "on-secondary-fixed": "#001c37",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "inverse-on-surface": "#eff1f3",
+                        "error": "#ba1a1a",
+                        "on-primary-fixed": "#00174b",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed": "#dbe1ff",
+                        "tertiary": "#784b00",
+                        "on-primary": "#ffffff",
+                        "surface-container-high": "#e6e8ea",
+                        "error-container": "#ffdad6",
+                        "surface-bright": "#f7f9fb",
+                        "primary": "#004ac6",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "outline": "#737686",
+                        "surface-container": "#eceef0",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "on-error-container": "#93000a",
+                        "on-surface": "#191c1e",
+                        "inverse-primary": "#b4c5ff",
+                        "surface-variant": "#e0e3e5",
+                        "on-primary-container": "#eeefff",
+                        "secondary": "#49607e",
+                        "on-secondary-container": "#49617f",
+                        "tertiary-container": "#996100"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "12px",
+                        "lg": "12px",
+                        "xl": "16px",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "body-medium": ["Inter"],
+                        "display-lg": ["Geist"],
+                        "headline-sm": ["Geist"],
+                        "label-caps": ["Geist"],
+                        "stat-lg": ["Geist"],
+                        "headline-md": ["Geist"],
+                        "code-sm": ["JetBrains Mono"],
+                        "body-base": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { background-color: #f7f9fb; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .micro-grid {
+            background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 18px;
+            width: 18px;
+            border-radius: 50%;
+            background: #2563eb;
+            cursor: pointer;
+            box-shadow: 0 0 2px rgba(0,0,0,0.2);
+            margin-top: -6px;
+        }
+        input[type="range"]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 6px;
+            background: #f1f5f9;
+            border-radius: 3px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-base text-on-surface">
+<!-- Top Navigation -->
+<header class="bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline fixed top-0 z-[60] w-full h-16 flex justify-between items-center px-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed text-2xl">bolt</span>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-inverse-primary tracking-tight">Smart PJU Control</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-lg font-body-medium hover:bg-blue-700 transition-colors">
+<span class="material-symbols-outlined text-sm">download</span>
+                Download Fiscal Report
+            </button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-full active:scale-95">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</div>
+</header>
+<main class="pt-20 pb-24 px-4 md:px-8 max-w-7xl mx-auto space-y-6">
+<!-- Dashboard Header -->
+<section class="flex flex-col md:flex-row md:items-end justify-between gap-4 py-4">
+<div>
+<p class="text-primary font-label-caps text-label-caps uppercase tracking-wider mb-1">Government of Ternate</p>
+<h2 class="font-display-lg text-display-lg text-on-background">Fiscal ROI Simulation</h2>
+<p class="text-on-surface-variant max-w-2xl">Forecasting the 10-year transition from traditional high-pressure sodium lighting to smart LED infrastructure across Ternate districts.</p>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant p-2 rounded-xl flex gap-1">
+<button class="px-4 py-1.5 rounded-lg bg-primary-container text-on-primary-container font-body-medium">Simulation</button>
+<button class="px-4 py-1.5 rounded-lg text-on-surface-variant font-body-medium hover:bg-surface-container-high">Live Data</button>
+</div>
+</section>
+<!-- Top Level Metrics -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Total Savings -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 relative overflow-hidden">
+<div class="flex justify-between items-start mb-4">
+<p class="text-on-surface-variant font-body-medium">Total Savings (5 Years)</p>
+<div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">account_balance_wallet</span>
+</div>
+</div>
+<h3 class="font-stat-lg text-stat-lg text-on-background">Rp 12.4B</h3>
+<div class="mt-4 flex items-center gap-2">
+<span class="text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded text-xs font-bold">+18.4% vs Projected</span>
+</div>
+<div class="absolute bottom-0 right-0 opacity-5 -mb-4 -mr-4">
+<span class="material-symbols-outlined text-8xl">trending_up</span>
+</div>
+</div>
+<!-- Breakeven -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 relative overflow-hidden">
+<div class="flex justify-between items-start mb-4">
+<p class="text-on-surface-variant font-body-medium">Breakeven Point</p>
+<div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">event_available</span>
+</div>
+</div>
+<h3 class="font-stat-lg text-stat-lg text-on-background">14 Months</h3>
+<div class="mt-4 w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[65%]"></div>
+</div>
+<p class="mt-2 text-xs text-on-surface-variant">Estimated Date: Oct 2025</p>
+</div>
+<!-- Carbon Credits -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 relative overflow-hidden">
+<div class="flex justify-between items-start mb-4">
+<p class="text-on-surface-variant font-body-medium">Carbon Credits Earned</p>
+<div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">eco</span>
+</div>
+</div>
+<h3 class="font-stat-lg text-stat-lg text-on-background">842 tCO₂e</h3>
+<div class="mt-4 flex items-center gap-2">
+<span class="text-primary font-body-medium">Valuation: Rp 210M</span>
+</div>
+</div>
+</section>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Parameters Panel -->
+<aside class="lg:col-span-4 space-y-6">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 micro-grid">
+<h4 class="font-headline-sm text-headline-sm text-on-background mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">tune</span>
+                        Simulation Parameters
+                    </h4>
+<div class="space-y-8">
+<div>
+<div class="flex justify-between mb-2">
+<label class="text-body-medium font-medium text-on-surface">Energy Price Growth</label>
+<span class="text-primary font-code-sm font-bold">4.2%</span>
+</div>
+<input class="w-full accent-primary" max="15" min="1" type="range" value="4"/>
+<p class="text-[11px] text-on-surface-variant mt-2 italic">Based on PLN annual trend forecasts.</p>
+</div>
+<div>
+<div class="flex justify-between mb-2">
+<label class="text-body-medium font-medium text-on-surface">Operational Efficiency</label>
+<span class="text-primary font-code-sm font-bold">88%</span>
+</div>
+<input class="w-full accent-primary" max="100" min="50" type="range" value="88"/>
+<p class="text-[11px] text-on-surface-variant mt-2 italic">Predictive maintenance impact on O&amp;M costs.</p>
+</div>
+<div>
+<div class="flex justify-between mb-2">
+<label class="text-body-medium font-medium text-on-surface">Smart Dimming Schedule</label>
+<span class="text-primary font-code-sm font-bold">11:00 PM</span>
+</div>
+<input class="w-full accent-primary" max="24" min="18" type="range" value="23"/>
+<p class="text-[11px] text-on-surface-variant mt-2 italic">Scheduled brightness reduction for midnight hours.</p>
+</div>
+</div>
+<button class="w-full mt-10 py-3 bg-secondary text-white rounded-lg font-headline-sm hover:opacity-90 active:scale-[0.98] transition-all">
+                        Update Simulation
+                    </button>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6">
+<h4 class="font-headline-sm text-headline-sm text-on-background mb-4">District Savings Breakdown</h4>
+<div class="space-y-4">
+<div class="flex items-center justify-between group">
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<span class="text-body-medium">Ternate Tengah</span>
+</div>
+<span class="font-code-sm text-on-surface-variant group-hover:text-primary transition-colors">Rp 4.2B</span>
+</div>
+<div class="flex items-center justify-between group">
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-secondary"></div>
+<span class="text-body-medium">Ternate Selatan</span>
+</div>
+<span class="font-code-sm text-on-surface-variant group-hover:text-primary transition-colors">Rp 3.8B</span>
+</div>
+<div class="flex items-center justify-between group">
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-tertiary"></div>
+<span class="text-body-medium">Ternate Utara</span>
+</div>
+<span class="font-code-sm text-on-surface-variant group-hover:text-primary transition-colors">Rp 2.9B</span>
+</div>
+<div class="flex items-center justify-between group">
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-outline"></div>
+<span class="text-body-medium">Pulau Ternate</span>
+</div>
+<span class="font-code-sm text-on-surface-variant group-hover:text-primary transition-colors">Rp 1.5B</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Chart Panel -->
+<section class="lg:col-span-8 space-y-6">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 h-full flex flex-col">
+<div class="flex justify-between items-center mb-8">
+<div>
+<h4 class="font-headline-md text-headline-md text-on-background">10-Year Cost Projection</h4>
+<p class="text-on-surface-variant text-body-base">Comparison of Legacy O&amp;M vs. Smart PJU Unified Costs</p>
+</div>
+<div class="flex items-center gap-4 text-xs font-label-caps">
+<div class="flex items-center gap-1.5">
+<span class="w-3 h-0.5 bg-slate-300"></span>
+<span>Legacy</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-3 h-0.5 bg-primary"></span>
+<span>Smart PJU</span>
+</div>
+</div>
+</div>
+<!-- SVG Chart Simulation -->
+<div class="flex-grow flex items-end w-full min-h-[350px] relative">
+<svg class="w-full h-full overflow-visible" preserveaspectratio="none" viewbox="0 0 1000 350">
+<!-- Grid Lines -->
+<line stroke="#e2e8f0" stroke-width="1" x1="0" x2="1000" y1="0" y2="0"></line>
+<line stroke="#e2e8f0" stroke-width="1" x1="0" x2="1000" y1="87.5" y2="87.5"></line>
+<line stroke="#e2e8f0" stroke-width="1" x1="0" x2="1000" y1="175" y2="175"></line>
+<line stroke="#e2e8f0" stroke-width="1" x1="0" x2="1000" y1="262.5" y2="262.5"></line>
+<line stroke="#e2e8f0" stroke-width="1" x1="0" x2="1000" y1="350" y2="350"></line>
+<!-- Legacy Cost Line (Trending Up) -->
+<path d="M 0 300 Q 250 280, 500 240 T 1000 150" fill="none" stroke="#94a3b8" stroke-dasharray="4" stroke-width="2"></path>
+<!-- Smart PJU Cost Line (Initial spike then flat/low) -->
+<path d="M 0 350 L 100 50 L 200 300 L 500 310 Q 750 320, 1000 330" fill="none" stroke="#2563eb" stroke-width="3"></path>
+<!-- Intersection Highlight -->
+<circle cx="150" cy="230" fill="#2563eb" fill-opacity="0.2" r="6"></circle>
+<circle cx="150" cy="230" fill="#2563eb" r="3"></circle>
+<!-- X-Axis Labels -->
+<text fill="#64748b" font-family="JetBrains Mono" font-size="12" x="0" y="370">Y1</text>
+<text fill="#64748b" font-family="JetBrains Mono" font-size="12" x="250" y="370">Y3</text>
+<text fill="#64748b" font-family="JetBrains Mono" font-size="12" x="500" y="370">Y5</text>
+<text fill="#64748b" font-family="JetBrains Mono" font-size="12" x="750" y="370">Y8</text>
+<text fill="#64748b" font-family="JetBrains Mono" font-size="12" x="970" y="370">Y10</text>
+</svg>
+<!-- Tooltip Overlay (Interaction placeholder) -->
+<div class="absolute left-[15%] top-[65%] -translate-x-1/2 p-3 bg-white border border-slate-200 rounded-lg shadow-lg z-10 pointer-events-none">
+<p class="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">Year 2 Breakeven</p>
+<p class="text-sm font-bold text-on-background">ROI: +Rp 840M</p>
+</div>
+</div>
+<div class="mt-12 p-4 bg-slate-50 border border-slate-100 rounded-lg flex items-start gap-4">
+<span class="material-symbols-outlined text-amber-500">info</span>
+<p class="text-sm text-slate-600 leading-relaxed">
+                            Projections account for a 15% annual maintenance reduction due to <strong>real-time fault detection</strong> and a 60% energy drop from <strong>high-efficiency LED</strong> transition.
+                        </p>
+</div>
+</div>
+</section>
+</div>
+<!-- Call to Action Footer -->
+<section class="bg-primary-container text-on-primary-container rounded-xl p-8 flex flex-col md:flex-row items-center justify-between gap-8 overflow-hidden relative">
+<div class="relative z-10">
+<h2 class="font-headline-md text-headline-md mb-2">Ready for Implementation?</h2>
+<p class="text-on-primary-container/80 max-w-xl">This simulation uses verified energy consumption data from the 2023 Ternate infrastructure audit. Export the detailed dataset for cabinet review.</p>
+</div>
+<div class="flex gap-4 relative z-10">
+<button class="bg-white text-primary px-6 py-3 rounded-lg font-headline-sm hover:bg-slate-50 active:scale-95 transition-all">Download CSV</button>
+<button class="bg-on-primary-container/20 border border-white/30 text-white px-6 py-3 rounded-lg font-headline-sm hover:bg-on-primary-container/30 active:scale-95 transition-all">Share Report</button>
+</div>
+<div class="absolute -right-12 -bottom-12 opacity-10">
+<span class="material-symbols-outlined text-[240px]">bar_chart_4_bars</span>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 py-2 bg-surface dark:bg-inverse-surface border-t border-outline-variant dark:border-outline z-50">
+<div class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2 active:scale-90 transition-transform">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-caps text-[10px] mt-1">Dashboard</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2 active:scale-90 transition-transform">
+<span class="material-symbols-outlined">map</span>
+<span class="font-label-caps text-[10px] mt-1">Map</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl p-2 active:scale-90 transition-transform">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-caps text-[10px] mt-1">Analytics</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2 active:scale-90 transition-transform">
+<span class="material-symbols-outlined">warning</span>
+<span class="font-label-caps text-[10px] mt-1">Alerts</span>
+</div>
+</nav>
+<script>
+        // Simple micro-interaction for simulation updates
+        document.querySelectorAll('input[type="range"]').forEach(input => {
+            input.addEventListener('input', (e) => {
+                const valueDisplay = e.target.parentElement.querySelector('.text-primary');
+                if (valueDisplay) {
+                    if (e.target.min == "1") {
+                        valueDisplay.textContent = e.target.value + '%';
+                    } else if (e.target.min == "50") {
+                        valueDisplay.textContent = e.target.value + '%';
+                    } else {
+                        valueDisplay.textContent = (e.target.value > 12 ? e.target.value - 12 : e.target.value) + (e.target.value > 11 ? ' PM' : ' AM');
+                    }
+                }
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Cyber Attack Simulation | PJU SecureConnect</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Geist:wght@400;600;700&family=JetBrains+Mono:wght@400;500&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(8px);
+            border: 1px solid #e2e8f0;
+        }
+        .terminal-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+        .terminal-scroll::-webkit-scrollbar-thumb {
+            background: #737686;
+            border-radius: 10px;
+        }
+        @keyframes pulse-red {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .animate-pulse-red {
+            animation: pulse-red 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        .grid-pattern {
+            background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-low": "#f2f4f6",
+                        "on-tertiary-container": "#ffeedd",
+                        "error-container": "#ffdad6",
+                        "on-surface": "#191c1e",
+                        "surface-dim": "#d8dadc",
+                        "primary-fixed": "#dbe1ff",
+                        "background": "#f7f9fb",
+                        "secondary": "#49607e",
+                        "secondary-fixed-dim": "#b0c8eb",
+                        "secondary-container": "#c4dcff",
+                        "on-secondary-fixed-variant": "#314865",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-bright": "#f7f9fb",
+                        "on-error-container": "#93000a",
+                        "surface-tint": "#0053db",
+                        "inverse-on-surface": "#eff1f3",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "secondary-fixed": "#d2e4ff",
+                        "error": "#ba1a1a",
+                        "on-secondary-container": "#49617f",
+                        "outline": "#737686",
+                        "surface-container-highest": "#e0e3e5",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "tertiary-fixed": "#ffddb8",
+                        "on-tertiary-fixed": "#2a1700",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-fixed": "#001c37",
+                        "surface": "#f7f9fb",
+                        "primary-container": "#2563eb",
+                        "on-tertiary": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "primary": "#004ac6",
+                        "surface-variant": "#e0e3e5",
+                        "surface-container": "#eceef0",
+                        "on-background": "#191c1e",
+                        "on-primary-fixed": "#00174b",
+                        "surface-container-high": "#e6e8ea",
+                        "outline-variant": "#c3c6d7",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "on-error": "#ffffff",
+                        "tertiary-container": "#996100",
+                        "inverse-surface": "#2d3133",
+                        "inverse-primary": "#b4c5ff",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "on-surface-variant": "#434655",
+                        "tertiary": "#784b00",
+                        "on-primary-container": "#eeefff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "4px",
+                        "xs": "4px",
+                        "lg": "24px",
+                        "md": "16px",
+                        "sm": "8px",
+                        "xl": "32px",
+                        "form-max": "768px",
+                        "gutter": "16px",
+                        "container-max": "1280px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Geist"],
+                        "code-sm": ["JetBrains Mono"],
+                        "body-base": ["Inter"],
+                        "body-medium": ["Inter"],
+                        "label-caps": ["Geist"],
+                        "headline-sm": ["Geist"],
+                        "headline-md": ["Geist"],
+                        "stat-lg": ["Geist"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body-base overflow-hidden">
+<!-- Sidebar Navigation (Mandatory Shared Component) -->
+<aside class="h-full w-72 fixed left-0 top-0 bg-inverse-surface dark:bg-surface-container-lowest border-r border-outline-variant shadow-sm z-50 hidden md:flex flex-col py-lg">
+<div class="px-lg mb-xl">
+<h1 class="font-display-lg text-display-lg text-on-primary-fixed">PJU</h1>
+<p class="text-surface-variant font-body-medium">Admin Console</p>
+</div>
+<nav class="flex-1 space-y-xs">
+<!-- Active Tab: Threat Simulation -->
+<a class="bg-primary dark:bg-primary-container text-on-primary dark:text-on-primary-container rounded-lg mx-sm my-xs px-md py-sm flex items-center gap-md transition-all active:brightness-90" href="#">
+<span class="material-symbols-outlined">security_update_warning</span>
+<span class="font-body-medium text-body-medium">Threat Simulation</span>
+</a>
+<a class="text-surface-variant dark:text-on-surface-variant mx-sm my-xs px-md py-sm flex items-center gap-md hover:bg-secondary dark:hover:bg-secondary-container transition-all" href="#">
+<span class="material-symbols-outlined">passkey</span>
+<span class="font-body-medium text-body-medium">Authentication Hub</span>
+</a>
+<a class="text-surface-variant dark:text-on-surface-variant mx-sm my-xs px-md py-sm flex items-center gap-md hover:bg-secondary dark:hover:bg-secondary-container transition-all" href="#">
+<span class="material-symbols-outlined">hub</span>
+<span class="font-body-medium text-body-medium">Node Monitoring</span>
+</a>
+<a class="text-surface-variant dark:text-on-surface-variant mx-sm my-xs px-md py-sm flex items-center gap-md hover:bg-secondary dark:hover:bg-secondary-container transition-all" href="#">
+<span class="material-symbols-outlined">database_off</span>
+<span class="font-body-medium text-body-medium">Security Logs</span>
+</a>
+<a class="text-surface-variant dark:text-on-surface-variant mx-sm my-xs px-md py-sm flex items-center gap-md hover:bg-secondary dark:hover:bg-secondary-container transition-all" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-body-medium text-body-medium">System Settings</span>
+</a>
+</nav>
+<div class="mt-auto px-lg pt-lg border-t border-outline/20">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center text-on-primary-fixed font-bold">AU</div>
+<div>
+<p class="font-body-medium text-on-primary-fixed">Admin User</p>
+<p class="text-xs text-surface-variant">v2.4.0-stable</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Top App Bar (Mandatory Shared Component) -->
+<header class="w-full top-0 sticky bg-surface dark:bg-surface-dim border-b border-outline-variant dark:border-outline flex items-center justify-between px-lg h-16 w-full z-40 md:pl-[304px]">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-primary font-headline-md">shield_lock</span>
+<h2 class="font-headline-md text-headline-md text-primary">Threat Simulation</h2>
+</div>
+<div class="flex items-center gap-lg">
+<div class="hidden md:flex gap-md">
+<span class="text-on-surface-variant font-label-caps tracking-widest bg-surface-container-high px-sm py-xs rounded">SYSTEM_STATUS: SECURE</span>
+</div>
+<img class="w-10 h-10 rounded-full border-2 border-primary shadow-sm" data-alt="A clean professional headshot of a system administrator in his late 30s, wearing business casual attire. The background is a blurred office with soft blue and white lighting, maintaining a corporate and high-security atmosphere consistent with the engineering precision theme." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4klC9-IzxL24zuob4g1pz56xrm4_NQ-yGwhl46R_EvdxzDyqVDxXJ44NS0TiUYCXsPvpDpS5bGijoZhsnZDm4dknWomZkhvtCmzobD7wSkVvBrWRNI39A7_UjmLE9uwyyyuBCYJ604qKlmTmUEdNZLzT52Qpk8g9x9VTyiiilZ0tpq4mQuUraZOBmu6YYl-LHj_abFLQvmhkcyFRBkc2Pa_8VJQPypRWj0Sqk-WTHByg-7XJ-7DtF_uQczoxRqhKTkPdgqjQrMjuC"/>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="md:pl-72 pt-4 pb-20 md:pb-4 h-screen overflow-hidden grid-pattern">
+<div class="h-full px-lg py-md max-w-[1400px] mx-auto grid grid-cols-12 gap-lg overflow-y-auto terminal-scroll">
+<!-- Bento Grid - Simulation Controls -->
+<div class="col-span-12 lg:col-span-8 space-y-lg">
+<!-- Primary Action Card: Attack Selection -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg shadow-sm">
+<div class="flex justify-between items-start mb-lg">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Simulation Parameters</h3>
+<p class="text-on-surface-variant font-body-base">Select a vector to begin the controlled stress test.</p>
+</div>
+<button class="bg-error text-on-error px-md py-sm rounded-lg font-label-caps flex items-center gap-sm hover:brightness-90 transition-all active:scale-95 animate-pulse-red">
+<span class="material-symbols-outlined">emergency_home</span>
+                            PANIC BUTTON
+                        </button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-md">
+<!-- DDoS Option -->
+<div class="border-2 border-primary bg-primary/5 p-md rounded-xl cursor-pointer hover:bg-primary/10 transition-colors group">
+<div class="flex items-center justify-between mb-sm">
+<span class="material-symbols-outlined text-primary text-3xl">router</span>
+<input checked="" class="text-primary focus:ring-primary h-4 w-4" name="attack_type" type="radio"/>
+</div>
+<p class="font-headline-sm text-on-surface group-hover:text-primary transition-colors">DDoS Attack</p>
+<p class="text-xs text-on-surface-variant mt-xs">High-volume traffic flood to edge gateways.</p>
+</div>
+<!-- SQL Injection -->
+<div class="border border-outline-variant bg-surface p-md rounded-xl cursor-pointer hover:border-primary transition-colors group">
+<div class="flex items-center justify-between mb-sm">
+<span class="material-symbols-outlined text-on-surface-variant text-3xl group-hover:text-primary">database</span>
+<input class="text-primary focus:ring-primary h-4 w-4" name="attack_type" type="radio"/>
+</div>
+<p class="font-headline-sm text-on-surface group-hover:text-primary transition-colors">SQL Injection</p>
+<p class="text-xs text-on-surface-variant mt-xs">Testing database sanitization at Node clusters.</p>
+</div>
+<!-- MITM -->
+<div class="border border-outline-variant bg-surface p-md rounded-xl cursor-pointer hover:border-primary transition-colors group">
+<div class="flex items-center justify-between mb-sm">
+<span class="material-symbols-outlined text-on-surface-variant text-3xl group-hover:text-primary">lan</span>
+<input class="text-primary focus:ring-primary h-4 w-4" name="attack_type" type="radio"/>
+</div>
+<p class="font-headline-sm text-on-surface group-hover:text-primary transition-colors">MITM Attack</p>
+<p class="text-xs text-on-surface-variant mt-xs">Packet sniffing and payload modification.</p>
+</div>
+</div>
+<div class="mt-lg flex items-center justify-between bg-surface-container-low p-md rounded-lg border border-outline-variant/50">
+<div class="flex items-center gap-md">
+<div class="h-2 w-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.6)]"></div>
+<span class="font-code-sm text-on-surface-variant">READY_STATE: IDLE</span>
+</div>
+<div class="flex gap-md">
+<button class="bg-primary text-on-primary px-xl py-sm rounded-lg font-label-caps flex items-center gap-sm hover:brightness-95 active:scale-95 transition-all" id="start-btn" onclick="toggleSim()">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+                                START SIMULATION
+                            </button>
+</div>
+</div>
+</section>
+<!-- Metrics Dashboard -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-lg">
+<!-- Stat Card 1 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-md shadow-sm">
+<div class="flex justify-between items-start mb-sm">
+<span class="text-on-surface-variant font-label-caps">MITIGATION TIME</span>
+<div class="bg-primary/10 p-sm rounded-lg">
+<span class="material-symbols-outlined text-primary text-sm">timer</span>
+</div>
+</div>
+<p class="font-stat-lg text-stat-lg text-on-surface" id="stat-mitigation">0.0<span class="text-sm font-normal text-on-surface-variant">s</span></p>
+<div class="w-full bg-surface-container-high h-1.5 rounded-full mt-md">
+<div class="bg-primary w-0 h-full rounded-full transition-all duration-1000" id="progress-mitigation"></div>
+</div>
+</div>
+<!-- Stat Card 2 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-md shadow-sm">
+<div class="flex justify-between items-start mb-sm">
+<span class="text-on-surface-variant font-label-caps">CPU SPIKE</span>
+<div class="bg-tertiary/10 p-sm rounded-lg">
+<span class="material-symbols-outlined text-tertiary text-sm">memory</span>
+</div>
+</div>
+<p class="font-stat-lg text-stat-lg text-on-surface" id="stat-cpu">12<span class="text-sm font-normal text-on-surface-variant">%</span></p>
+<div class="w-full bg-surface-container-high h-1.5 rounded-full mt-md">
+<div class="bg-tertiary w-1/4 h-full rounded-full transition-all duration-1000" id="progress-cpu"></div>
+</div>
+</div>
+<!-- Stat Card 3 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-md shadow-sm">
+<div class="flex justify-between items-start mb-sm">
+<span class="text-on-surface-variant font-label-caps">BW IMPACT</span>
+<div class="bg-secondary/10 p-sm rounded-lg">
+<span class="material-symbols-outlined text-secondary text-sm">speed</span>
+</div>
+</div>
+<p class="font-stat-lg text-stat-lg text-on-surface" id="stat-bandwidth">0.0<span class="text-sm font-normal text-on-surface-variant">GB/s</span></p>
+<div class="w-full bg-surface-container-high h-1.5 rounded-full mt-md">
+<div class="bg-secondary w-0 h-full rounded-full transition-all duration-1000" id="progress-bw"></div>
+</div>
+</div>
+</div>
+<!-- Visual Response Chart (Placeholder for high-end aesthetic) -->
+<div class="bg-inverse-surface rounded-xl p-lg h-64 relative overflow-hidden">
+<div class="absolute inset-0 opacity-20">
+<div class="h-full w-full grid grid-cols-12 grid-rows-6">
+<!-- Faked Grid -->
+<div class="border-r border-b border-surface-variant/20"></div><div class="border-r border-b border-surface-variant/20"></div><div class="border-r border-b border-surface-variant/20"></div><div class="border-r border-b border-surface-variant/20"></div><div class="border-r border-b border-surface-variant/20"></div><div class="border-r border-b border-surface-variant/20"></div><div class="border-r border-b border-surface-variant/20"></div><div class="border-r border-b border-surface-variant/20"></div><div class="border-r border-b border-surface-variant/20"></div><div class="border-r border-b border-surface-variant/20"></div><div class="border-r border-b border-surface-variant/20"></div><div class="border-r border-b border-surface-variant/20"></div>
+<div class="border-r border-b border-surface-variant/20"></div><div class="border-r border-b border-surface-variant/20"></div><div class="border-r border-b border-surface-variant/20"></div><div class="border-r border-b border-surface-variant/20"></div><div class="border-r border-b border-surface-variant/20"></div><div class="border-r border-b border-surface-variant/20"></div><div class="border-r border-b border-surface-variant/20"></div><div class="border-r border-b border-surface-variant/20"></div><div class="border-r border-b border-surface-variant/20"></div><div class="border-r border-b border-surface-variant/20"></div><div class="border-r border-b border-surface-variant/20"></div><div class="border-r border-b border-surface-variant/20"></div>
+</div>
+</div>
+<div class="relative z-10 flex flex-col h-full">
+<div class="flex justify-between items-center text-surface-container-highest">
+<span class="font-code-sm">REAL_TIME_TRAFFIC_ANALYSIS</span>
+<div class="flex gap-md">
+<div class="flex items-center gap-xs"><div class="h-2 w-2 bg-primary rounded-full"></div> <span class="text-[10px]">INBOUND</span></div>
+<div class="flex items-center gap-xs"><div class="h-2 w-2 bg-error rounded-full"></div> <span class="text-[10px]">ANOMALY</span></div>
+</div>
+</div>
+<div class="flex-1 flex items-end gap-1 px-sm">
+<!-- Visual Bars -->
+<div class="bg-primary w-full h-1/4 rounded-t-sm transition-all duration-500"></div>
+<div class="bg-primary w-full h-2/4 rounded-t-sm transition-all duration-500"></div>
+<div class="bg-primary w-full h-1/3 rounded-t-sm transition-all duration-500"></div>
+<div class="bg-error w-full h-3/4 rounded-t-sm animate-pulse opacity-80"></div>
+<div class="bg-error w-full h-full rounded-t-sm animate-pulse"></div>
+<div class="bg-error w-full h-4/5 rounded-t-sm animate-pulse opacity-90"></div>
+<div class="bg-primary w-full h-1/2 rounded-t-sm transition-all duration-500"></div>
+<div class="bg-primary w-full h-1/4 rounded-t-sm transition-all duration-500"></div>
+</div>
+<div class="pt-sm border-t border-surface-variant/20 flex justify-between font-code-sm text-surface-variant text-[10px]">
+<span>T-30m</span><span>T-15m</span><span>NOW</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Side Feed: Live Defense Logs -->
+<div class="col-span-12 lg:col-span-4 h-full">
+<div class="bg-inverse-surface border border-outline-variant h-full rounded-xl flex flex-col overflow-hidden shadow-xl">
+<div class="p-md border-b border-outline/30 flex justify-between items-center bg-surface-container-high/10">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary text-lg">list_alt</span>
+<h4 class="text-on-primary-fixed font-headline-sm uppercase tracking-wider text-sm">Defense Actions Log</h4>
+</div>
+<span class="text-[10px] text-primary bg-primary/10 px-xs py-0.5 rounded border border-primary/20">LIVE</span>
+</div>
+<div class="flex-1 p-md overflow-y-auto font-code-sm text-xs space-y-md terminal-scroll" id="log-container">
+<div class="text-surface-variant border-l-2 border-primary pl-sm py-xs">
+<p class="text-primary opacity-60">[14:22:01]</p>
+<p>System initialized. All nodes reporting status: OK.</p>
+</div>
+<div class="text-surface-variant border-l-2 border-outline-variant pl-sm py-xs">
+<p class="text-primary opacity-60">[14:22:05]</p>
+<p>WAF Policy "Default_Harden" active on Cluster-04.</p>
+</div>
+<div class="text-surface-variant border-l-2 border-outline-variant pl-sm py-xs">
+<p class="text-primary opacity-60">[14:23:12]</p>
+<p>Handshake established with Ternate North edge gateway.</p>
+</div>
+</div>
+<div class="p-md bg-surface-container-high/5 border-t border-outline/20">
+<div class="flex items-center gap-sm text-[10px] text-surface-variant">
+<span class="material-symbols-outlined text-xs">terminal</span>
+<span>Waiting for simulator start signal...</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation (Mobile Only) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-md pb-md pt-sm bg-surface-container-highest dark:bg-surface-container-low border-t border-outline-variant md:hidden">
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl p-sm" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">crisis_alert</span>
+<span class="font-label-caps text-[10px]">Simulate</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary" href="#">
+<span class="material-symbols-outlined">verified_user</span>
+<span class="font-label-caps text-[10px]">Auth</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary" href="#">
+<span class="material-symbols-outlined">lightbulb</span>
+<span class="font-label-caps text-[10px]">Nodes</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary" href="#">
+<span class="material-symbols-outlined">history</span>
+<span class="font-label-caps text-[10px]">Logs</span>
+</a>
+</nav>
+<script>
+        let isSimulating = false;
+        let simInterval;
+
+        function toggleSim() {
+            const btn = document.getElementById('start-btn');
+            const logContainer = document.getElementById('log-container');
+            const mitigation = document.getElementById('stat-mitigation');
+            const cpu = document.getElementById('stat-cpu');
+            const bandwidth = document.getElementById('stat-bandwidth');
+            const progMit = document.getElementById('progress-mitigation');
+            const progCpu = document.getElementById('progress-cpu');
+            const progBw = document.getElementById('progress-bw');
+
+            if (!isSimulating) {
+                isSimulating = true;
+                btn.innerHTML = `<span class="material-symbols-outlined">stop</span> STOP SIMULATION`;
+                btn.classList.replace('bg-primary', 'bg-error');
+                
+                addLog('INITIATING DDOS SIMULATION ON GATEWAY_01...', 'text-error font-bold');
+                
+                simInterval = setInterval(() => {
+                    const cpuVal = Math.floor(Math.random() * 40) + 50;
+                    const bwVal = (Math.random() * 12).toFixed(1);
+                    const mitVal = (Math.random() * 2).toFixed(2);
+
+                    cpu.innerHTML = `${cpuVal}<span class="text-sm font-normal text-on-surface-variant">%</span>`;
+                    bandwidth.innerHTML = `${bwVal}<span class="text-sm font-normal text-on-surface-variant">GB/s</span>`;
+                    mitigation.innerHTML = `${mitVal}<span class="text-sm font-normal text-on-surface-variant">s</span>`;
+
+                    progCpu.style.width = `${cpuVal}%`;
+                    progBw.style.width = `${(bwVal/20)*100}%`;
+                    progMit.style.width = `${(mitVal/3)*100}%`;
+
+                    if(Math.random() > 0.7) {
+                        const alerts = [
+                            "Malicious payload detected from IP 192.168.1.104",
+                            "Rate-limiting applied to North Edge Node.",
+                            "Scaling mitigation instances in Cluster-B.",
+                            "Heuristic filter: Dropping UDP flood packets."
+                        ];
+                        addLog(alerts[Math.floor(Math.random()*alerts.length)], 'text-primary');
+                    }
+                }, 1000);
+
+            } else {
+                stopSim();
+            }
+        }
+
+        function stopSim() {
+            const btn = document.getElementById('start-btn');
+            isSimulating = false;
+            clearInterval(simInterval);
+            btn.innerHTML = `<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span> START SIMULATION`;
+            btn.classList.replace('bg-error', 'bg-primary');
+            addLog('SIMULATION HALTED. GENERATING REPORT...', 'text-emerald-500 font-bold');
+        }
+
+        function addLog(message, colorClass = '') {
+            const logContainer = document.getElementById('log-container');
+            const now = new Date().toLocaleTimeString([], { hour12: false });
+            const logEntry = document.createElement('div');
+            logEntry.className = `text-surface-variant border-l-2 border-primary pl-sm py-xs animate-in slide-in-from-left duration-300 ${colorClass}`;
+            logEntry.innerHTML = `<p class="text-primary opacity-60">[${now}]</p><p>${message}</p>`;
+            logContainer.prepend(logEntry);
+        }
+    </script>
+</body></html>

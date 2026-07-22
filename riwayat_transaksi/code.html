@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Transaction History | PLN Mobile</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Geist:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .grid-pattern {
+            background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-fixed-dim": "#b0c8eb",
+                    "secondary-container": "#c4dcff",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "tertiary-fixed": "#ffddb8",
+                    "on-surface-variant": "#434655",
+                    "primary": "#004ac6",
+                    "surface-dim": "#d8dadc",
+                    "primary-container": "#2563eb",
+                    "outline": "#737686",
+                    "inverse-surface": "#2d3133",
+                    "inverse-on-surface": "#eff1f3",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "surface-variant": "#e0e3e5",
+                    "on-tertiary-fixed": "#2a1700",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "surface-container-low": "#f2f4f6",
+                    "surface-container-highest": "#e0e3e5",
+                    "error": "#ba1a1a",
+                    "tertiary": "#784b00",
+                    "on-tertiary": "#ffffff",
+                    "outline-variant": "#c3c6d7",
+                    "on-secondary-fixed-variant": "#314865",
+                    "primary-fixed": "#dbe1ff",
+                    "on-secondary": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "on-primary-fixed-variant": "#003ea8",
+                    "background": "#f7f9fb",
+                    "on-primary-container": "#eeefff",
+                    "on-tertiary-container": "#ffeedd",
+                    "on-primary": "#ffffff",
+                    "surface-container-high": "#e6e8ea",
+                    "on-error-container": "#93000a",
+                    "on-secondary-fixed": "#001c37",
+                    "on-error": "#ffffff",
+                    "surface-tint": "#0053db",
+                    "on-surface": "#191c1e",
+                    "on-background": "#191c1e",
+                    "surface": "#f7f9fb",
+                    "surface-bright": "#f7f9fb",
+                    "secondary-fixed": "#d2e4ff",
+                    "on-secondary-container": "#49617f",
+                    "surface-container": "#eceef0",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary-fixed": "#00174b",
+                    "tertiary-container": "#996100",
+                    "inverse-primary": "#b4c5ff",
+                    "secondary": "#49607e"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "12px",
+                    "xl": "16px",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "sm": "8px",
+                    "xs": "4px",
+                    "md": "16px",
+                    "form-max": "768px",
+                    "gutter": "16px",
+                    "container-max": "1280px",
+                    "base": "4px",
+                    "xl": "32px",
+                    "lg": "24px"
+            },
+            "fontFamily": {
+                    "label-caps": ["Geist"],
+                    "code-sm": ["JetBrains Mono"],
+                    "display-lg": ["Geist"],
+                    "body-base": ["Inter"],
+                    "headline-sm": ["Geist"],
+                    "headline-md": ["Geist"],
+                    "body-medium": ["Inter"],
+                    "stat-lg": ["Geist"]
+            },
+            "fontSize": {
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "code-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0", "fontWeight": "400"}],
+                    "display-lg": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-base": ["14px", {"lineHeight": "20px", "letterSpacing": "0", "fontWeight": "400"}],
+                    "headline-sm": ["18px", {"lineHeight": "24px", "letterSpacing": "0", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "body-medium": ["14px", {"lineHeight": "20px", "letterSpacing": "0", "fontWeight": "500"}],
+                    "stat-lg": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background font-body-base text-on-background min-h-screen grid-pattern">
+<!-- TopAppBar Shell -->
+<header class="w-full top-0 sticky z-50 bg-background border-b border-outline-variant">
+<div class="flex items-center justify-between px-md h-16 w-full max-w-container-max mx-auto">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A professional, close-up corporate headshot of a smiling utility administrative officer against a clean, softly lit office background. The lighting is bright and modern, using a light-mode aesthetic with soft blue and white tones to match a professional PLN corporate identity. High quality digital photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAF4sMmc6V5BwV6z8zzI8vn7FRLd1siGJsGfGdTx6FAQAqOjUfEbISAMNzktZR-yyRZHvO0Yt03lOZ4mRBcLmC-YGbpBkl7JLTCvZ2wcdZWz3iekxSHWSh6woAQLgDAWVPaECZyrPyWGQgcSDgUO-hQFOyoEed33ksvA5awFL-orWEGSWSX7538j47TeJSCOk408BMAP0mBGmEWxrBpVKIRGmFBVQUmpXMIJvJnNms6fdx1ffET3ZF4N1zEvm0aJg94k9vGFn5Nvi7e"/>
+</div>
+<h1 class="font-headline-md text-headline-md font-bold text-primary">PLN Mobile</h1>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-high transition-colors active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-primary">notifications</span>
+</button>
+</div>
+</header>
+<main class="max-w-container-max mx-auto px-md py-lg mb-24">
+<!-- Dashboard Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-md mb-xl">
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface">History</h2>
+<p class="text-on-surface-variant font-body-base">Review your electricity tokens and bill payments.</p>
+</div>
+<div class="flex gap-sm">
+<div class="relative group">
+<button class="flex items-center gap-xs px-md py-sm bg-surface-container-lowest border border-outline-variant rounded-lg font-body-medium text-on-surface-variant hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[20px]">calendar_today</span>
+<span>Last 30 Days</span>
+<span class="material-symbols-outlined text-[20px]">expand_more</span>
+</button>
+</div>
+<div class="relative group">
+<button class="flex items-center gap-xs px-md py-sm bg-surface-container-lowest border border-outline-variant rounded-lg font-body-medium text-on-surface-variant hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[20px]">filter_list</span>
+<span>All Types</span>
+<span class="material-symbols-outlined text-[20px]">expand_more</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Summary Stats Bento -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-lg mb-xl">
+<!-- Total Spending -->
+<div class="bg-surface-container-lowest p-lg rounded-xl border border-outline-variant flex flex-col justify-between group hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start">
+<span class="text-on-surface-variant font-label-caps">TOTAL SPENDING</span>
+<div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">payments</span>
+</div>
+</div>
+<div class="mt-md">
+<span class="text-on-surface font-stat-lg">Rp 1.450.000</span>
+<div class="flex items-center gap-xs text-emerald-600 font-body-medium mt-xs">
+<span class="material-symbols-outlined text-[16px]">trending_up</span>
+<span>+12% from last month</span>
+</div>
+</div>
+</div>
+<!-- Active Tokens -->
+<div class="bg-surface-container-lowest p-lg rounded-xl border border-outline-variant flex flex-col justify-between group hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start">
+<span class="text-on-surface-variant font-label-caps">ACTIVE TOKENS</span>
+<div class="w-10 h-10 rounded-lg bg-tertiary-fixed-dim/20 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined">electric_bolt</span>
+</div>
+</div>
+<div class="mt-md">
+<span class="text-on-surface font-stat-lg">3 Active</span>
+<p class="text-on-surface-variant font-body-base mt-xs">Estimated 12 days remaining</p>
+</div>
+</div>
+<!-- Pending Actions -->
+<div class="bg-surface-container-lowest p-lg rounded-xl border border-outline-variant flex flex-col justify-between group hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start">
+<span class="text-on-surface-variant font-label-caps">STATUS OVERVIEW</span>
+<div class="w-10 h-10 rounded-lg bg-error-container/50 flex items-center justify-center text-error">
+<span class="material-symbols-outlined">assignment_late</span>
+</div>
+</div>
+<div class="mt-md">
+<span class="text-on-surface font-stat-lg">1 Pending</span>
+<p class="text-on-surface-variant font-body-base mt-xs">Waiting for payment confirmation</p>
+</div>
+</div>
+</div>
+<!-- Transaction Table / List -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden">
+<div class="p-lg border-b border-outline-variant flex justify-between items-center bg-white">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Recent Transactions</h3>
+<button class="text-primary font-body-medium hover:underline">Download CSV</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full border-collapse">
+<thead class="bg-surface-container-low border-b border-outline-variant">
+<tr>
+<th class="px-lg py-md text-left font-label-caps text-on-surface-variant">TRANSACTION</th>
+<th class="px-lg py-md text-left font-label-caps text-on-surface-variant">ID NUMBER</th>
+<th class="px-lg py-md text-left font-label-caps text-on-surface-variant">DATE</th>
+<th class="px-lg py-md text-left font-label-caps text-on-surface-variant">STATUS</th>
+<th class="px-lg py-md text-right font-label-caps text-on-surface-variant">AMOUNT</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<!-- Transaction Row 1 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-lg py-lg">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-primary-container/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">confirmation_number</span>
+</div>
+<div>
+<p class="font-body-medium text-on-surface">Token Purchase</p>
+<p class="text-xs text-on-surface-variant">IDPEL 5432109876</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-lg">
+<span class="font-code-sm text-code-sm text-on-surface-variant">#PLN-2023-001</span>
+</td>
+<td class="px-lg py-lg">
+<p class="font-body-base text-on-surface">Oct 24, 2023</p>
+<p class="text-xs text-on-surface-variant">14:30 PM</p>
+</td>
+<td class="px-lg py-lg">
+<span class="inline-flex items-center px-sm py-xs rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600 mr-1.5"></span>
+                                    SUCCESS
+                                </span>
+</td>
+<td class="px-lg py-lg text-right font-bold text-on-surface">
+                                Rp 200.000
+                            </td>
+</tr>
+<!-- Transaction Row 2 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-lg py-lg">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-secondary-container/20 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined">receipt_long</span>
+</div>
+<div>
+<p class="font-body-medium text-on-surface">Monthly Bill Payment</p>
+<p class="text-xs text-on-surface-variant">IDPEL 1234567890</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-lg">
+<span class="font-code-sm text-code-sm text-on-surface-variant">#PLN-2023-098</span>
+</td>
+<td class="px-lg py-lg">
+<p class="font-body-base text-on-surface">Oct 20, 2023</p>
+<p class="text-xs text-on-surface-variant">09:12 AM</p>
+</td>
+<td class="px-lg py-lg">
+<span class="inline-flex items-center px-sm py-xs rounded-full bg-amber-100 text-amber-800 text-[11px] font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-600 mr-1.5"></span>
+                                    PENDING
+                                </span>
+</td>
+<td class="px-lg py-lg text-right font-bold text-on-surface">
+                                Rp 850.000
+                            </td>
+</tr>
+<!-- Transaction Row 3 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-lg py-lg">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-primary-container/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">confirmation_number</span>
+</div>
+<div>
+<p class="font-body-medium text-on-surface">Token Purchase</p>
+<p class="text-xs text-on-surface-variant">IDPEL 9876543210</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-lg">
+<span class="font-code-sm text-code-sm text-on-surface-variant">#PLN-2023-042</span>
+</td>
+<td class="px-lg py-lg">
+<p class="font-body-base text-on-surface">Oct 15, 2023</p>
+<p class="text-xs text-on-surface-variant">18:45 PM</p>
+</td>
+<td class="px-lg py-lg">
+<span class="inline-flex items-center px-sm py-xs rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600 mr-1.5"></span>
+                                    SUCCESS
+                                </span>
+</td>
+<td class="px-lg py-lg text-right font-bold text-on-surface">
+                                Rp 100.000
+                            </td>
+</tr>
+<!-- Transaction Row 4 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-lg py-lg">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-primary-container/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">confirmation_number</span>
+</div>
+<div>
+<p class="font-body-medium text-on-surface">Token Purchase</p>
+<p class="text-xs text-on-surface-variant">IDPEL 5432109876</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-lg">
+<span class="font-code-sm text-code-sm text-on-surface-variant">#PLN-2023-015</span>
+</td>
+<td class="px-lg py-lg">
+<p class="font-body-base text-on-surface">Oct 05, 2023</p>
+<p class="text-xs text-on-surface-variant">11:00 AM</p>
+</td>
+<td class="px-lg py-lg">
+<span class="inline-flex items-center px-sm py-xs rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600 mr-1.5"></span>
+                                    SUCCESS
+                                </span>
+</td>
+<td class="px-lg py-lg text-right font-bold text-on-surface">
+                                Rp 300.000
+                            </td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination Shell -->
+<div class="p-lg flex items-center justify-between bg-white">
+<span class="text-on-surface-variant font-body-base">Showing 1 to 4 of 24 results</span>
+<div class="flex gap-xs">
+<button class="w-10 h-10 rounded-lg border border-outline-variant flex items-center justify-center hover:bg-surface-container-high transition-colors disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="w-10 h-10 rounded-lg bg-primary text-white flex items-center justify-center font-body-medium">1</button>
+<button class="w-10 h-10 rounded-lg border border-outline-variant flex items-center justify-center hover:bg-surface-container-high transition-colors font-body-medium">2</button>
+<button class="w-10 h-10 rounded-lg border border-outline-variant flex items-center justify-center hover:bg-surface-container-high transition-colors font-body-medium">3</button>
+<button class="w-10 h-10 rounded-lg border border-outline-variant flex items-center justify-center hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Atmospheric Secondary Section -->
+<div class="mt-xl grid grid-cols-1 md:grid-cols-2 gap-lg">
+<div class="relative rounded-xl overflow-hidden h-48 group">
+<img class="w-full h-full object-cover" data-alt="A clean, minimalist high-tech control center with sleek monitors displaying energy usage graphs and charts in a cool blue and white palette. The scene represents professional energy management and digital surveillance of utility services, matching the PLN Mobile's corporate modernism style with clinical clarity and precision geometry." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfxncxYaSgcYbSOyKGDZACOMo4fyLvXmkAGNx04jJ0KjkEM8TVg1D5DcJ1fze9wuotzXHvWPAcoyAorNv5Jn5LHwUeAeNsd5TKnD4txzYARWOAaX6rNb2gSn8TZ4LvKScFPhpTuHXONOS82D09ZV2hELbSzcOx7fVZ8JIMXFBXtyJY06CrF56b6qLxjkaDZ-iPtDZERGyJC587Qy1K3yW7aUWKcvro-csv_bY0bpH1VjjWGKb3s9akLS2Ws0l65zll5Qs3MwX7ZeAU"/>
+<div class="absolute inset-0 bg-primary/40 mix-blend-multiply transition-opacity group-hover:opacity-30"></div>
+<div class="absolute inset-0 p-lg flex flex-col justify-end text-white">
+<h4 class="font-headline-sm text-headline-sm">Energy Report</h4>
+<p class="text-sm opacity-90">View your detailed consumption habits for Q4 2023.</p>
+</div>
+</div>
+<div class="bg-secondary-container/30 border border-secondary-fixed-dim rounded-xl p-lg flex flex-col justify-center gap-md">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 rounded-xl bg-white flex items-center justify-center text-primary shadow-sm">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">help</span>
+</div>
+<div>
+<h4 class="font-body-medium text-on-secondary-container">Transaction discrepancy?</h4>
+<p class="text-sm text-on-secondary-container/80">Report any issues to our 24/7 support team.</p>
+</div>
+</div>
+<button class="w-full py-md bg-white border border-secondary-fixed-dim rounded-lg text-primary font-bold hover:bg-surface-container-highest transition-colors active:scale-95 transition-transform">
+                    Contact Customer Care
+                </button>
+</div>
+</div>
+</main>
+<!-- BottomNavBar Shell -->
+<nav class="fixed bottom-0 w-full z-50 rounded-t-xl bg-surface-container-lowest border-t border-outline-variant shadow-md">
+<div class="flex justify-around items-center h-20 px-sm w-full">
+<!-- Home -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-colors px-4 py-1" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-caps text-label-caps mt-1">Home</span>
+</a>
+<!-- History (Active) -->
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">receipt_long</span>
+<span class="font-label-caps text-label-caps mt-1">History</span>
+</a>
+<!-- Updates -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-colors px-4 py-1" href="#">
+<span class="material-symbols-outlined">campaign</span>
+<span class="font-label-caps text-label-caps mt-1">Updates</span>
+</a>
+<!-- Profile -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-colors px-4 py-1" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-caps text-label-caps mt-1">Profile</span>
+</a>
+</div>
+</nav>
+<script>
+        // Micro-interaction for table rows
+        document.querySelectorAll('tbody tr').forEach(row => {
+            row.addEventListener('click', () => {
+                // Future expansion: Open transaction detail modal
+                console.log('Opening transaction details...');
+            });
+        });
+
+        // Simple filtering simulation for demonstration
+        const filterButtons = document.querySelectorAll('button span:contains("expand_more")');
+        filterButtons.forEach(btn => {
+            btn.parentElement.addEventListener('click', (e) => {
+                e.stopPropagation();
+                // Add dropdown logic here
+            });
+        });
+    </script>
+</body></html>

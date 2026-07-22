@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Maintenance Schedule | Smart PJU Control</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Geist:wght@400;700&family=JetBrains+Mono&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #e2e8f0;
+            border-radius: 10px;
+        }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "surface-dim": "#d8dadc",
+                    "secondary-fixed-dim": "#b0c8eb",
+                    "on-secondary-fixed": "#001c37",
+                    "inverse-surface": "#2d3133",
+                    "error": "#ba1a1a",
+                    "primary-fixed": "#dbe1ff",
+                    "inverse-on-surface": "#eff1f3",
+                    "secondary": "#49607e",
+                    "tertiary-fixed": "#ffddb8",
+                    "surface-container-low": "#f2f4f6",
+                    "surface-container-highest": "#e0e3e5",
+                    "background": "#f7f9fb",
+                    "on-primary": "#ffffff",
+                    "outline": "#737686",
+                    "error-container": "#ffdad6",
+                    "inverse-primary": "#b4c5ff",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "on-secondary-container": "#49617f",
+                    "on-background": "#191c1e",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-fixed": "#d2e4ff",
+                    "on-secondary": "#ffffff",
+                    "tertiary": "#784b00",
+                    "outline-variant": "#c3c6d7",
+                    "tertiary-container": "#996100",
+                    "on-primary-fixed-variant": "#003ea8",
+                    "on-surface": "#191c1e",
+                    "on-primary-fixed": "#00174b",
+                    "secondary-container": "#c4dcff",
+                    "surface": "#f7f9fb",
+                    "on-tertiary-fixed": "#2a1700",
+                    "on-surface-variant": "#434655",
+                    "on-error": "#ffffff",
+                    "surface-tint": "#0053db",
+                    "on-secondary-fixed-variant": "#314865",
+                    "surface-variant": "#e0e3e5",
+                    "surface-container": "#eceef0",
+                    "primary-container": "#2563eb",
+                    "on-primary-container": "#eeefff",
+                    "surface-bright": "#f7f9fb",
+                    "primary": "#004ac6",
+                    "on-tertiary-container": "#ffeedd",
+                    "surface-container-high": "#e6e8ea"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "form-max": "768px",
+                    "lg": "24px",
+                    "md": "16px",
+                    "container-max": "1280px",
+                    "gutter": "16px",
+                    "base": "4px",
+                    "xs": "4px",
+                    "sm": "8px",
+                    "xl": "32px"
+            },
+            "fontFamily": {
+                    "label-caps": ["Geist"],
+                    "body-medium": ["Inter"],
+                    "body-base": ["Inter"],
+                    "headline-md": ["Geist"],
+                    "code-sm": ["JetBrains Mono"],
+                    "stat-lg": ["Geist"],
+                    "display-lg": ["Geist"],
+                    "headline-sm": ["Geist"]
+            },
+            "fontSize": {
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "body-medium": ["14px", {"lineHeight": "20px", "letterSpacing": "0", "fontWeight": "500"}],
+                    "body-base": ["14px", {"lineHeight": "20px", "letterSpacing": "0", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "code-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0", "fontWeight": "400"}],
+                    "stat-lg": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "display-lg": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-sm": ["18px", {"lineHeight": "24px", "letterSpacing": "0", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body-base min-h-screen pb-24">
+<!-- Top App Bar -->
+<header class="bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline docked full-width top-0 sticky z-40">
+<div class="flex justify-between items-center w-full px-4 h-16">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed">bolt</span>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-inverse-primary">Smart PJU Control</h1>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 rounded-full hover:bg-surface-container-high transition-colors active:scale-95">
+<span class="material-symbols-outlined text-on-surface-variant">search</span>
+</button>
+<button class="p-2 rounded-full hover:bg-surface-container-high transition-colors active:scale-95">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+</button>
+</div>
+</div>
+</header>
+<main class="max-w-container-max mx-auto px-4 py-8 space-y-8">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h2 class="font-display-lg text-display-lg text-on-surface">Maintenance Schedule</h2>
+<p class="font-body-medium text-body-medium text-on-surface-variant">Manage and monitor automated and manual infrastructure tasks.</p>
+</div>
+<button class="bg-primary-container text-on-primary-container px-6 h-[44px] rounded-xl font-body-medium flex items-center justify-center gap-2 hover:brightness-95 active:scale-95 transition-all">
+<span class="material-symbols-outlined">add</span>
+                Add Manual Schedule
+            </button>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Left Column: Calendar and Quick Stats -->
+<div class="lg:col-span-4 space-y-8">
+<!-- Calendar Card -->
+<section class="bg-surface-container-lowest rounded-xl border border-outline-variant p-6">
+<div class="flex items-center justify-between mb-6">
+<h3 class="font-headline-sm text-headline-sm">October 2023</h3>
+<div class="flex gap-1">
+<button class="p-1 hover:bg-surface-container rounded transition-colors"><span class="material-symbols-outlined">chevron_left</span></button>
+<button class="p-1 hover:bg-surface-container rounded transition-colors"><span class="material-symbols-outlined">chevron_right</span></button>
+</div>
+</div>
+<div class="calendar-grid text-center text-on-surface-variant font-label-caps text-label-caps mb-2">
+<div>S</div><div>M</div><div>T</div><div>W</div><div>T</div><div>F</div><div>S</div>
+</div>
+<div class="calendar-grid gap-y-2">
+<!-- Simplified Calendar Mockup -->
+<div class="py-2 text-outline">24</div><div class="py-2 text-outline">25</div><div class="py-2 text-outline">26</div><div class="py-2 text-outline">27</div><div class="py-2 text-outline">28</div><div class="py-2 text-outline">29</div><div class="py-2 text-on-surface">1</div>
+<div class="py-2 text-on-surface">2</div><div class="py-2 text-on-surface">3</div><div class="py-2 text-on-surface bg-primary-container text-on-primary-container rounded-lg">4</div><div class="py-2 text-on-surface">5</div><div class="py-2 text-on-surface">6</div><div class="py-2 text-on-surface">7</div><div class="py-2 text-on-surface">8</div>
+<div class="py-2 text-on-surface">9</div><div class="py-2 text-on-surface">10</div><div class="py-2 text-on-surface">11</div><div class="py-2 text-on-surface">12</div><div class="py-2 text-on-surface">13</div><div class="py-2 text-on-surface">14</div><div class="py-2 text-on-surface">15</div>
+<div class="py-2 text-on-surface">16</div><div class="py-2 text-on-surface">17</div><div class="py-2 text-on-surface">18</div><div class="py-2 text-on-surface">19</div><div class="py-2 text-on-surface">20</div><div class="py-2 text-on-surface">21</div><div class="py-2 text-on-surface">22</div>
+<div class="py-2 text-on-surface">23</div><div class="py-2 text-on-surface">24</div><div class="py-2 text-on-surface">25</div><div class="py-2 text-on-surface">26</div><div class="py-2 text-on-surface">27</div><div class="py-2 text-on-surface">28</div><div class="py-2 text-on-surface">29</div>
+</div>
+</section>
+<!-- Quick Stats -->
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-surface-container-lowest border border-outline-variant p-4 rounded-xl">
+<div class="flex justify-between items-start mb-2">
+<div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">engineering</span>
+</div>
+</div>
+<div class="font-stat-lg text-stat-lg">12</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant">PENDING TASKS</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant p-4 rounded-xl">
+<div class="flex justify-between items-start mb-2">
+<div class="w-10 h-10 rounded-xl bg-tertiary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-tertiary">check_circle</span>
+</div>
+</div>
+<div class="font-stat-lg text-stat-lg">45</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant">COMPLETED</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Task List -->
+<div class="lg:col-span-8">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden flex flex-col h-full">
+<div class="p-6 border-b border-outline-variant flex items-center justify-between bg-surface-container-low/50">
+<h3 class="font-headline-sm text-headline-sm">Upcoming Tasks</h3>
+<div class="flex gap-2">
+<select class="bg-surface border border-outline-variant rounded-lg text-body-medium px-3 py-1.5 focus:ring-2 focus:ring-primary outline-none">
+<option>All Status</option>
+<option>Scheduled</option>
+<option>In Progress</option>
+</select>
+</div>
+</div>
+<div class="flex-grow overflow-y-auto custom-scrollbar">
+<!-- Task Item 1 -->
+<div class="p-6 border-b border-outline-variant hover:bg-surface-container-low transition-colors group cursor-pointer">
+<div class="flex flex-col md:flex-row md:items-start justify-between gap-4">
+<div class="flex gap-4">
+<div class="mt-1 w-2 h-2 rounded-full bg-primary flex-shrink-0"></div>
+<div class="space-y-1">
+<h4 class="font-body-medium text-body-medium text-on-surface group-hover:text-primary transition-colors">Routine Check - Area Sudirman</h4>
+<div class="flex flex-wrap gap-x-4 gap-y-1 text-on-surface-variant font-body-base text-[13px]">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">calendar_today</span> Oct 12, 2023</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">group</span> Team Alpha (Technician)</span>
+<span class="flex items-center gap-1 font-semibold text-error"><span class="material-symbols-outlined text-[16px]">priority_high</span> High Priority</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<span class="px-3 py-1 rounded-full bg-blue-100 text-blue-700 font-label-caps text-[10px] uppercase tracking-wider">Scheduled</span>
+<button class="p-2 rounded-lg border border-outline-variant hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Task Item 2 -->
+<div class="p-6 border-b border-outline-variant hover:bg-surface-container-low transition-colors group cursor-pointer">
+<div class="flex flex-col md:flex-row md:items-start justify-between gap-4">
+<div class="flex gap-4">
+<div class="mt-1 w-2 h-2 rounded-full bg-tertiary flex-shrink-0"></div>
+<div class="space-y-1">
+<h4 class="font-body-medium text-body-medium text-on-surface group-hover:text-primary transition-colors">Replacement of LED - Area Blok M</h4>
+<div class="flex flex-wrap gap-x-4 gap-y-1 text-on-surface-variant font-body-base text-[13px]">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">calendar_today</span> Oct 14, 2023</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">group</span> Team Beta (Civil)</span>
+<span class="flex items-center gap-1 font-semibold text-secondary"><span class="material-symbols-outlined text-[16px]">low_priority</span> Medium Priority</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<span class="px-3 py-1 rounded-full bg-amber-100 text-amber-700 font-label-caps text-[10px] uppercase tracking-wider">In Progress</span>
+<button class="p-2 rounded-lg border border-outline-variant hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Task Item 3 -->
+<div class="p-6 border-b border-outline-variant hover:bg-surface-container-low transition-colors group cursor-pointer">
+<div class="flex flex-col md:flex-row md:items-start justify-between gap-4">
+<div class="flex gap-4">
+<div class="mt-1 w-2 h-2 rounded-full bg-outline flex-shrink-0"></div>
+<div class="space-y-1">
+<h4 class="font-body-medium text-body-medium text-on-surface group-hover:text-primary transition-colors">Sensor Calibration - Kuningan Bypass</h4>
+<div class="flex flex-wrap gap-x-4 gap-y-1 text-on-surface-variant font-body-base text-[13px]">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">calendar_today</span> Oct 15, 2023</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">group</span> Automated System</span>
+<span class="flex items-center gap-1 font-semibold text-secondary"><span class="material-symbols-outlined text-[16px]">low_priority</span> Low Priority</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<span class="px-3 py-1 rounded-full bg-slate-100 text-slate-700 font-label-caps text-[10px] uppercase tracking-wider">Scheduled</span>
+<button class="p-2 rounded-lg border border-outline-variant hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Task Item 4 -->
+<div class="p-6 border-b border-outline-variant hover:bg-surface-container-low transition-colors group cursor-pointer opacity-70">
+<div class="flex flex-col md:flex-row md:items-start justify-between gap-4">
+<div class="flex gap-4">
+<div class="mt-1 w-2 h-2 rounded-full bg-emerald-500 flex-shrink-0"></div>
+<div class="space-y-1">
+<h4 class="font-body-medium text-body-medium text-on-surface line-through">Grounding Inspection - Senayan Circle</h4>
+<div class="flex flex-wrap gap-x-4 gap-y-1 text-on-surface-variant font-body-base text-[13px]">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">calendar_today</span> Oct 08, 2023</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">group</span> Team Delta</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 font-label-caps text-[10px] uppercase tracking-wider">Completed</span>
+<button class="p-2 rounded-lg border border-outline-variant hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Task Distribution Map Preview (Themed) -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden">
+<div class="p-6 border-b border-outline-variant">
+<h3 class="font-headline-sm text-headline-sm">Maintenance Distribution</h3>
+</div>
+<div class="relative h-[300px]">
+<div class="w-full h-full bg-cover bg-center grayscale contrast-125" data-alt="A clean, minimalist topographical map of a metropolitan city area like Jakarta at night, featuring glowing markers for maintenance zones. The map uses a sophisticated slate and blue color palette, with high-contrast UI overlays showing maintenance density. The visual style is professional, engineering-focused, and sharp." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBnWTdLHlXEpGm3qtSDyICs4vfi7k-YeZL8KEj84C4Cg_fMi9U1PjqvWFs09UIqd8azUjknChKuu79mEgY7KF65JQsjRBCV7gxz_HJ4Vb9Qtfkw2QQ-IrFOk-ofsd46L8F9exMRLIycHa-gtQNNG0u7TX4U2fDS1qiLnFSBvbvDf0LlP7JNNcM_qV6KcSxmMlhVO3IAqKS1MQVUMk7aA9O5wvQ99FmY1cZ9Kg053t8yq6xTkhenPRpgQDR2_jEpTiGBMsWFjsv9cu2o')"></div>
+<div class="absolute inset-0 bg-primary/5 pointer-events-none"></div>
+<!-- Mock Map Overlays -->
+<div class="absolute top-4 left-4 p-3 bg-surface-container-lowest border border-outline-variant rounded-lg shadow-sm">
+<div class="text-label-caps font-label-caps text-on-surface-variant mb-1">SELECTED ZONE</div>
+<div class="font-body-medium">Jakarta South - District 4</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Bar (Mobile) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-surface dark:bg-inverse-surface border-t border-outline-variant dark:border-outline flex justify-around items-center px-4 py-2 z-50">
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2 hover:text-primary dark:hover:text-primary-fixed active:scale-90 transition-transform">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-caps text-label-caps">Dashboard</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2 hover:text-primary dark:hover:text-primary-fixed active:scale-90 transition-transform">
+<span class="material-symbols-outlined">map</span>
+<span class="font-label-caps text-label-caps">Map</span>
+</button>
+<button class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl p-2 active:scale-90 transition-transform">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-caps text-label-caps">Analytics</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2 hover:text-primary dark:hover:text-primary-fixed active:scale-90 transition-transform">
+<span class="material-symbols-outlined">warning</span>
+<span class="font-label-caps text-label-caps">Alerts</span>
+</button>
+</nav>
+<!-- Task Detail Backdrop Modal (Interactive Logic Mock) -->
+<div class="fixed inset-0 bg-on-background/20 backdrop-blur-sm z-[100] hidden items-center justify-center p-4" id="modal">
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant w-full max-w-lg overflow-hidden shadow-xl">
+<div class="p-6 border-b border-outline-variant flex justify-between items-center">
+<h3 class="font-headline-sm text-headline-sm">Task Details</h3>
+<button class="p-1 hover:bg-surface-container rounded-full" onclick="toggleModal()"><span class="material-symbols-outlined">close</span></button>
+</div>
+<div class="p-6 space-y-6">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">engineering</span>
+</div>
+<div>
+<div class="font-headline-sm text-headline-sm">Routine Check - Area Sudirman</div>
+<div class="text-on-surface-variant text-body-medium">Work Order #WO-2023-0941</div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="space-y-1">
+<div class="font-label-caps text-label-caps text-on-surface-variant">DATE & TIME</div>
+<div class="font-body-medium">Oct 12, 2023 • 09:00 AM</div>
+</div>
+<div class="space-y-1">
+<div class="font-label-caps text-label-caps text-on-surface-variant">LOCATION</div>
+<div class="font-body-medium">Area Sudirman Central</div>
+</div>
+<div class="space-y-1">
+<div class="font-label-caps text-label-caps text-on-surface-variant">ASSIGNED TEAM</div>
+<div class="font-body-medium">Team Alpha (R. Wijaya)</div>
+</div>
+<div class="space-y-1">
+<div class="font-label-caps text-label-caps text-on-surface-variant">PRIORITY</div>
+<div class="font-body-medium text-error">High Priority</div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="font-label-caps text-label-caps text-on-surface-variant">DESCRIPTION</div>
+<p class="text-body-base text-on-surface-variant">Standard quarterly inspection of PJU control boxes. Check for corrosion, wiring integrity, and sensor responsiveness. Replace any aging components as necessary.</p>
+</div>
+</div>
+<div class="p-6 border-t border-outline-variant bg-surface-container-low flex justify-end gap-3">
+<button class="px-4 py-2 border border-outline-variant rounded-lg text-body-medium hover:bg-surface-container-high transition-colors" onclick="toggleModal()">Close</button>
+<button class="px-4 py-2 bg-primary text-on-primary rounded-lg text-body-medium hover:brightness-110 transition-all">Edit Task</button>
+</div>
+</div>
+</div>
+<script>
+        function toggleModal() {
+            const modal = document.getElementById('modal');
+            modal.classList.toggle('hidden');
+            modal.classList.toggle('flex');
+        }
+
+        // Add micro-interactions for task list items
+        document.querySelectorAll('.cursor-pointer').forEach(item => {
+            item.addEventListener('click', () => {
+                toggleModal();
+            });
+        });
+    </script>
+</body></html>

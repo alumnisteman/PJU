@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+
+<html class="light" lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Citizen Mobility Dashboard - Ternate Smart PJU</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono&amp;family=Geist:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-highest": "#e0e3e5",
+                    "secondary-fixed-dim": "#b0c8eb",
+                    "secondary-fixed": "#d2e4ff",
+                    "surface-bright": "#f7f9fb",
+                    "surface": "#f7f9fb",
+                    "primary-fixed": "#dbe1ff",
+                    "surface-container-high": "#e6e8ea",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "on-error": "#ffffff",
+                    "error": "#ba1a1a",
+                    "on-primary": "#ffffff",
+                    "surface-variant": "#e0e3e5",
+                    "outline": "#737686",
+                    "on-primary-container": "#eeefff",
+                    "error-container": "#ffdad6",
+                    "on-tertiary-fixed": "#2a1700",
+                    "on-primary-fixed-variant": "#003ea8",
+                    "inverse-on-surface": "#eff1f3",
+                    "secondary-container": "#c4dcff",
+                    "surface-dim": "#d8dadc",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary-fixed-variant": "#314865",
+                    "background": "#f7f9fb",
+                    "tertiary": "#784b00",
+                    "primary": "#004ac6",
+                    "on-tertiary": "#ffffff",
+                    "on-secondary": "#ffffff",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "outline-variant": "#c3c6d7",
+                    "tertiary-container": "#996100",
+                    "surface-tint": "#0053db",
+                    "on-surface": "#191c1e",
+                    "secondary": "#49607e",
+                    "on-surface-variant": "#434655",
+                    "tertiary-fixed": "#ffddb8",
+                    "on-background": "#191c1e",
+                    "on-secondary-fixed": "#001c37",
+                    "on-primary-fixed": "#00174b",
+                    "on-error-container": "#93000a",
+                    "inverse-surface": "#2d3133",
+                    "on-tertiary-container": "#ffeedd",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "on-secondary-container": "#49617f",
+                    "surface-container-low": "#f2f4f6",
+                    "surface-container": "#eceef0",
+                    "inverse-primary": "#b4c5ff",
+                    "primary-container": "#2563eb"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "12px",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "md": "16px",
+                    "form-max": "768px",
+                    "xs": "4px",
+                    "lg": "24px",
+                    "container-max": "1280px",
+                    "base": "4px",
+                    "xl": "32px",
+                    "gutter": "16px",
+                    "sm": "8px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Geist"],
+                    "display-lg": ["Geist"],
+                    "body-medium": ["Inter"],
+                    "code-sm": ["JetBrains Mono"],
+                    "body-base": ["Inter"],
+                    "stat-lg": ["Geist"],
+                    "label-caps": ["Geist"],
+                    "headline-sm": ["Geist"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "display-lg": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-medium": ["14px", {"lineHeight": "20px", "letterSpacing": "0", "fontWeight": "500"}],
+                    "code-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0", "fontWeight": "400"}],
+                    "body-base": ["14px", {"lineHeight": "20px", "letterSpacing": "0", "fontWeight": "400"}],
+                    "stat-lg": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "headline-sm": ["18px", {"lineHeight": "24px", "letterSpacing": "0", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #f7f9fb;
+            color: #191c1e;
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+        @media (max-width: 768px) {
+            .bento-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        .blueprint-pattern {
+            background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-base pb-24">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex items-center justify-between px-md h-14 bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed-dim" data-icon="bolt">bolt</span>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim">Ternate Smart PJU</h1>
+</div>
+<div class="flex items-center gap-md">
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-high transition-colors p-2 rounded-full" data-icon="notifications">notifications</button>
+</div>
+</header>
+<main class="mt-14 p-md lg:p-lg max-w-container-max mx-auto">
+<!-- Welcome Header -->
+<section class="mb-xl pt-lg">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-md">
+<div>
+<p class="font-label-caps text-label-caps text-primary mb-xs">SELAMAT DATANG</p>
+<h2 class="font-display-lg text-display-lg text-on-surface">Halo, Warga Ternate</h2>
+</div>
+<div class="flex items-center gap-sm px-md py-sm bg-surface-container-low rounded-xl border border-outline-variant">
+<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+<p class="font-body-medium text-body-medium">Koneksi Mesh Aktif: Kota Terang</p>
+</div>
+</div>
+</section>
+<!-- Status Kota Hari Ini (Bento Grid Style) -->
+<section class="mb-xl">
+<h3 class="font-headline-sm text-headline-sm mb-md flex items-center gap-sm">
+<span class="material-symbols-outlined" data-icon="insights">insights</span>
+                Status Kota Hari Ini
+            </h3>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-md">
+<!-- PJU Health -->
+<div class="bg-surface-container-lowest p-md rounded-xl border border-outline-variant shadow-sm flex flex-col justify-between">
+<div class="flex justify-between items-start mb-md">
+<span class="font-label-caps text-label-caps text-on-surface-variant">KESEHATAN PJU</span>
+<div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="lightbulb">lightbulb</span>
+</div>
+</div>
+<div>
+<p class="font-stat-lg text-stat-lg">98.4%</p>
+<p class="font-body-medium text-body-medium text-on-surface-variant">2,410 Titik Aktif</p>
+</div>
+<div class="mt-md h-1.5 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary" style="width: 98.4%"></div>
+</div>
+</div>
+<!-- EV Hubs -->
+<div class="bg-surface-container-lowest p-md rounded-xl border border-outline-variant shadow-sm flex flex-col justify-between">
+<div class="flex justify-between items-start mb-md">
+<span class="font-label-caps text-label-caps text-on-surface-variant">EV CHARGING</span>
+<div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="ev_station">ev_station</span>
+</div>
+</div>
+<div>
+<p class="font-stat-lg text-stat-lg">12 / 15</p>
+<p class="font-body-medium text-body-medium text-on-surface-variant">Hub Tersedia Sekarang</p>
+</div>
+<div class="mt-md h-1.5 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-secondary" style="width: 80%"></div>
+</div>
+</div>
+<!-- Carbon Saved -->
+<div class="bg-surface-container-lowest p-md rounded-xl border border-outline-variant shadow-sm flex flex-col justify-between blueprint-pattern">
+<div class="flex justify-between items-start mb-md">
+<span class="font-label-caps text-label-caps text-on-surface-variant">ESTIMASI KARBON</span>
+<div class="w-10 h-10 rounded-xl bg-tertiary/10 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined" data-icon="eco">eco</span>
+</div>
+</div>
+<div>
+<p class="font-stat-lg text-stat-lg">-4.2t</p>
+<p class="font-body-medium text-body-medium text-on-surface-variant">Reduksi emisi bulan ini</p>
+</div>
+<div class="mt-md flex items-center text-emerald-600 font-body-medium gap-1">
+<span class="material-symbols-outlined text-sm" data-icon="trending_down">trending_down</span>
+<span>Efisiensi meningkat 12%</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Safety & Quick Actions -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-lg mb-xl">
+<!-- SOS Visual (Safety First) -->
+<div class="lg:col-span-5 bg-error text-on-error p-lg rounded-xl flex flex-col justify-between relative overflow-hidden group active:scale-[0.98] transition-transform cursor-pointer shadow-lg shadow-error/20">
+<div class="relative z-10">
+<h3 class="font-headline-md text-headline-md mb-xs">Fitur Keselamatan</h3>
+<p class="font-body-medium opacity-90 mb-lg max-w-[280px]">Aktifkan SOS Visual untuk memicu pencahayaan maksimal dan sinyal darurat pada tiang PJU terdekat.</p>
+<button class="bg-white text-error font-bold px-lg py-md rounded-full flex items-center gap-md hover:bg-error-container transition-colors">
+<span class="material-symbols-outlined font-bold" data-icon="emergency_share" data-weight="fill">emergency_share</span>
+                        Trigger SOS Visual
+                    </button>
+</div>
+<div class="absolute -right-10 -bottom-10 opacity-10 group-hover:scale-110 transition-transform duration-500">
+<span class="material-symbols-outlined text-[200px]" data-icon="warning">warning</span>
+</div>
+</div>
+<!-- Quick Actions Grid -->
+<div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-3 gap-md">
+<div class="bg-white border border-outline-variant p-md rounded-xl hover:bg-surface-container-high transition-all cursor-pointer flex flex-col items-center text-center justify-center gap-sm">
+<div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container mb-xs">
+<span class="material-symbols-outlined" data-icon="electric_car">electric_car</span>
+</div>
+<p class="font-body-medium font-bold">Cari Charger EV</p>
+</div>
+<div class="bg-white border border-outline-variant p-md rounded-xl hover:bg-surface-container-high transition-all cursor-pointer flex flex-col items-center text-center justify-center gap-sm">
+<div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container mb-xs">
+<span class="material-symbols-outlined" data-icon="report_problem">report_problem</span>
+</div>
+<p class="font-body-medium font-bold">Lapor Lampu Padam</p>
+</div>
+<div class="bg-white border border-outline-variant p-md rounded-xl hover:bg-surface-container-high transition-all cursor-pointer flex flex-col items-center text-center justify-center gap-sm">
+<div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container mb-xs">
+<span class="material-symbols-outlined" data-icon="security">security</span>
+</div>
+<p class="font-body-medium font-bold">Peta Keamanan</p>
+</div>
+</div>
+</section>
+<!-- News & Updates -->
+<section>
+<div class="flex justify-between items-center mb-md">
+<h3 class="font-headline-sm text-headline-sm">Pembaruan Kota Cerdas</h3>
+<button class="text-primary font-body-medium hover:underline">Lihat Semua</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
+<div class="group cursor-pointer">
+<div class="aspect-video w-full overflow-hidden rounded-xl mb-md">
+<div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500" data-alt="A futuristic smart city landscape in Ternate at dusk, featuring sleek LED smart street poles along a coastal road. The lighting is a cool blue and crisp white, highlighting modern infrastructure against a tropical volcanic mountain background. The style is clean, architectural photography with professional color grading." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCaNl-LFBAEmWj9Y9yLKhgsGr35Gf-J8mG2SCm1di1J3xchqpfJbO-dBAegipxxdY28dfmJmlCPRjwaraBUlUSZ7ja4SkovMrY2IIUKjNPCwMC8gLSL_20xuiDg-4ICS_PjqmXFeDy63FXq52jYecCryb9vjuCZk07QFeG1jhtm50oqZcCWpaeE1qzZAzJVxRKTaAqZwAAsJfJC_3pQCjjk7Lb--eHPZmgt6zZfz6j9wg7c6onJUkYjZlbj8qy9v_l4OuLndMU5Om0Z')"></div>
+</div>
+<span class="font-label-caps text-label-caps text-secondary">INFRASTRUKTUR</span>
+<h4 class="font-headline-sm text-headline-sm group-hover:text-primary transition-colors">Ekspansi Jaringan PJU Pintar di Kawasan Pantai Falajawa</h4>
+<p class="font-body-base text-on-surface-variant mt-sm">Implementasi 50 titik lampu baru dengan sensor gerak dan konektivitas 5G Mesh.</p>
+</div>
+<div class="group cursor-pointer">
+<div class="aspect-video w-full overflow-hidden rounded-xl mb-md">
+<div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500" data-alt="A modern electric vehicle charging station in a clean, high-tech urban setting. A sleek electric car is parked and charging. The lighting is bright and airy, using a palette of whites, light grays, and primary blue accents. Professional industrial design aesthetic, emphasizes cleanliness and reliability." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCm95PH7UUc2GIHxyUW4zQsfHgl66e3leK7fDNOE1Yr27-B67uBAEtNiFKULlLMoZ4r-8L98r7u0FZGOMl3ylBAr_aG4NC4K05XjCbha9uDWxSgwsWRex4UZnLsR8wLE6uLCW-11bZTklcT4SbWT8i3piyGybqoF_sVhJPIOFndcDZwLwi89l053pzd8gNVM1jcSHFFh1kM7I11jSMyIKcuN2_HtFf-BNU4XAJJoGq_o17ST9j1PWpw80PaJmbYgteaeIO4i0ZMovLk')"></div>
+</div>
+<span class="font-label-caps text-label-caps text-secondary">MOBILITAS</span>
+<h4 class="font-headline-sm text-headline-sm group-hover:text-primary transition-colors">Peresmian Hub Charger EV Terintegrasi Pertama</h4>
+<p class="font-body-base text-on-surface-variant mt-sm">Kini warga dapat mengisi daya kendaraan listrik menggunakan aplikasi Ternate Smart.</p>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-sm py-xs pb-safe bg-surface-container dark:bg-surface-dim border-t border-outline-variant dark:border-outline shadow-sm rounded-t-xl">
+<button class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 active:scale-90 duration-150 ease-in-out">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-caps text-label-caps">Home</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant transition-colors active:scale-90 duration-150 ease-in-out">
+<span class="material-symbols-outlined" data-icon="map">map</span>
+<span class="font-label-caps text-label-caps">Map</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant transition-colors active:scale-90 duration-150 ease-in-out">
+<span class="material-symbols-outlined" data-icon="feedback">feedback</span>
+<span class="font-label-caps text-label-caps">Reports</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant transition-colors active:scale-90 duration-150 ease-in-out">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-caps text-label-caps">Profile</span>
+</button>
+</nav>
+<!-- Micro-interaction for SOS button -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sosBtn = document.querySelector('.bg-error');
+            sosBtn.addEventListener('click', () => {
+                if(confirm("Konfirmasi Aktifkan SOS Visual? Hal ini akan memicu peringatan di jaringan PJU terdekat.")) {
+                    alert("Sinyal SOS dikirim. Tetap di tempat yang terang.");
+                }
+            });
+
+            // Ripple effect simulation on cards
+            const cards = document.querySelectorAll('.bg-white.border');
+            cards.forEach(card => {
+                card.addEventListener('mousedown', function() {
+                    this.classList.add('scale-95');
+                });
+                card.addEventListener('mouseup', function() {
+                    this.classList.remove('scale-95');
+                });
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>PJU Digital Twin - Modul Indeks</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Material+Symbols+Outlined:wght,FILL@400,0..1&display=swap" rel="stylesheet"/>
+    <script src="js/api-client.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f0f4f8; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .module-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .module-card:hover { transform: translateY(-4px); box-shadow: 0 10px 25px -5px rgba(0, 74, 198, 0.1), 0 8px 10px -6px rgba(0, 74, 198, 0.1); }
+        .bg-grid { background-image: radial-gradient(#cbd5e1 1px, transparent 1px); background-size: 20px 20px; }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: { 50: '#eff6ff', 100: '#dbeafe', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 900: '#1e3a8a' },
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="text-slate-800 antialiased min-h-screen relative">
+    <div class="fixed inset-0 bg-grid opacity-30 z-0 pointer-events-none"></div>
+    
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <!-- Header -->
+        <div class="text-center mb-16">
+            <div class="inline-flex items-center justify-center p-3 bg-primary-100 rounded-2xl mb-6 shadow-inner">
+                <span class="material-symbols-outlined text-4xl text-primary-600">lightbulb_circle</span>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 mb-4">
+                Sistem PJU Cerdas <span class="text-primary-600">Digital Twin</span>
+            </h1>
+            <p class="text-lg text-slate-600 max-w-2xl mx-auto">
+                Direktori lengkap seluruh modul dan komponen UI dari sistem Penerangan Jalan Umum Cerdas. Pilih modul di bawah ini untuk melihat pratinjau antarmuka.
+            </p>
+            
+            <!-- Search -->
+            <div class="mt-8 max-w-xl mx-auto relative">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                    <span class="material-symbols-outlined text-slate-400">search</span>
+                </div>
+                <input type="text" id="searchInput" class="block w-full pl-11 pr-4 py-4 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white shadow-sm text-slate-900 transition-shadow placeholder-slate-400 text-lg" placeholder="Cari modul..." onkeyup="filterModules()">
+            </div>
+        </div>
+
+        <!-- Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="moduleGrid">
+            <!-- Items injected here -->
+        </div>
+    </div>
+
+    <script>
+        const modules = [
+            { id: "absensi_kehadiran_teknisi", name: "Absensi & Kehadiran", icon: "person_check" },
+            { id: "ai_predictive_maintenance", name: "AI Predictive Maintenance", icon: "memory" },
+            { id: "analitik_alert_pju", name: "Analitik Alert PJU", icon: "warning" },
+            { id: "ar_asset_inspection", name: "AR Asset Inspection", icon: "view_in_ar" },
+            { id: "dashboard_mobilitas_warga", name: "Dashboard Mobilitas", icon: "directions_car" },
+            { id: "dashboard_penugasan_teknisi", name: "Penugasan Teknisi", icon: "assignment" },
+            { id: "dashboard_pln_mobile", name: "Dashboard PLN Mobile", icon: "phone_iphone" },
+            { id: "detail_lapor_lampu_padam", name: "Detail Lampu Padam", icon: "lightbulb_circle" },
+            { id: "detail_penugasan_teknisi", name: "Detail Penugasan", icon: "engineering" },
+            { id: "detail_tiang_lampu", name: "Detail Tiang Lampu", icon: "podcasts" },
+            { id: "digital_twin_command_center", name: "Command Center", icon: "dashboard_customize" },
+            { id: "donasi_lampu_taman", name: "Donasi Lampu Taman", icon: "volunteer_activism" },
+            { id: "esg_sustainability_dash", name: "ESG Sustainability", icon: "eco" },
+            { id: "hub_pengisian_ev_pju", name: "Hub Pengisian EV", icon: "ev_station" },
+            { id: "inspeksi_kendaraan_harian", name: "Inspeksi Kendaraan", icon: "car_repair" },
+            { id: "jadwal_pemeliharaan_pju", name: "Jadwal Pemeliharaan", icon: "calendar_month" },
+            { id: "jaringan_keamanan_publik", name: "Jaringan Keamanan", icon: "security" },
+            { id: "kontrol_adaptif_cuaca", name: "Kontrol Adaptif Cuaca", icon: "cloudy" },
+            { id: "kontrol_suara_command_center", name: "Kontrol Suara", icon: "mic" },
+            { id: "lapor_gangguan_pju", name: "Lapor Gangguan", icon: "report_problem" },
+            { id: "manajemen_bbm_armada", name: "Manajemen BBM", icon: "local_gas_station" },
+            { id: "notifikasi_informasi", name: "Notifikasi Informasi", icon: "notifications" },
+            { id: "pengaturan_rute_berbasis_stok", name: "Pengaturan Rute Stok", icon: "route" },
+            { id: "peta_keamanan_rute_terang", name: "Peta Rute Terang", icon: "map" },
+            { id: "peta_monitoring_pju", name: "Peta Monitoring", icon: "satellite_alt" },
+            { id: "peta_rute_pemeliharaan", name: "Peta Pemeliharaan", icon: "alt_route" },
+            { id: "pju_smart_dashboard", name: "Smart Dashboard", icon: "speed" },
+            { id: "portal_transparansi_publik", name: "Portal Transparansi", icon: "public" },
+            { id: "power_engineering_precision", name: "Power Engineering", icon: "bolt" },
+            { id: "profil_pengguna", name: "Profil Pengguna", icon: "account_circle" },
+            { id: "riwayat_transaksi", name: "Riwayat Transaksi", icon: "receipt_long" },
+            { id: "simulasi_darurat_pju", name: "Simulasi Darurat", icon: "emergency" },
+            { id: "simulasi_penghematan_roi", name: "Simulasi Penghematan", icon: "savings" },
+            { id: "stok_material_kendaraan", name: "Stok Material", icon: "inventory" },
+            { id: "verifikasi_penyelesaian_tugas", name: "Verifikasi Tugas", icon: "task_alt" }
+        ];
+
+        const grid = document.getElementById('moduleGrid');
+
+        function renderModules(items) {
+            grid.innerHTML = items.map(m => `
+                <a href="${m.id}/code.html" class="module-card group block bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm relative">
+                    <div class="p-6">
+                        <div class="w-14 h-14 bg-primary-50 rounded-2xl flex items-center justify-center mb-5 group-hover:bg-primary-600 transition-colors duration-300">
+                            <span class="material-symbols-outlined text-3xl text-primary-600 group-hover:text-white transition-colors duration-300">${m.icon}</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-800 group-hover:text-primary-700 mb-2 transition-colors leading-tight">${m.name}</h3>
+                        <p class="text-sm font-medium text-slate-400 truncate" title="${m.id}">/${m.id}</p>
+                    </div>
+                    <div class="px-6 py-4 bg-slate-50 border-t border-slate-100 flex justify-between items-center group-hover:bg-primary-50 transition-colors">
+                        <span class="text-sm font-semibold text-slate-500 group-hover:text-primary-600">Buka Modul</span>
+                        <div class="w-8 h-8 rounded-full bg-white flex items-center justify-center shadow-sm group-hover:shadow-md transition-shadow">
+                            <span class="material-symbols-outlined text-sm text-slate-400 group-hover:text-primary-600 transition-transform group-hover:translate-x-1">arrow_forward</span>
+                        </div>
+                    </div>
+                </a>
+            `).join('');
+        }
+
+        function filterModules() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = modules.filter(m => 
+                m.name.toLowerCase().includes(query) || m.id.toLowerCase().includes(query)
+            );
+            renderModules(filtered);
+        }
+
+        // Initial render
+        renderModules(modules);
+    </script>
+</body>
+</html>

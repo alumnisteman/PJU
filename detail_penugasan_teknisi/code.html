@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+
+<html lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Detail Penugasan PJU - Sistem PJU Cerdas</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Geist:wght@400;600;700;800&family=JetBrains+Mono&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed": "#2a1700",
+                        "secondary-container": "#c4dcff",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "inverse-on-surface": "#eff1f3",
+                        "surface-variant": "#e0e3e5",
+                        "outline": "#737686",
+                        "on-primary-container": "#eeefff",
+                        "on-primary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "surface-container-high": "#e6e8ea",
+                        "error": "#ba1a1a",
+                        "on-error": "#ffffff",
+                        "secondary-fixed": "#d2e4ff",
+                        "surface-bright": "#f7f9fb",
+                        "surface-container-highest": "#e0e3e5",
+                        "secondary-fixed-dim": "#b0c8eb",
+                        "surface": "#f7f9fb",
+                        "primary-fixed": "#dbe1ff",
+                        "surface-container-low": "#f2f4f6",
+                        "surface-container": "#eceef0",
+                        "on-secondary-container": "#49617f",
+                        "primary-container": "#2563eb",
+                        "inverse-primary": "#b4c5ff",
+                        "on-primary-fixed": "#00174b",
+                        "on-error-container": "#93000a",
+                        "inverse-surface": "#2d3133",
+                        "on-secondary-fixed": "#001c37",
+                        "on-tertiary-container": "#ffeedd",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "outline-variant": "#c3c6d7",
+                        "tertiary-fixed": "#ffddb8",
+                        "on-background": "#191c1e",
+                        "tertiary-container": "#996100",
+                        "surface-tint": "#0053db",
+                        "on-surface": "#191c1e",
+                        "secondary": "#49607e",
+                        "on-surface-variant": "#434655",
+                        "surface-dim": "#d8dadc",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed-variant": "#314865",
+                        "background": "#f7f9fb",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "tertiary": "#784b00",
+                        "primary": "#004ac6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "lg": "24px",
+                        "container-max": "1280px",
+                        "xs": "4px",
+                        "md": "16px",
+                        "form-max": "768px",
+                        "sm": "8px",
+                        "gutter": "16px",
+                        "xl": "32px",
+                        "base": "4px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Geist"],
+                        "display-lg": ["Geist"],
+                        "stat-lg": ["Geist"],
+                        "label-caps": ["Geist"],
+                        "headline-sm": ["Geist"],
+                        "code-sm": ["JetBrains Mono"],
+                        "body-base": ["Inter"],
+                        "body-medium": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "display-lg": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "stat-lg": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                        "headline-sm": ["18px", {"lineHeight": "24px", "letterSpacing": "0", "fontWeight": "600"}],
+                        "code-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0", "fontWeight": "400"}],
+                        "body-base": ["14px", {"lineHeight": "20px", "letterSpacing": "0", "fontWeight": "400"}],
+                        "body-medium": ["14px", {"lineHeight": "20px", "letterSpacing": "0", "fontWeight": "500"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .active-fill {
+            font-variation-settings: 'FILL' 1;
+        }
+        body {
+            background-color: #f7f9fb;
+            color: #191c1e;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid #e2e8f0;
+        }
+        .blueprint-grid {
+            background-image: linear-gradient(#e2e8f0 1px, transparent 1px), linear-gradient(90deg, #e2e8f0 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-base">
+<!-- Top Navigation -->
+<header class="w-full top-0 sticky bg-surface dark:bg-surface-dim border-b border-outline-variant dark:border-outline z-50">
+<div class="flex justify-between items-center px-md h-16 w-full max-w-container-max mx-auto">
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined p-2 hover:bg-surface-container-low transition-colors rounded-full text-primary">menu</button>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">Sistem PJU Cerdas</h1>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden md:flex items-center gap-6 mr-6">
+<span class="text-primary dark:text-primary-fixed font-body-medium cursor-pointer">Dashboard</span>
+<span class="text-on-surface-variant dark:text-on-surface-variant font-body-medium cursor-pointer font-bold">Tugas</span>
+<span class="text-on-surface-variant dark:text-on-surface-variant font-body-medium cursor-pointer">Aset</span>
+</div>
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center border-2 border-primary overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Professional headshot of a technical field engineer in a crisp uniform, high-contrast professional lighting, clean modern aesthetic, soft bokeh background with a hint of technical equipment, reflecting corporate reliability and administrative clarity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTCtNva4_VuevHe5dTj-SbgtgsAWMkxlaczGe7OPKBfHqAucfhPWOukAUjZbKCchZHpWq8uFqUbIODly7D1ErAi28e8_bfJfimOHvSA1HaJ71a9MNY3hYhRUCvfqf1MkPhl6-fyxCNVRmfng2sJegJYy8S1739KusjueuQnwFt5P-dgerxwlvqi7BkoVp5JjdRVTSFUnfhThQt8qVP4ZgFw_nltz3HEU006Rwg2b2yYX3qEFjfgY87kLs7GYBaiEgGSJXVLoP73qwg"/>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-container-max mx-auto p-md md:p-lg flex flex-col gap-6 pb-24">
+<!-- Breadcrumb & Back -->
+<div class="flex items-center gap-2">
+<button class="flex items-center text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-headline-sm">arrow_back</span>
+<span class="font-body-medium ml-2">Kembali ke Daftar Tugas</span>
+</button>
+</div>
+<!-- Hero Status Section -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Main Content Area -->
+<div class="lg:col-span-2 flex flex-col gap-6">
+<!-- Asset Identity Card -->
+<div class="bg-surface-container-lowest rounded-xl p-6 border border-outline-variant shadow-sm relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4">
+<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-error-container text-on-error-container">
+<span class="w-2 h-2 rounded-full bg-error mr-2"></span>
+                            RUSAK PARAH
+                        </span>
+</div>
+<div class="flex flex-col md:flex-row gap-6">
+<div class="w-full md:w-48 h-48 rounded-lg overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="High-detail close-up shot of a modern LED street light pole in an urban setting. The lighting is crisp afternoon sun, highlighting the metallic texture and technical Lora components. The background shows a clean, modern streetscape with blue sky accents, maintaining a professional engineering precision look." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbqOaQ8bBgRaC8_s-bM5P297MMa6kEKb7du9WB6hq7ifvq44HpmSn6itf-7VwfB_G8zzfzfpc5TNNWxy0WTyBe6fnCXCUI0WqTRN_0VdZyAh-1y-EV215VShq9Nzl-OpbItJt-qqOrGW1t_hR-j6COfXSibWzyKFdxLcCeffa3Stxd9W9ztEtVYHR0RmLxF2BXGFGhGy7Qt8yi6vonLo_VZEJR7nGJDPM_CzFM1H2sPoKN1THg2jbcOrTy3_ihvj3FnbcEaBn_hzxj"/>
+</div>
+<div class="flex-1 space-y-4">
+<div>
+<p class="text-label-caps font-label-caps text-on-surface-variant uppercase tracking-wider">Asset ID</p>
+<h2 class="font-headline-md text-headline-md text-primary">PJU-TTE-09921</h2>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<p class="text-label-caps font-label-caps text-on-surface-variant">JENIS LAMPU</p>
+<p class="font-body-medium text-on-surface">LED 120W Smart Dimming</p>
+</div>
+<div>
+<p class="text-label-caps font-label-caps text-on-surface-variant">TANGGAL PEMASANGAN</p>
+<p class="font-body-medium text-on-surface">12 Jan 2022</p>
+</div>
+<div>
+<p class="text-label-caps font-label-caps text-on-surface-variant">KOORDINAT</p>
+<p class="font-code-sm text-code-sm text-primary">0.8351° N, 127.3824° E</p>
+</div>
+<div>
+<p class="text-label-caps font-label-caps text-on-surface-variant">KONEKTIVITAS</p>
+<div class="flex items-center text-error">
+<span class="material-symbols-outlined text-[16px] mr-1">signal_wifi_off</span>
+<p class="font-body-medium">LoRa Offline</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Technical Checklist -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm overflow-hidden">
+<div class="px-6 py-4 border-b border-outline-variant bg-surface-container-low flex justify-between items-center">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Checklist Teknis Perbaikan</h3>
+<span class="text-label-caps font-label-caps text-on-surface-variant">0/3 SELESAI</span>
+</div>
+<div class="p-6 space-y-4">
+<label class="flex items-center p-4 rounded-lg border border-outline-variant hover:bg-surface-container-low transition-all cursor-pointer group">
+<input class="w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/>
+<div class="ml-4 flex-1">
+<p class="font-body-medium text-on-surface font-bold">Cek Fuse & Box Panel</p>
+<p class="text-body-base text-on-surface-variant">Pastikan tidak ada arus pendek pada pengaman utama.</p>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary">electric_bolt</span>
+</label>
+<label class="flex items-center p-4 rounded-lg border border-outline-variant hover:bg-surface-container-low transition-all cursor-pointer group">
+<input class="w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/>
+<div class="ml-4 flex-1">
+<p class="font-body-medium text-on-surface font-bold">Ganti Bulb / Module LED</p>
+<p class="text-body-base text-on-surface-variant">Ganti unit yang terbakar dengan stok baru ID #L-02.</p>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary">lightbulb</span>
+</label>
+<label class="flex items-center p-4 rounded-lg border border-outline-variant hover:bg-surface-container-low transition-all cursor-pointer group">
+<input class="w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/>
+<div class="ml-4 flex-1">
+<p class="font-body-medium text-on-surface font-bold">Cek Koneksi LoRa</p>
+<p class="text-body-base text-on-surface-variant">Reset modul komunikasi dan verifikasi di dashboard.</p>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary">router</span>
+</label>
+</div>
+</div>
+<!-- Citizen Report History -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm overflow-hidden">
+<div class="px-6 py-4 border-b border-outline-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">campaign</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Histori Laporan Warga</h3>
+</div>
+<div class="divide-y divide-outline-variant">
+<div class="p-4 flex gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container flex-shrink-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant">person</span>
+</div>
+<div>
+<div class="flex items-center gap-2 mb-1">
+<p class="font-body-medium font-bold text-on-surface">Budi Santoso</p>
+<span class="text-xs text-on-surface-variant">• 2 jam yang lalu</span>
+</div>
+<p class="text-body-base text-on-surface-variant">"Lampu mati total sudah 3 hari, jalanan jadi gelap dan rawan."</p>
+</div>
+</div>
+<div class="p-4 flex gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container flex-shrink-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant">person</span>
+</div>
+<div>
+<div class="flex items-center gap-2 mb-1">
+<p class="font-body-medium font-bold text-on-surface">Siti Aminah</p>
+<span class="text-xs text-on-surface-variant">• Kemarin</span>
+</div>
+<p class="text-body-base text-on-surface-variant">"Lampu sempat berkedip-kedip sebelum akhirnya mati permanen semalam."</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Side Navigation & Action Panel -->
+<div class="lg:col-span-1 flex flex-col gap-6">
+<!-- Map Integration Card -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm overflow-hidden flex flex-col h-fit">
+<div class="w-full h-64 bg-surface-container relative">
+<div class="absolute inset-0 blueprint-grid opacity-20"></div>
+<!-- Mock Map Background -->
+<div class="w-full h-full bg-cover bg-center" data-alt="A clean, minimalist satellite map view of an urban residential area in Ternate, North Maluku. The map features high-contrast rendering, clear street labels, and a primary blue marker indicating a specific location. The aesthetic is professional, architectural, and data-focused." data-location="Ternate, North Maluku, Indonesia" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB4m1pOmrqGQn1z4jn2Bc7E8BG5-rrpUMPTm0UDRXDuAjjYNjEUUAgfwObR1FmicPEbTqqM1w6bIkGntw4ru2w1vKLVGMQGu76XbeAxtk8BA3OnkH6PIOBGTAlKxsYrpWT28ui7_NyGrq9mQuLaRO_nkA1pkDYdgH2Cq_pRlDf9jMcaribTk6Qt2_ghGgdLq9GMQa6HEgLa3EKqwo8OXb479JwmktXYVvFgfeeIqRbDeSkIlQCSFzIPZ5KiJzO1lrvRT-Xr5lONWfsL')"></div>
+<!-- Pulse marker -->
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="relative">
+<div class="absolute -inset-4 bg-primary/20 rounded-full animate-ping"></div>
+<div class="relative bg-primary text-white p-2 rounded-full shadow-lg border-2 border-white">
+<span class="material-symbols-outlined block">lightbulb</span>
+</div>
+</div>
+</div>
+<div class="absolute bottom-4 left-4 right-4 glass-card p-3 rounded-lg flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">distance</span>
+<span class="text-body-medium font-bold">1.2 KM dari lokasi Anda</span>
+</div>
+</div>
+</div>
+<div class="p-6 space-y-4">
+<button class="w-full h-12 bg-primary text-on-primary rounded-lg font-headline-sm flex items-center justify-center gap-2 hover:bg-primary/90 transition-all active:scale-95 shadow-md">
+<span class="material-symbols-outlined">directions</span>
+                            Mulai Navigasi
+                        </button>
+<button class="w-full h-12 border border-outline text-on-surface rounded-lg font-body-medium flex items-center justify-center gap-2 hover:bg-surface-container-low transition-all">
+<span class="material-symbols-outlined">share</span>
+                            Bagikan Lokasi
+                        </button>
+</div>
+</div>
+<!-- Assignment Info -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm p-6 space-y-4">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Informasi Penugasan</h3>
+<div class="space-y-3">
+<div class="flex justify-between items-center py-2 border-b border-outline-variant border-dashed">
+<span class="text-on-surface-variant text-body-base">Estimasi Waktu</span>
+<span class="text-on-surface font-bold">45 Menit</span>
+</div>
+<div class="flex justify-between items-center py-2 border-b border-outline-variant border-dashed">
+<span class="text-on-surface-variant text-body-base">Prioritas</span>
+<span class="text-error font-bold">Tinggi</span>
+</div>
+<div class="flex justify-between items-center py-2 border-b border-outline-variant border-dashed">
+<span class="text-on-surface-variant text-body-base">Status</span>
+<span class="text-secondary font-bold">Belum Dimulai</span>
+</div>
+</div>
+<div class="pt-2">
+<button class="w-full py-4 rounded-xl bg-secondary-container text-on-secondary-container font-bold hover:brightness-95 transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">play_circle</span>
+                            Mulai Kerja Sekarang
+                        </button>
+</div>
+</div>
+<!-- Stats/Micro-texture Widget -->
+<div class="bg-inverse-surface text-inverse-on-surface rounded-xl p-6 shadow-lg relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4 opacity-10">
+<span class="material-symbols-outlined text-[64px]">engineering</span>
+</div>
+<p class="text-label-caps font-label-caps text-outline-variant mb-2">TARGET HARI INI</p>
+<div class="flex items-end gap-2 mb-4">
+<span class="text-display-lg font-display-lg">3/5</span>
+<span class="text-body-base pb-2 text-outline-variant">Tugas Selesai</span>
+</div>
+<div class="w-full bg-white/10 h-2 rounded-full overflow-hidden">
+<div class="bg-primary-fixed w-[60%] h-full"></div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 py-2 bg-surface-container-lowest dark:bg-inverse-surface border-t border-outline-variant dark:border-outline z-50">
+<a class="flex flex-col items-center justify-center text-on-surface-variant py-1" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] font-bold mt-1 uppercase tracking-tighter">Beranda</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl px-4 py-1" href="#">
+<span class="material-symbols-outlined active-fill">list_alt</span>
+<span class="text-[10px] font-bold mt-1 uppercase tracking-tighter">Tugas</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant py-1" href="#">
+<span class="material-symbols-outlined">lightbulb</span>
+<span class="text-[10px] font-bold mt-1 uppercase tracking-tighter">Aset</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant py-1" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-bold mt-1 uppercase tracking-tighter">Profil</span>
+</a>
+</nav>
+<script>
+        // Micro-interaction for Checklist
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        const progressText = document.querySelector('.text-label-caps.font-label-caps.text-on-surface-variant');
+        
+        checkboxes.forEach(cb => {
+            cb.addEventListener('change', () => {
+                const checkedCount = document.querySelectorAll('input[type="checkbox"]:checked').length;
+                progressText.textContent = `${checkedCount}/3 SELESAI`;
+                
+                if (checkedCount === 3) {
+                    progressText.classList.remove('text-on-surface-variant');
+                    progressText.classList.add('text-primary');
+                } else {
+                    progressText.classList.add('text-on-surface-variant');
+                    progressText.classList.remove('text-primary');
+                }
+            });
+        });
+
+        // Toggle work status
+        const startBtn = document.querySelector('button.bg-secondary-container');
+        let isStarted = false;
+
+        startBtn.addEventListener('click', () => {
+            isStarted = !isStarted;
+            if (isStarted) {
+                startBtn.innerHTML = '<span class="material-symbols-outlined">pause_circle</span>Selesaikan Tugas';
+                startBtn.classList.replace('bg-secondary-container', 'bg-tertiary-container');
+                startBtn.classList.replace('text-on-secondary-container', 'text-on-tertiary-container');
+            } else {
+                startBtn.innerHTML = '<span class="material-symbols-outlined">play_circle</span>Mulai Kerja Sekarang';
+                startBtn.classList.replace('bg-tertiary-container', 'bg-secondary-container');
+                startBtn.classList.replace('text-on-tertiary-container', 'text-on-secondary-container');
+            }
+        });
+    </script>
+</body></html>

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Smart PJU Control - EV Hub</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#006494",
+                        "on-primary": "#ffffff",
+                        "primary-container": "#cae6ff",
+                        "on-primary-container": "#001e2e",
+                        secondary: "#50606e",
+                        "on-secondary": "#ffffff",
+                        surface: "#f8fafc",
+                        "on-surface": "#1a1c1e",
+                        "surface-variant": "#dee3eb",
+                        "on-surface-variant": "#42474e",
+                        outline: "#72777f",
+                        "outline-variant": "#c2c7cf",
+                        error: "#ba1a1a",
+                        success: "#2d6a4f",
+                        warning: "#f59e0b"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    fontFamily: {
+                        headline: ["Public Sans", "sans-serif"],
+                        display: ["Public Sans", "sans-serif"],
+                        body: ["Public Sans", "sans-serif"],
+                        label: ["Public Sans", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 1rem;
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .pju-dot-glow {
+            box-shadow: 0 0 15px currentColor;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface font-body text-on-surface antialiased pb-20 md:pb-0">
+<!-- TopAppBar from JSON -->
+<header class="bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline docked full-width top-0 z-50 sticky">
+<div class="flex justify-between items-center w-full px-4 h-16">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed text-2xl" data-icon="bolt">bolt</span>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-inverse-primary tracking-tight">Smart PJU Control</h1>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 hover:bg-surface-container-high transition-colors active:scale-95 duration-150 rounded-full">
+<span class="material-symbols-outlined text-on-surface-variant dark:text-surface-variant" data-icon="notifications">notifications</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center font-bold text-on-primary-container text-xs">TR</div>
+</div>
+</div>
+</header>
+<main class="max-w-[1600px] mx-auto p-4 lg:p-6">
+<!-- Dashboard Content -->
+<div class="bento-grid">
+<!-- Hero Stats: Revenue Tracking -->
+<div class="col-span-12 lg:col-span-4 bg-white p-6 rounded-xl shadow-sm border border-outline-variant flex flex-col justify-between overflow-hidden relative">
+<div class="relative z-10">
+<p class="text-on-surface-variant font-medium text-sm">Monthly Revenue (IDR)</p>
+<h2 class="text-4xl font-extrabold text-primary mt-1">Rp 142.5M</h2>
+<div class="flex items-center gap-2 mt-2 text-success">
+<span class="material-symbols-outlined text-sm" data-icon="trending_up">trending_up</span>
+<span class="text-xs font-bold">+12.4% vs last month</span>
+</div>
+</div>
+<div class="mt-6 h-32 w-full flex items-end gap-1">
+<!-- Simple bar chart mockup -->
+<div class="bg-primary/20 w-full h-[40%] rounded-t-sm"></div>
+<div class="bg-primary/20 w-full h-[60%] rounded-t-sm"></div>
+<div class="bg-primary/20 w-full h-[55%] rounded-t-sm"></div>
+<div class="bg-primary/20 w-full h-[80%] rounded-t-sm"></div>
+<div class="bg-primary/20 w-full h-[70%] rounded-t-sm"></div>
+<div class="bg-primary w-full h-[100%] rounded-t-sm"></div>
+</div>
+</div>
+<!-- Real-time map -->
+<div class="col-span-12 lg:col-span-8 h-[400px] lg:h-auto min-h-[450px] bg-white rounded-xl shadow-sm border border-outline-variant relative overflow-hidden group">
+<div class="absolute top-4 left-4 z-20 flex flex-col gap-2">
+<div class="glass-panel px-3 py-2 rounded-lg text-xs font-bold flex items-center gap-2 shadow-sm">
+<span class="w-2 h-2 rounded-full bg-success pju-dot-glow"></span>
+                        342 Poles Active
+                    </div>
+<div class="glass-panel px-3 py-2 rounded-lg text-xs font-bold flex items-center gap-2 shadow-sm">
+<span class="w-2 h-2 rounded-full bg-warning pju-dot-glow animate-pulse"></span>
+                        18 Charging Sessions
+                    </div>
+</div>
+<div class="w-full h-full bg-cover bg-center transition-transform duration-[20s] group-hover:scale-110" data-alt="A sophisticated satellite and street-level map hybrid of Ternate, Indonesia, showing the coastal city and volcano. Overlaid are dozens of glowing cyan and amber dots representing smart street lighting poles. The map uses a cool blue and dark slate professional aesthetic, highlighting the infrastructure grid. High-tech UI elements like coordinate grids and pulse effects are visible in the lighting data points." data-location="Ternate, Indonesia" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB75Wh8rLfCCba2XahemC1PWPPIoltgHQRx4qzXztDhYcAcxj8SFXUPTk_KERws_54l9X1dA-duX8vuoQtFj_6QNI5L8YE4xaLFN_RtTr8s95OMyvGNpjpF4M6uM6MPNGnOfNH7vF_nCV1-80yb61Z0mxhfJH-hI0oF6lQ2Wex5Ljjkol2i6v_pT8GmEd4ywS-wumhDRGaLxJ2xSfwEjXPlfBN3tahHNyzo0UInqjuECdcHg4VNZXTnoQ6NHidu_LWXaPyCyXCR3pL9')"></div>
+<div class="absolute bottom-4 right-4 z-20 flex gap-2">
+<button class="bg-white p-2 rounded-lg shadow-md border border-outline-variant hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined" data-icon="layers">layers</span>
+</button>
+<button class="bg-white p-2 rounded-lg shadow-md border border-outline-variant hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined" data-icon="my_location">my_location</span>
+</button>
+</div>
+</div>
+<!-- Active Sessions Monitoring -->
+<div class="col-span-12 lg:col-span-7 bg-white rounded-xl shadow-sm border border-outline-variant flex flex-col">
+<div class="p-6 border-b border-outline-variant flex justify-between items-center">
+<h3 class="font-bold text-lg">Active Charging Sessions</h3>
+<button class="text-primary text-sm font-bold hover:underline">View All</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-surface text-on-surface-variant text-xs uppercase tracking-wider">
+<tr>
+<th class="px-6 py-3">Pole ID</th>
+<th class="px-6 py-3">Location</th>
+<th class="px-6 py-3">Power (kWh)</th>
+<th class="px-6 py-3">Time Elapsed</th>
+<th class="px-6 py-3">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<tr class="hover:bg-surface-variant/30 transition-colors">
+<td class="px-6 py-4 font-mono text-sm">PJU-T-084</td>
+<td class="px-6 py-4 text-sm">Jl. Pahlawan Revolusi</td>
+<td class="px-6 py-4 text-sm font-bold">14.2 kWh</td>
+<td class="px-6 py-4 text-sm">42m 12s</td>
+<td class="px-6 py-4">
+<span class="bg-success/10 text-success text-[10px] font-bold px-2 py-1 rounded-full uppercase">Fast Charging</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-variant/30 transition-colors">
+<td class="px-6 py-4 font-mono text-sm">PJU-T-121</td>
+<td class="px-6 py-4 text-sm">Sultan Babullah St.</td>
+<td class="px-6 py-4 text-sm font-bold">8.7 kWh</td>
+<td class="px-6 py-4 text-sm">28m 05s</td>
+<td class="px-6 py-4">
+<span class="bg-primary/10 text-primary text-[10px] font-bold px-2 py-1 rounded-full uppercase">Standard</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-variant/30 transition-colors">
+<td class="px-6 py-4 font-mono text-sm">PJU-T-012</td>
+<td class="px-6 py-4 text-sm">Ternate Waterfront</td>
+<td class="px-6 py-4 text-sm font-bold">2.1 kWh</td>
+<td class="px-6 py-4 text-sm">05m 44s</td>
+<td class="px-6 py-4">
+<span class="bg-warning/10 text-warning text-[10px] font-bold px-2 py-1 rounded-full uppercase">Initiating</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Energy & Utility Precision Card -->
+<div class="col-span-12 lg:col-span-5 bg-on-primary-container text-white rounded-xl shadow-lg p-6 relative overflow-hidden">
+<div class="absolute -right-10 -bottom-10 opacity-10">
+<span class="material-symbols-outlined text-[160px]" data-icon="electric_bolt" style="font-variation-settings: 'FILL' 1;">electric_bolt</span>
+</div>
+<h3 class="font-bold text-lg mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary-container" data-icon="offline_bolt">offline_bolt</span>
+                    Grid Demand Monitoring
+                </h3>
+<div class="space-y-6">
+<div>
+<div class="flex justify-between text-xs text-primary-container mb-2 uppercase tracking-widest font-bold">
+<span>Current Load</span>
+<span>82% capacity</span>
+</div>
+<div class="w-full bg-white/10 h-3 rounded-full overflow-hidden">
+<div class="bg-primary-container h-full w-[82%]" id="load-bar"></div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-white/5 p-4 rounded-lg border border-white/10">
+<p class="text-[10px] text-primary-container font-bold uppercase mb-1">Total Consumed</p>
+<p class="text-2xl font-bold">1.2 GWh</p>
+</div>
+<div class="bg-white/5 p-4 rounded-lg border border-white/10">
+<p class="text-[10px] text-primary-container font-bold uppercase mb-1">Peak Demand</p>
+<p class="text-2xl font-bold">482 kW</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Alert Feed -->
+<div class="col-span-12 lg:col-span-12 bg-white rounded-xl shadow-sm border border-outline-variant p-6">
+<div class="flex items-center justify-between mb-4">
+<h3 class="font-bold text-lg">System Alerts</h3>
+<span class="bg-error/10 text-error text-xs font-bold px-2 py-1 rounded">2 Critical Alerts</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+<div class="flex gap-4 p-4 rounded-lg border border-error/20 bg-error/5">
+<span class="material-symbols-outlined text-error" data-icon="warning">warning</span>
+<div>
+<p class="text-sm font-bold text-on-surface">PJU-T-044 Offline</p>
+<p class="text-xs text-on-surface-variant">Power surge detected at Muara Terminal. Breaker tripped.</p>
+<p class="text-[10px] text-on-surface-variant mt-2">12:04 PM</p>
+</div>
+</div>
+<div class="flex gap-4 p-4 rounded-lg border border-warning/20 bg-warning/5">
+<span class="material-symbols-outlined text-warning" data-icon="build">build</span>
+<div>
+<p class="text-sm font-bold text-on-surface">Maintenance Due</p>
+<p class="text-xs text-on-surface-variant">Connector wear detected at Pole PJU-T-009. Schedule inspection.</p>
+<p class="text-[10px] text-on-surface-variant mt-2">10:15 AM</p>
+</div>
+</div>
+<div class="flex gap-4 p-4 rounded-lg border border-outline-variant bg-surface">
+<span class="material-symbols-outlined text-primary" data-icon="info">info</span>
+<div>
+<p class="text-sm font-bold text-on-surface">Software Update</p>
+<p class="text-xs text-on-surface-variant">Central control firmware v2.4.1 deployed successfully.</p>
+<p class="text-[10px] text-on-surface-variant mt-2">08:00 AM</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar from JSON -->
+<nav class="bg-surface dark:bg-inverse-surface border-t border-outline-variant dark:border-outline fixed bottom-0 left-0 w-full flex justify-around items-center px-4 py-2 z-50 md:hidden">
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl p-2 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-caps text-[10px] mt-1">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2 active:scale-90 transition-transform hover:text-primary dark:hover:text-primary-fixed" href="#">
+<span class="material-symbols-outlined" data-icon="map">map</span>
+<span class="font-label-caps text-[10px] mt-1">Map</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2 active:scale-90 transition-transform hover:text-primary dark:hover:text-primary-fixed" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-label-caps text-[10px] mt-1">Analytics</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2 active:scale-90 transition-transform hover:text-primary dark:hover:text-primary-fixed" href="#">
+<span class="material-symbols-outlined" data-icon="warning">warning</span>
+<span class="font-label-caps text-[10px] mt-1">Alerts</span>
+</a>
+</nav>
+<!-- Sidebar Navigation for Desktop -->
+<aside class="hidden md:flex fixed top-16 left-0 h-[calc(100vh-64px)] w-20 flex-col items-center py-6 gap-6 bg-surface border-r border-outline-variant z-40">
+<a class="group relative" href="#">
+<div class="p-3 bg-primary-container text-on-primary-container rounded-xl transition-all duration-200">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+</div>
+<div class="absolute left-full ml-4 px-2 py-1 bg-on-surface text-white text-[10px] rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-50">Dashboard</div>
+</a>
+<a class="group relative" href="#">
+<div class="p-3 text-on-surface-variant hover:bg-surface-variant rounded-xl transition-all duration-200">
+<span class="material-symbols-outlined" data-icon="map">map</span>
+</div>
+<div class="absolute left-full ml-4 px-2 py-1 bg-on-surface text-white text-[10px] rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-50">Map View</div>
+</a>
+<a class="group relative" href="#">
+<div class="p-3 text-on-surface-variant hover:bg-surface-variant rounded-xl transition-all duration-200">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+</div>
+<div class="absolute left-full ml-4 px-2 py-1 bg-on-surface text-white text-[10px] rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-50">Analytics</div>
+</a>
+<a class="group relative" href="#">
+<div class="p-3 text-on-surface-variant hover:bg-surface-variant rounded-xl transition-all duration-200">
+<span class="material-symbols-outlined" data-icon="warning">warning</span>
+</div>
+<div class="absolute left-full ml-4 px-2 py-1 bg-on-surface text-white text-[10px] rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-50">Alerts</div>
+</a>
+<div class="mt-auto group relative">
+<div class="p-3 text-on-surface-variant hover:bg-surface-variant rounded-xl transition-all duration-200">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</div>
+</div>
+</aside>
+<script>
+        // Micro-interaction: Load bar animation
+        document.addEventListener('DOMContentLoaded', () => {
+            const bar = document.getElementById('load-bar');
+            bar.style.width = '0%';
+            setTimeout(() => {
+                bar.style.transition = 'width 1.5s cubic-bezier(0.65, 0, 0.35, 1)';
+                bar.style.width = '82%';
+            }, 500);
+        });
+
+        // Floating Action Button logic for Dashboard
+        const fab = document.createElement('button');
+        fab.className = 'fixed bottom-24 right-6 md:bottom-10 md:right-10 bg-primary text-white p-4 rounded-2xl shadow-xl hover:shadow-2xl active:scale-95 transition-all z-50 flex items-center gap-2 group';
+        fab.innerHTML = `
+            <span class="material-symbols-outlined" data-icon="add">add</span>
+            <span class="max-w-0 overflow-hidden group-hover:max-w-[200px] transition-all duration-300 font-bold whitespace-nowrap">Register New Hub</span>
+        `;
+        document.body.appendChild(fab);
+    </script>
+</body></html>

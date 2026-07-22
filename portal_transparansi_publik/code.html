@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+
+<html class="light" lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Transparansi PJU Ternate | Public Portal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Geist:wght@400;600;700;800&amp;family=JetBrains+Mono&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-container": "#eeefff",
+                        "on-secondary-fixed": "#001c37",
+                        "inverse-primary": "#b4c5ff",
+                        "tertiary-container": "#996100",
+                        "surface-bright": "#f7f9fb",
+                        "on-primary": "#ffffff",
+                        "on-secondary-container": "#49617f",
+                        "tertiary": "#784b00",
+                        "surface-container-highest": "#e0e3e5",
+                        "on-surface-variant": "#434655",
+                        "on-error-container": "#93000a",
+                        "surface": "#f7f9fb",
+                        "surface-dim": "#d8dadc",
+                        "inverse-surface": "#2d3133",
+                        "on-tertiary": "#ffffff",
+                        "on-surface": "#191c1e",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "background": "#f7f9fb",
+                        "surface-container-low": "#f2f4f6",
+                        "surface-container-high": "#e6e8ea",
+                        "surface-container-lowest": "#ffffff",
+                        "primary": "#004ac6",
+                        "secondary-fixed-dim": "#b0c8eb",
+                        "on-error": "#ffffff",
+                        "secondary-fixed": "#d2e4ff",
+                        "secondary": "#49607e",
+                        "outline": "#737686",
+                        "surface-tint": "#0053db",
+                        "on-tertiary-fixed": "#2a1700",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "surface-variant": "#e0e3e5",
+                        "inverse-on-surface": "#eff1f3",
+                        "error": "#ba1a1a",
+                        "on-secondary": "#ffffff",
+                        "secondary-container": "#c4dcff",
+                        "on-background": "#191c1e",
+                        "primary-container": "#2563eb",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "tertiary-fixed": "#ffddb8",
+                        "primary-fixed": "#dbe1ff",
+                        "surface-container": "#eceef0",
+                        "on-tertiary-container": "#ffeedd",
+                        "on-secondary-fixed-variant": "#314865",
+                        "error-container": "#ffdad6",
+                        "outline-variant": "#c3c6d7",
+                        "on-primary-fixed": "#00174b"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "12px",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "4px",
+                        "gutter": "16px",
+                        "xl": "32px",
+                        "sm": "8px",
+                        "container-max": "1280px",
+                        "xs": "4px",
+                        "lg": "24px",
+                        "md": "16px",
+                        "form-max": "768px"
+                    },
+                    "fontFamily": {
+                        "headline-sm": ["Geist"],
+                        "headline-md": ["Geist"],
+                        "code-sm": ["JetBrains Mono"],
+                        "display-lg": ["Geist"],
+                        "body-medium": ["Inter"],
+                        "stat-lg": ["Geist"],
+                        "label-caps": ["Geist"],
+                        "body-base": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-sm": ["18px", {"lineHeight": "24px", "letterSpacing": "0", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "code-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0", "fontWeight": "400"}],
+                        "display-lg": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-medium": ["14px", {"lineHeight": "20px", "letterSpacing": "0", "fontWeight": "500"}],
+                        "stat-lg": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                        "body-base": ["14px", {"lineHeight": "20px", "letterSpacing": "0", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .grid-blueprint {
+            background-image: linear-gradient(to right, rgba(226, 232, 240, 0.5) 1px, transparent 1px), 
+                              linear-gradient(to bottom, rgba(226, 232, 240, 0.5) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen">
+<!-- TopAppBar -->
+<header class="w-full sticky top-0 z-50 bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline shadow-none">
+<div class="flex justify-between items-center px-md py-sm max-w-container-max mx-auto">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed-dim text-2xl">lightbulb</span>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-inverse-primary">Ternate Smart PJU</h1>
+</div>
+<nav class="hidden md:flex items-center gap-lg">
+<a class="text-primary dark:text-primary-fixed-dim font-bold font-label-caps text-label-caps hover:bg-surface-container-high transition-colors px-md py-xs rounded-lg" href="#">Dashboard</a>
+<a class="text-on-surface-variant dark:text-on-secondary-fixed-variant font-label-caps text-label-caps hover:bg-surface-container-high transition-colors px-md py-xs rounded-lg" href="#">Sustainability</a>
+<a class="text-on-surface-variant dark:text-on-secondary-fixed-variant font-label-caps text-label-caps hover:bg-surface-container-high transition-colors px-md py-xs rounded-lg" href="#">Map</a>
+</nav>
+<button class="md:hidden p-sm rounded-full hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</header>
+<main class="flex flex-col md:flex-row max-w-container-max mx-auto">
+<!-- Sidebar for Desktop -->
+<aside class="hidden md:flex flex-col w-72 bg-inverse-surface dark:bg-surface-container-lowest h-[calc(100vh-64px)] sticky top-16 py-lg px-md shadow-md">
+<div class="mb-xl px-md">
+<h2 class="font-headline-sm text-headline-sm text-on-primary">Transparency Portal</h2>
+</div>
+<nav class="flex flex-col gap-sm">
+<a class="bg-primary-container text-on-primary-container rounded-lg px-md py-sm flex items-center gap-md transition-all ease-in-out duration-200" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-base text-body-base">Dashboard</span>
+</a>
+<a class="text-on-primary-fixed-variant dark:text-on-surface-variant hover:bg-surface-container-high rounded-lg px-md py-sm flex items-center gap-md transition-all ease-in-out duration-200" href="#">
+<span class="material-symbols-outlined">map</span>
+<span class="font-body-base text-body-base">Maintenance Map</span>
+</a>
+<a class="text-on-primary-fixed-variant dark:text-on-surface-variant hover:bg-surface-container-high rounded-lg px-md py-sm flex items-center gap-md transition-all ease-in-out duration-200" href="#">
+<span class="material-symbols-outlined">eco</span>
+<span class="font-body-base text-body-base">Sustainability</span>
+</a>
+<a class="text-on-primary-fixed-variant dark:text-on-surface-variant hover:bg-surface-container-high rounded-lg px-md py-sm flex items-center gap-md transition-all ease-in-out duration-200" href="#">
+<span class="material-symbols-outlined">forum</span>
+<span class="font-body-base text-body-base">Feedback</span>
+</a>
+</nav>
+<div class="mt-auto px-md">
+<div class="bg-primary/10 border border-primary/20 rounded-xl p-md">
+<p class="text-xs font-bold text-primary-fixed-dim uppercase tracking-wider mb-xs">Status Sistem</p>
+<div class="flex items-center gap-sm">
+<span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
+<span class="text-sm font-medium text-on-surface">Operasional Normal</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<section class="flex-1 p-md md:p-xl grid-blueprint min-h-screen">
+<!-- Hero / Headline -->
+<div class="mb-xl">
+<h2 class="font-display-lg text-display-lg text-on-surface mb-xs">Transparansi PJU Ternate</h2>
+<p class="text-on-surface-variant font-body-base text-body-base max-w-2xl">Akses data real-time pencahayaan kota untuk kenyamanan dan keamanan warga Ternate. Monitoring efisiensi energi dan performa pemeliharaan secara terbuka.</p>
+</div>
+<!-- KPI Grid (Bento Style) -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-lg mb-xl">
+<!-- Card 1: Lampu Aktif -->
+<div class="bg-surface-container-lowest border border-outline-variant p-lg rounded-xl flex flex-col gap-md transition-all hover:shadow-md">
+<div class="flex justify-between items-start">
+<span class="font-label-caps text-label-caps text-outline uppercase">Performa Kota</span>
+<div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">check_circle</span>
+</div>
+</div>
+<div>
+<p class="text-on-surface-variant text-sm font-medium">Lampu Aktif</p>
+<h3 class="font-stat-lg text-stat-lg text-on-surface">98.4%</h3>
+<p class="text-emerald-600 text-xs font-bold flex items-center gap-xs mt-xs">
+<span class="material-symbols-outlined text-sm">trending_up</span> +0.2% dari minggu lalu
+                        </p>
+</div>
+<div class="mt-auto">
+<div class="w-full h-1.5 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-emerald-500" style="width: 98.4%"></div>
+</div>
+</div>
+</div>
+<!-- Card 2: Rata-rata Waktu Perbaikan -->
+<div class="bg-surface-container-lowest border border-outline-variant p-lg rounded-xl flex flex-col gap-md transition-all hover:shadow-md">
+<div class="flex justify-between items-start">
+<span class="font-label-caps text-label-caps text-outline uppercase">Respon Tim</span>
+<div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">timer</span>
+</div>
+</div>
+<div>
+<p class="text-on-surface-variant text-sm font-medium">Rata-rata Waktu Perbaikan</p>
+<h3 class="font-stat-lg text-stat-lg text-on-surface">4.2 Jam</h3>
+<p class="text-primary text-xs font-bold mt-xs">Sesuai SLA Kota</p>
+</div>
+<div class="mt-auto">
+<div class="w-full h-1.5 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-primary" style="width: 85%"></div>
+</div>
+</div>
+</div>
+<!-- Card 3: Laporan Selesai -->
+<div class="bg-surface-container-lowest border border-outline-variant p-lg rounded-xl flex flex-col gap-md transition-all hover:shadow-md">
+<div class="flex justify-between items-start">
+<span class="font-label-caps text-label-caps text-outline uppercase">Penyelesaian</span>
+<div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">assignment_turned_in</span>
+</div>
+</div>
+<div>
+<p class="text-on-surface-variant text-sm font-medium">Laporan Selesai</p>
+<h3 class="font-stat-lg text-stat-lg text-on-surface">142/150</h3>
+<p class="text-on-surface-variant text-xs font-bold mt-xs">Bulan ini (Februari)</p>
+</div>
+<div class="mt-auto">
+<div class="flex gap-1">
+<div class="flex-1 h-1.5 bg-primary rounded-full"></div>
+<div class="flex-1 h-1.5 bg-primary rounded-full"></div>
+<div class="flex-1 h-1.5 bg-primary rounded-full"></div>
+<div class="flex-1 h-1.5 bg-primary/20 rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bento Layout Second Row -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-lg mb-xl">
+<!-- Impact Section: Dampak Positif -->
+<div class="lg:col-span-8 bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden flex flex-col">
+<div class="p-lg border-b border-outline-variant flex justify-between items-center">
+<h3 class="font-headline-sm text-headline-sm text-on-surface flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary">eco</span>
+                            Dampak Positif
+                        </h3>
+<span class="font-label-caps text-label-caps text-primary px-sm py-xs bg-primary/10 rounded">Laporan Tahunan</span>
+</div>
+<div class="p-lg grid grid-cols-1 md:grid-cols-2 gap-lg flex-1">
+<div class="flex flex-col gap-sm p-lg bg-surface-container rounded-xl">
+<p class="text-on-surface-variant font-medium text-sm">Penghematan Energi</p>
+<div class="flex items-end gap-sm">
+<h4 class="font-stat-lg text-stat-lg text-primary">12.5 MWh</h4>
+<span class="material-symbols-outlined text-primary pb-sm">bolt</span>
+</div>
+<p class="text-xs text-on-surface-variant">Setara dengan penggunaan 80 rumah tangga</p>
+</div>
+<div class="flex flex-col gap-sm p-lg bg-surface-container rounded-xl">
+<p class="text-on-surface-variant font-medium text-sm">Reduksi Karbon</p>
+<div class="flex items-end gap-sm">
+<h4 class="font-stat-lg text-stat-lg text-emerald-600">8.4 Ton</h4>
+<span class="material-symbols-outlined text-emerald-600 pb-sm">cloud_done</span>
+</div>
+<p class="text-xs text-on-surface-variant">Kontribusi nyata untuk langit Ternate yang bersih</p>
+</div>
+</div>
+</div>
+<!-- Call to Action Card -->
+<div class="lg:col-span-4 bg-primary text-on-primary rounded-xl p-lg flex flex-col justify-between relative overflow-hidden group">
+<div class="absolute -right-8 -bottom-8 opacity-20 group-hover:scale-110 transition-transform duration-500">
+<span class="material-symbols-outlined text-[120px]" style="font-variation-settings: 'FILL' 1;">rate_review</span>
+</div>
+<div class="relative z-10">
+<h3 class="font-headline-sm text-headline-sm mb-sm">Beri Masukan Warga</h3>
+<p class="text-on-primary-container/80 text-sm font-body-base mb-lg">Laporan Anda membantu kami menjaga kota tetap terang dan aman. Bagikan feedback Anda tentang layanan PJU.</p>
+</div>
+<button class="relative z-10 bg-on-primary text-primary font-bold py-md px-lg rounded-xl hover:bg-primary-fixed transition-colors active:scale-95 duration-150 flex items-center justify-center gap-md">
+                        Mulai Laporan
+                        <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Third Row: Map and Activity Feed -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-lg">
+<!-- Transparency Map Thumbnail -->
+<div class="lg:col-span-7 bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden flex flex-col">
+<div class="p-lg border-b border-outline-variant">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Peta Transparansi</h3>
+<p class="text-xs text-on-surface-variant">Visualisasi wilayah dengan pencahayaan 100%</p>
+</div>
+<div class="relative aspect-video flex-1">
+<div class="w-full h-full bg-cover bg-center" data-alt="A clean, professional 3D map interface of Ternate city, Indonesia, at night. The map shows glowing nodes representing active smart street lights. Coastal areas are illuminated with a soft blue and amber glow, indicating 100% lighting uptime. The aesthetic is clinical and data-driven with Slate 200 borders and a sophisticated dark background context." data-location="Ternate" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuANfvsNtWe2sfdAi1AafI84dWVVJsC-7cB5x-rHCVSHqfiQVJ66PVtK0f5FuYIAoPz-cPwdXI5cXITk-R_kF33JXz1U8eFFqPNtPFhS4Ckgnme5JxKUC9gEu6x8sMPlltTS_fH13Qryut1-u8riPwMPOi-jLBdFLHEBy0YOzi5diQx-CXUPTE42QrLEjyet2kPfRgIjJymC8d9KcmiRXfOUToh_EglgSDOfGTypvmO-m9GCyvCWtRSRsq45JqVnSc2Mvu7w_JkhhUKy')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent"></div>
+<div class="absolute bottom-md left-md">
+<div class="bg-surface-container-lowest/90 backdrop-blur-md p-sm border border-outline-variant rounded-lg flex items-center gap-sm shadow-sm">
+<span class="w-3 h-3 bg-emerald-500 rounded-full"></span>
+<span class="text-xs font-bold text-on-surface uppercase">Ternate Tengah: 100% Terang</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Real-time Activity Feed -->
+<div class="lg:col-span-5 bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden flex flex-col">
+<div class="p-lg border-b border-outline-variant flex justify-between items-center">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Aktivitas Pemeliharaan Terkini</h3>
+<span class="animate-pulse flex items-center gap-1 text-[10px] font-bold text-primary bg-primary/5 px-2 py-1 rounded">
+                            LIVE
+                        </span>
+</div>
+<div class="flex-1 overflow-y-auto max-h-[300px]">
+<ul class="divide-y divide-outline-variant">
+<li class="p-md hover:bg-surface-container transition-colors">
+<div class="flex gap-md">
+<div class="w-10 h-10 rounded-lg bg-emerald-100 flex items-center justify-center text-emerald-700 shrink-0">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">build</span>
+</div>
+<div class="flex-1">
+<p class="text-sm font-bold text-on-surface">Tiang #T72 di Ternate Tengah</p>
+<div class="flex justify-between items-center mt-1">
+<span class="text-xs text-on-surface-variant">Selesai - 12 Menit lalu</span>
+<span class="text-[10px] font-bold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded uppercase">Verified</span>
+</div>
+</div>
+</div>
+</li>
+<li class="p-md hover:bg-surface-container transition-colors">
+<div class="flex gap-md">
+<div class="w-10 h-10 rounded-lg bg-emerald-100 flex items-center justify-center text-emerald-700 shrink-0">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">build</span>
+</div>
+<div class="flex-1">
+<p class="text-sm font-bold text-on-surface">Tiang #A04 di Pelabuhan Bastiong</p>
+<div class="flex justify-between items-center mt-1">
+<span class="text-xs text-on-surface-variant">Selesai - 45 Menit lalu</span>
+<span class="text-[10px] font-bold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded uppercase">Verified</span>
+</div>
+</div>
+</div>
+</li>
+<li class="p-md hover:bg-surface-container transition-colors">
+<div class="flex gap-md">
+<div class="w-10 h-10 rounded-lg bg-amber-100 flex items-center justify-center text-amber-700 shrink-0">
+<span class="material-symbols-outlined">engineering</span>
+</div>
+<div class="flex-1">
+<p class="text-sm font-bold text-on-surface">Tiang #B11 di Kelurahan Toboko</p>
+<div class="flex justify-between items-center mt-1">
+<span class="text-xs text-on-surface-variant">Sedang Dikerjakan</span>
+<span class="text-[10px] font-bold bg-amber-100 text-amber-800 px-2 py-0.5 rounded uppercase">In Progress</span>
+</div>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="p-md bg-surface-container border-t border-outline-variant">
+<a class="text-primary text-xs font-bold flex items-center justify-center gap-sm hover:underline" href="#">
+                            Lihat Semua Riwayat Aktivitas
+                            <span class="material-symbols-outlined text-sm">open_in_new</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 bg-surface-container-lowest dark:bg-inverse-surface border-t border-outline-variant dark:border-outline shadow-lg h-16 px-gutter pb-safe flex justify-around items-center">
+<a class="flex flex-col items-center justify-center text-primary dark:text-primary-fixed-dim font-bold active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-caps text-[10px] uppercase tracking-tighter">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">distance</span>
+<span class="font-label-caps text-[10px] uppercase tracking-tighter">Map</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">auto_graph</span>
+<span class="font-label-caps text-[10px] uppercase tracking-tighter">Impact</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">rate_review</span>
+<span class="font-label-caps text-[10px] uppercase tracking-tighter">Feedback</span>
+</a>
+</nav>
+<!-- Floating Action Button for Feedback (suppressed on some screens, active here) -->
+<button class="fixed bottom-20 right-6 md:bottom-10 md:right-10 bg-primary-container text-on-primary-container w-14 h-14 rounded-full shadow-lg flex items-center justify-center active:scale-95 transition-all z-40 hover:bg-primary-fixed-dim">
+<span class="material-symbols-outlined text-2xl">rate_review</span>
+</button>
+<footer class="bg-surface-container-low border-t border-outline-variant mt-xl py-lg text-center">
+<div class="max-w-container-max mx-auto px-md">
+<div class="flex flex-col md:flex-row justify-between items-center gap-md">
+<p class="text-on-surface-variant text-sm font-body-base">© 2024 Dinas Lingkungan Hidup Kota Ternate. Powered by Smart City Initiative.</p>
+<div class="flex gap-lg">
+<a class="text-on-surface-variant hover:text-primary text-xs font-bold uppercase tracking-wider" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant hover:text-primary text-xs font-bold uppercase tracking-wider" href="#">Contact Support</a>
+</div>
+</div>
+</div>
+</footer>
+<script>
+        // Simple Interaction logic
+        document.querySelectorAll('nav a, aside a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                // Example: Toggle active state visually if needed for prototype
+            });
+        });
+    </script>
+</body></html>

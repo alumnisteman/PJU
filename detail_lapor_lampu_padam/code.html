@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ternate Smart PJU - Lapor Lampu Padam</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&amp;family=Geist:wght@400;600;700&amp;family=JetBrains+Mono&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-bright": "#f7f9fb",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "surface-container-high": "#e6e8ea",
+                        "tertiary": "#784b00",
+                        "secondary": "#49607e",
+                        "on-secondary-fixed": "#001c37",
+                        "secondary-container": "#c4dcff",
+                        "on-surface-variant": "#434655",
+                        "on-error": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "on-background": "#191c1e",
+                        "inverse-primary": "#b4c5ff",
+                        "on-secondary-fixed-variant": "#314865",
+                        "surface-variant": "#e0e3e5",
+                        "error": "#ba1a1a",
+                        "on-tertiary": "#ffffff",
+                        "primary-fixed": "#dbe1ff",
+                        "background": "#f7f9fb",
+                        "primary-container": "#2563eb",
+                        "surface-container-low": "#f2f4f6",
+                        "error-container": "#ffdad6",
+                        "surface-tint": "#0053db",
+                        "outline-variant": "#c3c6d7",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-container": "#eeefff",
+                        "outline": "#737686",
+                        "inverse-on-surface": "#eff1f3",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-container": "#49617f",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "surface-container-highest": "#e0e3e5",
+                        "surface-container": "#eceef0",
+                        "inverse-surface": "#2d3133",
+                        "primary": "#004ac6",
+                        "on-primary-fixed": "#00174b",
+                        "secondary-fixed": "#d2e4ff",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "secondary-fixed-dim": "#b0c8eb",
+                        "on-tertiary-container": "#ffeedd",
+                        "on-tertiary-fixed": "#2a1700",
+                        "on-surface": "#191c1e",
+                        "tertiary-container": "#996100",
+                        "surface": "#f7f9fb",
+                        "surface-dim": "#d8dadc",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed": "#ffddb8"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "md": "16px",
+                        "base": "4px",
+                        "sm": "8px",
+                        "lg": "24px",
+                        "xs": "4px",
+                        "container-max": "1280px",
+                        "form-max": "768px",
+                        "xl": "32px"
+                    },
+                    "fontFamily": {
+                        "stat-lg": ["Geist"],
+                        "headline-md": ["Geist"],
+                        "code-sm": ["JetBrains Mono"],
+                        "headline-sm": ["Geist"],
+                        "display-lg": ["Geist"],
+                        "body-base": ["Inter"],
+                        "label-caps": ["Geist"],
+                        "body-medium": ["Inter"]
+                    },
+                    "fontSize": {
+                        "stat-lg": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "code-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0", "fontWeight": "400"}],
+                        "headline-sm": ["18px", {"lineHeight": "24px", "letterSpacing": "0", "fontWeight": "600"}],
+                        "display-lg": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-base": ["14px", {"lineHeight": "20px", "letterSpacing": "0", "fontWeight": "400"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                        "body-medium": ["14px", {"lineHeight": "20px", "letterSpacing": "0", "fontWeight": "500"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #f8fafc;
+            color: #191c1e;
+        }
+        .step-active { border-color: #004ac6; background-color: #004ac6; color: white; }
+        .step-inactive { border-color: #e2e8f0; background-color: white; color: #64748b; }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid #e2e8f0;
+        }
+        .form-section { display: none; }
+        .form-section.active { display: block; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-base text-body-base pb-24">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex items-center justify-between px-md h-14 bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed-dim">bolt</span>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim">Ternate Smart PJU</h1>
+</div>
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-high transition-colors p-2 rounded-full active:scale-95 transition-transform">notifications</button>
+</header>
+<main class="mt-20 px-4 max-w-form-max mx-auto space-y-6">
+<!-- Header & Progress Tracker -->
+<div class="space-y-4">
+<div class="flex justify-between items-end">
+<div>
+<p class="text-primary font-label-caps text-label-caps uppercase tracking-wider">Reporting Flow</p>
+<h2 class="font-display-lg text-display-lg mt-1">Lapor Lampu Padam</h2>
+</div>
+<div class="text-right hidden sm:block">
+<p class="font-code-sm text-code-sm text-outline">REPORT_REF: PJU-2023-0892</p>
+</div>
+</div>
+<!-- Stepper UI -->
+<div class="relative flex justify-between items-center py-4 px-2">
+<div class="absolute h-0.5 bg-outline-variant w-full top-1/2 -translate-y-1/2 left-0 z-0"></div>
+<div class="relative z-10 flex flex-col items-center gap-2">
+<div class="step-active w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm border-2 transition-all" id="step-dot-1">1</div>
+<span class="text-[10px] font-bold uppercase text-primary">Location</span>
+</div>
+<div class="relative z-10 flex flex-col items-center gap-2">
+<div class="step-inactive w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm border-2 transition-all" id="step-dot-2">2</div>
+<span class="text-[10px] font-bold uppercase text-outline">Media</span>
+</div>
+<div class="relative z-10 flex flex-col items-center gap-2">
+<div class="step-inactive w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm border-2 transition-all" id="step-dot-3">3</div>
+<span class="text-[10px] font-bold uppercase text-outline">Asset ID</span>
+</div>
+<div class="relative z-10 flex flex-col items-center gap-2">
+<div class="step-inactive w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm border-2 transition-all" id="step-dot-4">4</div>
+<span class="text-[10px] font-bold uppercase text-outline">Submit</span>
+</div>
+</div>
+</div>
+<!-- Form Canvas -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant p-6 min-h-[400px] flex flex-col">
+<!-- STEP 1: Location -->
+<div class="form-section active space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-300" id="step-1">
+<div class="space-y-2">
+<label class="font-label-caps text-label-caps text-outline block">Step 1: Coordinate Verification</label>
+<p class="font-headline-sm text-headline-sm">Detecting Current Position...</p>
+</div>
+<div class="relative w-full aspect-video rounded-xl overflow-hidden border border-outline-variant group">
+<div class="absolute inset-0 bg-secondary-container/20 flex items-center justify-center pointer-events-none z-10">
+<div class="bg-primary p-3 rounded-full text-white animate-pulse shadow-lg">
+<span class="material-symbols-outlined">my_location</span>
+</div>
+</div>
+<div class="absolute bottom-4 left-4 z-20 bg-white/90 backdrop-blur px-3 py-2 rounded-lg border border-outline-variant shadow-sm max-w-[200px]">
+<p class="font-code-sm text-code-sm font-bold text-primary">GPS LOCKED</p>
+<p class="text-[10px] text-on-surface-variant truncate">0.8351° N, 127.3571° E</p>
+</div>
+<div class="w-full h-full grayscale-[0.2]" data-location="Ternate City, Indonesia" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDi4EGXw2h7I8RoJxI1mP4HonJ96Kl4HHqWcmSLotGrsSXs3qaBjUzxZT2GRbhl-bHsSQtudob-CzrSOcbTPxyVxB219nw51BRKfeOILYiAM5kXfWwVFYh7UDzlvEbzV8NroYxjLXFEq3w5GDvPT3cu3mY0oWd4875H4CnqztCsoqvWEcTqspfAWKGVe9ICPFdRj6ddx35dgzP6Cogn9UXbP0Mf7L_ZaHF2u1gIr5EyTW7Zg4clP4ujBEnA4B7MdBt5KqGyEiBsbdwM')"></div>
+</div>
+<div class="p-4 bg-surface-container-low border border-outline-variant rounded-lg flex items-start gap-4">
+<span class="material-symbols-outlined text-primary">info</span>
+<p class="text-sm text-on-surface-variant">The system has identified your location near <b>Jl. Hasan Esa, Ternate Tengah</b>. Please ensure you are standing near the faulty pole.</p>
+</div>
+</div>
+<!-- STEP 2: Photo Upload -->
+<div class="form-section space-y-6 animate-in fade-in slide-in-from-right-4 duration-300" id="step-2">
+<div class="space-y-2">
+<label class="font-label-caps text-label-caps text-outline block">Step 2: Visual Evidence</label>
+<p class="font-headline-sm text-headline-sm">Upload Photo of the Pole</p>
+</div>
+<div class="grid grid-cols-1 gap-4">
+<div class="flex items-center justify-center w-full">
+<label class="flex flex-col items-center justify-center w-full h-64 border-2 border-outline-variant border-dashed rounded-xl cursor-pointer bg-surface-container-lowest hover:bg-surface-container-low transition-all" for="dropzone-file">
+<div class="flex flex-col items-center justify-center pt-5 pb-6">
+<span class="material-symbols-outlined text-outline text-4xl mb-3">add_a_photo</span>
+<p class="mb-2 text-sm text-on-surface-variant"><span class="font-bold">Tap to capture</span> or drag and drop</p>
+<p class="text-xs text-outline">JPEG, PNG (MAX. 5MB)</p>
+</div>
+<input class="hidden" id="dropzone-file" type="file"/>
+</label>
+</div>
+</div>
+<div class="flex items-center gap-2 text-xs text-outline italic">
+<span class="material-symbols-outlined text-sm">check_circle</span>
+                    Include the surroundings and pole number if possible.
+                </div>
+</div>
+<!-- STEP 3: QR Scanner -->
+<div class="form-section space-y-6 animate-in fade-in slide-in-from-right-4 duration-300" id="step-3">
+<div class="space-y-2">
+<label class="font-label-caps text-label-caps text-outline block">Step 3: Pole Identification</label>
+<p class="font-headline-sm text-headline-sm">Scan QR Code or Enter ID</p>
+</div>
+<div class="relative w-full aspect-square max-w-[300px] mx-auto rounded-xl border-4 border-primary/20 overflow-hidden bg-black flex items-center justify-center">
+<div class="absolute inset-0 z-0">
+<div class="w-full h-full" data-alt="A close up detailed shot of a street pole with a weather-beaten QR code sticker applied to its metallic grey surface. The lighting is direct and surgical, emphasizing the industrial textures of the utility infrastructure. The color palette is dominated by cold silvers, slate blues, and the stark black-and-white of the QR code. The overall mood is precise and technical." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBSlrXO_SAWIT7xEI-RRoWDGNEvyO_ASBDX3ZAaSUxYqw-aVp_98oHr9bHoqrAvbr7wSQxmQcswrdpswhcCBtm5hYdY2E-QnL_ZynQXsbQOtUk8Mg3U2o68vZaprUDqsIeKxRyZB_oLK1-Cu2OmUiire_zMAhed0R6soN03S_qhZFVKK4pHNBsx1HbVcf6MT7OxRMirvGFaZjvKuvZXrDNm3nQZfboY0MWNm1zBwKfcVESZUemtnFLTZxCApaXOaABOw8UKnXATwVIm')"></div>
+</div>
+<!-- Scanner overlay -->
+<div class="absolute inset-0 z-10 pointer-events-none">
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 border-2 border-primary rounded-lg shadow-[0_0_0_1000px_rgba(0,0,0,0.5)]">
+<div class="absolute top-0 w-full h-1 bg-primary shadow-[0_0_15px_rgba(37,99,235,0.8)] animate-[scan_2s_infinite_ease-in-out]"></div>
+</div>
+</div>
+<button class="absolute bottom-4 z-20 bg-white/10 hover:bg-white/20 backdrop-blur text-white px-4 py-2 rounded-full text-xs font-bold transition-all">
+                        SWITCH TO MANUAL ENTRY
+                    </button>
+</div>
+<div class="space-y-2">
+<label class="text-xs font-bold text-on-surface-variant px-1">MANUAL ID ENTRY (OPTIONAL)</label>
+<div class="relative">
+<input class="w-full h-10 px-4 rounded-lg border border-outline-variant bg-surface-container-lowest focus:ring-2 focus:ring-primary focus:border-transparent transition-all uppercase font-code-sm" placeholder="e.g. TTE-CENTRAL-001" type="text"/>
+</div>
+</div>
+</div>
+<!-- STEP 4: Description & Submit -->
+<div class="form-section space-y-6 animate-in fade-in slide-in-from-right-4 duration-300" id="step-4">
+<div class="space-y-2">
+<label class="font-label-caps text-label-caps text-outline block">Step 4: Final Details</label>
+<p class="font-headline-sm text-headline-sm">Issue Description</p>
+</div>
+<div class="space-y-4">
+<div class="space-y-2">
+<label class="text-xs font-bold text-on-surface-variant">OBSERVATION NOTES</label>
+<textarea class="w-full p-4 rounded-xl border border-outline-variant bg-surface-container-lowest focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-sm" placeholder="Describe the outage (e.g., flickering, completely dead, physical damage to pole)..." rows="4"></textarea>
+</div>
+<div class="p-4 rounded-xl border border-primary/20 bg-primary/5 space-y-3">
+<h4 class="text-xs font-bold text-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">verified</span>
+                            REPORT SUMMARY
+                        </h4>
+<div class="grid grid-cols-2 gap-y-2 text-xs">
+<span class="text-outline">LOCATION</span>
+<span class="text-right font-bold">Jl. Hasan Esa (0.83°N)</span>
+<span class="text-outline">POLE ID</span>
+<span class="text-right font-bold">SCAN_DETECTED: TTE-082</span>
+<span class="text-outline">TYPE</span>
+<span class="text-right font-bold">Standard Outage</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Navigation Buttons -->
+<div class="mt-auto pt-8 flex gap-3">
+<button class="hidden flex-1 h-11 border border-outline-variant text-on-surface font-bold rounded-lg hover:bg-surface-container-high transition-all active:scale-95" id="btn-prev">
+                    Previous
+                </button>
+<button class="flex-[2] h-11 bg-primary text-white font-bold rounded-lg hover:bg-primary/90 transition-all active:scale-95 shadow-lg shadow-primary/20" id="btn-next">
+                    Next Step
+                </button>
+<button class="hidden flex-[2] h-11 bg-primary text-white font-bold rounded-lg hover:bg-primary/90 transition-all active:scale-95 shadow-lg shadow-primary/20" id="btn-submit">
+                    Submit Report
+                </button>
+</div>
+</div>
+<!-- Recent Reports Status Tracker -->
+<section class="space-y-4">
+<div class="flex justify-between items-center">
+<h3 class="font-headline-sm text-headline-sm">Recent Reports Status</h3>
+<button class="text-primary font-bold text-xs hover:underline">View All</button>
+</div>
+<div class="grid grid-cols-1 gap-3">
+<!-- Report Card 1 -->
+<div class="glass-card p-4 rounded-xl flex items-center gap-4 transition-all hover:border-primary/50 cursor-pointer">
+<div class="w-12 h-12 bg-error-container/20 rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-error">pending_actions</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<h4 class="font-bold text-sm truncate">Broken Lamp Arm</h4>
+<span class="text-[10px] px-2 py-0.5 rounded-full bg-surface-container-highest text-outline font-bold">DRAFT</span>
+</div>
+<p class="text-xs text-outline truncate">Jl. Ahmad Yani, Kel. Tanah Tinggi</p>
+</div>
+<span class="material-symbols-outlined text-outline">chevron_right</span>
+</div>
+<!-- Report Card 2 -->
+<div class="glass-card p-4 rounded-xl flex items-center gap-4 border-l-4 border-l-primary">
+<div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">engineering</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<h4 class="font-bold text-sm truncate">Total Outage Block A</h4>
+<span class="text-[10px] px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-bold">IN PROGRESS</span>
+</div>
+<p class="text-xs text-outline truncate">Jl. Mononutu, Kota Baru</p>
+</div>
+<span class="material-symbols-outlined text-outline">chevron_right</span>
+</div>
+<!-- Report Card 3 -->
+<div class="glass-card p-4 rounded-xl flex items-center gap-4">
+<div class="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-emerald-600">task_alt</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<h4 class="font-bold text-sm truncate">Broken Fuse Box</h4>
+<span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold">COMPLETED</span>
+</div>
+<p class="text-xs text-outline truncate">Yesterday • Sektor Selatan</p>
+</div>
+<span class="material-symbols-outlined text-outline">chevron_right</span>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-sm py-xs pb-safe bg-surface-container dark:bg-surface-dim border-t border-outline-variant dark:border-outline shadow-sm">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant transition-colors p-2 rounded-lg" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-caps text-[10px] mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant transition-colors p-2 rounded-lg" href="#">
+<span class="material-symbols-outlined">map</span>
+<span class="font-label-caps text-[10px] mt-1">Map</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">feedback</span>
+<span class="font-label-caps text-[10px] mt-1">Reports</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant transition-colors p-2 rounded-lg" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-caps text-[10px] mt-1">Profile</span>
+</a>
+</nav>
+<script>
+        let currentStep = 1;
+        const totalSteps = 4;
+
+        const btnNext = document.getElementById('btn-next');
+        const btnPrev = document.getElementById('btn-prev');
+        const btnSubmit = document.getElementById('btn-submit');
+
+        function updateUI() {
+            // Update sections
+            document.querySelectorAll('.form-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(`step-${currentStep}`).classList.add('active');
+
+            // Update steps tracker
+            for (let i = 1; i <= totalSteps; i++) {
+                const dot = document.getElementById(`step-dot-${i}`);
+                const label = dot.nextElementSibling;
+                if (i < currentStep) {
+                    dot.classList.remove('step-inactive', 'step-active');
+                    dot.classList.add('bg-emerald-500', 'border-emerald-500', 'text-white');
+                    dot.innerHTML = '<span class="material-symbols-outlined text-sm">check</span>';
+                    label.classList.remove('text-outline', 'text-primary');
+                    label.classList.add('text-emerald-600');
+                } else if (i === currentStep) {
+                    dot.classList.remove('step-inactive', 'bg-emerald-500', 'border-emerald-500');
+                    dot.classList.add('step-active');
+                    dot.innerHTML = i;
+                    label.classList.remove('text-outline', 'text-emerald-600');
+                    label.classList.add('text-primary');
+                } else {
+                    dot.classList.remove('step-active', 'bg-emerald-500', 'border-emerald-500');
+                    dot.classList.add('step-inactive');
+                    dot.innerHTML = i;
+                    label.classList.remove('text-primary', 'text-emerald-600');
+                    label.classList.add('text-outline');
+                }
+            }
+
+            // Button visibility
+            btnPrev.classList.toggle('hidden', currentStep === 1);
+            if (currentStep === totalSteps) {
+                btnNext.classList.add('hidden');
+                btnSubmit.classList.remove('hidden');
+            } else {
+                btnNext.classList.remove('hidden');
+                btnSubmit.classList.add('hidden');
+            }
+        }
+
+        btnNext.addEventListener('click', () => {
+            if (currentStep < totalSteps) {
+                currentStep++;
+                updateUI();
+            }
+        });
+
+        btnPrev.addEventListener('click', () => {
+            if (currentStep > 1) {
+                currentStep--;
+                updateUI();
+            }
+        });
+
+        btnSubmit.addEventListener('click', () => {
+            alert('Report submitted successfully! Case ID: PJU-2023-0892');
+        });
+
+        // Initialize
+        updateUI();
+
+        // Simple animation for the GPS lock
+        const gpsPulse = () => {
+            const gpsLabel = document.querySelector('.font-code-sm.text-primary');
+            if(gpsLabel) {
+                gpsLabel.classList.toggle('opacity-50');
+            }
+        };
+        setInterval(gpsPulse, 1000);
+    </script>
+<style>
+        @keyframes scan {
+            0% { top: 0; }
+            100% { top: 100%; }
+        }
+        .animate-scan {
+            animation: scan 2s infinite ease-in-out;
+        }
+        /* Mobile safe area handling */
+        .pb-safe {
+            padding-bottom: env(safe-area-inset-bottom, 16px);
+        }
+    </style>
+</body></html>
