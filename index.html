@@ -59,62 +59,120 @@
 
     <script>
         const modules = [
-            { id: "absensi_kehadiran_teknisi", name: "Absensi & Kehadiran", icon: "person_check" },
-            { id: "ai_predictive_maintenance", name: "AI Predictive Maintenance", icon: "memory" },
-            { id: "analitik_alert_pju", name: "Analitik Alert PJU", icon: "warning" },
-            { id: "ar_asset_inspection", name: "AR Asset Inspection", icon: "view_in_ar" },
-            { id: "dashboard_mobilitas_warga", name: "Dashboard Mobilitas", icon: "directions_car" },
-            { id: "dashboard_penugasan_teknisi", name: "Penugasan Teknisi", icon: "assignment" },
-            { id: "dashboard_pln_mobile", name: "Dashboard PLN Mobile", icon: "phone_iphone" },
-            { id: "detail_lapor_lampu_padam", name: "Detail Lampu Padam", icon: "lightbulb_circle" },
-            { id: "detail_penugasan_teknisi", name: "Detail Penugasan", icon: "engineering" },
-            { id: "detail_tiang_lampu", name: "Detail Tiang Lampu", icon: "podcasts" },
-            { id: "digital_twin_command_center", name: "Command Center", icon: "dashboard_customize" },
-            { id: "donasi_lampu_taman", name: "Donasi Lampu Taman", icon: "volunteer_activism" },
-            { id: "esg_sustainability_dash", name: "ESG Sustainability", icon: "eco" },
-            { id: "hub_pengisian_ev_pju", name: "Hub Pengisian EV", icon: "ev_station" },
-            { id: "inspeksi_kendaraan_harian", name: "Inspeksi Kendaraan", icon: "car_repair" },
-            { id: "jadwal_pemeliharaan_pju", name: "Jadwal Pemeliharaan", icon: "calendar_month" },
-            { id: "jaringan_keamanan_publik", name: "Jaringan Keamanan", icon: "security" },
-            { id: "kontrol_adaptif_cuaca", name: "Kontrol Adaptif Cuaca", icon: "cloudy" },
-            { id: "kontrol_suara_command_center", name: "Kontrol Suara", icon: "mic" },
-            { id: "lapor_gangguan_pju", name: "Lapor Gangguan", icon: "report_problem" },
-            { id: "manajemen_bbm_armada", name: "Manajemen BBM", icon: "local_gas_station" },
-            { id: "notifikasi_informasi", name: "Notifikasi Informasi", icon: "notifications" },
-            { id: "pengaturan_rute_berbasis_stok", name: "Pengaturan Rute Stok", icon: "route" },
-            { id: "peta_keamanan_rute_terang", name: "Peta Rute Terang", icon: "map" },
-            { id: "peta_monitoring_pju", name: "Peta Monitoring", icon: "satellite_alt" },
-            { id: "peta_rute_pemeliharaan", name: "Peta Pemeliharaan", icon: "alt_route" },
-            { id: "pju_smart_dashboard", name: "Smart Dashboard", icon: "speed" },
-            { id: "portal_transparansi_publik", name: "Portal Transparansi", icon: "public" },
-            { id: "power_engineering_precision", name: "Power Engineering", icon: "bolt" },
-            { id: "profil_pengguna", name: "Profil Pengguna", icon: "account_circle" },
-            { id: "riwayat_transaksi", name: "Riwayat Transaksi", icon: "receipt_long" },
-            { id: "simulasi_darurat_pju", name: "Simulasi Darurat", icon: "emergency" },
-            { id: "simulasi_penghematan_roi", name: "Simulasi Penghematan", icon: "savings" },
-            { id: "stok_material_kendaraan", name: "Stok Material", icon: "inventory" },
-            { id: "verifikasi_penyelesaian_tugas", name: "Verifikasi Tugas", icon: "task_alt" }
+            // ── Operasional ─────────────────────────────────────────────
+            { id: "pju_smart_dashboard",            name: "Smart Dashboard",           icon: "speed",                category: "Operasional" },
+            { id: "digital_twin_command_center",    name: "Command Center",            icon: "dashboard_customize",  category: "Operasional" },
+            { id: "peta_monitoring_pju",            name: "Peta Monitoring",           icon: "satellite_alt",        category: "Operasional" },
+            { id: "analitik_alert_pju",             name: "Analitik Alert PJU",        icon: "warning",              category: "Operasional" },
+            { id: "dashboard_eksekutif_smart_pju",  name: "Dashboard Eksekutif",       icon: "business_center",      category: "Operasional" },
+            { id: "pusat_kendali_integrasi",        name: "Pusat Kendali Integrasi",   icon: "control_camera",       category: "Operasional" },
+            // ── Pemeliharaan ─────────────────────────────────────────────
+            { id: "ai_predictive_maintenance",      name: "AI Predictive Maintenance", icon: "memory",               category: "Pemeliharaan" },
+            { id: "jadwal_pemeliharaan_pju",        name: "Jadwal Pemeliharaan",       icon: "calendar_month",       category: "Pemeliharaan" },
+            { id: "detail_tiang_lampu",             name: "Detail Tiang Lampu",        icon: "podcasts",             category: "Pemeliharaan" },
+            { id: "ar_asset_inspection",            name: "AR Asset Inspection",       icon: "view_in_ar",           category: "Pemeliharaan" },
+            { id: "kontrol_adaptif_cuaca",          name: "Kontrol Adaptif Cuaca",     icon: "cloudy",               category: "Pemeliharaan" },
+            { id: "verifikasi_penyelesaian_tugas",  name: "Verifikasi Tugas",          icon: "task_alt",             category: "Pemeliharaan" },
+            // ── Teknisi ──────────────────────────────────────────────────
+            { id: "dashboard_penugasan_teknisi",    name: "Penugasan Teknisi",         icon: "assignment",           category: "Teknisi" },
+            { id: "detail_penugasan_teknisi",       name: "Detail Penugasan",          icon: "engineering",          category: "Teknisi" },
+            { id: "absensi_kehadiran_teknisi",      name: "Absensi & Kehadiran",       icon: "person_check",         category: "Teknisi" },
+            { id: "peta_rute_pemeliharaan",         name: "Peta Rute Pemeliharaan",    icon: "alt_route",            category: "Teknisi" },
+            { id: "stok_material_kendaraan",        name: "Stok Material",             icon: "inventory",            category: "Teknisi" },
+            { id: "inspeksi_kendaraan_harian",      name: "Inspeksi Kendaraan",        icon: "car_repair",           category: "Teknisi" },
+            { id: "manajemen_bbm_armada",           name: "Manajemen BBM Armada",      icon: "local_gas_station",    category: "Teknisi" },
+            { id: "pengaturan_rute_berbasis_stok",  name: "Rute Berbasis Stok",        icon: "route",                category: "Teknisi" },
+            // ── Warga ─────────────────────────────────────────────────────
+            { id: "lapor_gangguan_pju",             name: "Lapor Gangguan",            icon: "report_problem",       category: "Warga" },
+            { id: "detail_lapor_lampu_padam",       name: "Detail Lapor Padam",        icon: "lightbulb_circle",     category: "Warga" },
+            { id: "portal_transparansi_publik",     name: "Portal Transparansi",       icon: "public",               category: "Warga" },
+            { id: "dashboard_mobilitas_warga",      name: "Dashboard Mobilitas",       icon: "directions_car",       category: "Warga" },
+            { id: "peta_keamanan_rute_terang",      name: "Peta Rute Terang",          icon: "map",                  category: "Warga" },
+            { id: "donasi_lampu_taman",             name: "Donasi Lampu Taman",        icon: "volunteer_activism",   category: "Warga" },
+            { id: "jaringan_keamanan_publik",       name: "Jaringan Keamanan Publik",  icon: "security",             category: "Warga" },
+            // ── PLN Mobile ───────────────────────────────────────────────
+            { id: "dashboard_pln_mobile",           name: "Dashboard PLN Mobile",      icon: "phone_iphone",         category: "PLN Mobile" },
+            { id: "integrasi_otentikasi_pln_mobile",name: "Otentikasi PLN Mobile",     icon: "verified_user",        category: "PLN Mobile" },
+            { id: "profil_pengguna",                name: "Profil Pengguna",           icon: "account_circle",       category: "PLN Mobile" },
+            { id: "notifikasi_informasi",           name: "Notifikasi Informasi",      icon: "notifications",        category: "PLN Mobile" },
+            { id: "riwayat_transaksi",              name: "Riwayat Transaksi",         icon: "receipt_long",         category: "PLN Mobile" },
+            { id: "hub_pengisian_ev_pju",           name: "Hub Pengisian EV",          icon: "ev_station",           category: "PLN Mobile" },
+            // ── Analitik ─────────────────────────────────────────────────
+            { id: "esg_sustainability_dash",        name: "ESG Sustainability",        icon: "eco",                  category: "Analitik" },
+            { id: "simulasi_penghematan_roi",       name: "Simulasi Penghematan ROI",  icon: "savings",              category: "Analitik" },
+            { id: "laporan_keuangan_audit",         name: "Laporan Keuangan & Audit",  icon: "account_balance",      category: "Analitik" },
+            { id: "skema_database_relasi",          name: "Skema Database",            icon: "schema",               category: "Analitik" },
+            // ── Sistem ───────────────────────────────────────────────────
+            { id: "hub_integrasi_api",              name: "Hub Integrasi API",         icon: "hub",                  category: "Sistem" },
+            { id: "konfigurasi_sistem_backend",     name: "Konfigurasi Backend",       icon: "settings",             category: "Sistem" },
+            { id: "setup_produksi_deploy",          name: "Setup Produksi & Deploy",   icon: "cloud_upload",         category: "Sistem" },
+            { id: "kontrol_suara_command_center",   name: "Kontrol Suara",             icon: "mic",                  category: "Sistem" },
+            // ── Keamanan ─────────────────────────────────────────────────
+            { id: "manajemen_enkripsi_api",         name: "Manajemen Enkripsi API",    icon: "key",                  category: "Keamanan" },
+            { id: "keamanan_privasi_database",      name: "Keamanan & Privasi DB",     icon: "lock",                 category: "Keamanan" },
+            { id: "log_audit_keamanan",             name: "Log Audit Keamanan",        icon: "gavel",                category: "Keamanan" },
+            { id: "security_dashboard",             name: "Security Dashboard",        icon: "shield",               category: "Keamanan" },
+            { id: "simulasi_serangan_siber",        name: "Simulasi Serangan Siber",   icon: "bug_report",           category: "Keamanan" },
+            // ── Simulasi & DR ────────────────────────────────────────────
+            { id: "simulasi_darurat_pju",           name: "Simulasi Darurat PJU",      icon: "emergency",            category: "Simulasi & DR" },
+            { id: "simulasi_beban_penuh_sistem",    name: "Simulasi Beban Sistem",     icon: "trending_up",          category: "Simulasi & DR" },
+            { id: "simulasi_kegagalan_server_dr",   name: "Simulasi Kegagalan Server", icon: "dangerous",            category: "Simulasi & DR" },
+            { id: "pusat_pemulihan_bencana_dr",     name: "Pemulihan Bencana (DR)",    icon: "health_and_safety",    category: "Simulasi & DR" },
         ];
 
         const grid = document.getElementById('moduleGrid');
 
-        function renderModules(items) {
-            grid.innerHTML = items.map(m => `
+        const CATEGORY_COLORS = {
+            'Operasional':   'bg-blue-50 text-blue-700 border-blue-200',
+            'Pemeliharaan':  'bg-amber-50 text-amber-700 border-amber-200',
+            'Teknisi':       'bg-emerald-50 text-emerald-700 border-emerald-200',
+            'Warga':         'bg-purple-50 text-purple-700 border-purple-200',
+            'PLN Mobile':    'bg-sky-50 text-sky-700 border-sky-200',
+            'Analitik':      'bg-teal-50 text-teal-700 border-teal-200',
+            'Sistem':        'bg-slate-50 text-slate-700 border-slate-200',
+            'Keamanan':      'bg-red-50 text-red-700 border-red-200',
+            'Simulasi & DR': 'bg-orange-50 text-orange-700 border-orange-200',
+        };
+
+        function moduleCard(m) {
+            const badge = CATEGORY_COLORS[m.category] || 'bg-slate-50 text-slate-600 border-slate-200';
+            return `
                 <a href="${m.id}/code.html" class="module-card group block bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm relative">
                     <div class="p-6">
-                        <div class="w-14 h-14 bg-primary-50 rounded-2xl flex items-center justify-center mb-5 group-hover:bg-primary-600 transition-colors duration-300">
-                            <span class="material-symbols-outlined text-3xl text-primary-600 group-hover:text-white transition-colors duration-300">${m.icon}</span>
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="w-14 h-14 bg-primary-50 rounded-2xl flex items-center justify-center group-hover:bg-primary-600 transition-colors duration-300 flex-shrink-0">
+                                <span class="material-symbols-outlined text-3xl text-primary-600 group-hover:text-white transition-colors duration-300">${m.icon}</span>
+                            </div>
+                            <span class="text-[10px] font-bold uppercase tracking-wide border rounded-full px-2 py-0.5 ${badge}">${m.category}</span>
                         </div>
-                        <h3 class="text-xl font-bold text-slate-800 group-hover:text-primary-700 mb-2 transition-colors leading-tight">${m.name}</h3>
-                        <p class="text-sm font-medium text-slate-400 truncate" title="${m.id}">/${m.id}</p>
+                        <h3 class="text-base font-bold text-slate-800 group-hover:text-primary-700 mb-1 transition-colors leading-tight">${m.name}</h3>
+                        <p class="text-xs font-medium text-slate-400 truncate" title="${m.id}">/${m.id}</p>
                     </div>
-                    <div class="px-6 py-4 bg-slate-50 border-t border-slate-100 flex justify-between items-center group-hover:bg-primary-50 transition-colors">
-                        <span class="text-sm font-semibold text-slate-500 group-hover:text-primary-600">Buka Modul</span>
-                        <div class="w-8 h-8 rounded-full bg-white flex items-center justify-center shadow-sm group-hover:shadow-md transition-shadow">
-                            <span class="material-symbols-outlined text-sm text-slate-400 group-hover:text-primary-600 transition-transform group-hover:translate-x-1">arrow_forward</span>
-                        </div>
+                    <div class="px-6 py-3 bg-slate-50 border-t border-slate-100 flex justify-between items-center group-hover:bg-primary-50 transition-colors">
+                        <span class="text-xs font-semibold text-slate-500 group-hover:text-primary-600">Buka Modul</span>
+                        <span class="material-symbols-outlined text-sm text-slate-400 group-hover:text-primary-600 transition-transform group-hover:translate-x-1">arrow_forward</span>
                     </div>
-                </a>
+                </a>`;
+        }
+
+        function renderModules(items) {
+            // Group by category when no search filter
+            const cats = {};
+            items.forEach(m => {
+                if (!cats[m.category]) cats[m.category] = [];
+                cats[m.category].push(m);
+            });
+            const catOrder = ['Operasional','Pemeliharaan','Teknisi','Warga','PLN Mobile','Analitik','Sistem','Keamanan','Simulasi & DR'];
+            const ordered = catOrder.filter(c => cats[c]);
+            const rest = Object.keys(cats).filter(c => !catOrder.includes(c));
+
+            grid.innerHTML = [...ordered, ...rest].map(cat => `
+                <div class="col-span-full mt-6 mb-2 flex items-center gap-3">
+                    <h2 class="text-xs font-bold uppercase tracking-widest text-slate-400">${cat}</h2>
+                    <div class="flex-1 h-px bg-slate-200"></div>
+                    <span class="text-xs text-slate-400">${cats[cat].length} modul</span>
+                </div>
+                ${cats[cat].map(moduleCard).join('')}
             `).join('');
         }
 
