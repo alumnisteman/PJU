@@ -4,6 +4,8 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Peta Rute Pemeliharaan Otomatis - Sistem PJU Cerdas</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Geist:wght@400;600;700&family=JetBrains+Mono&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
@@ -209,20 +211,8 @@
 </aside>
 <!-- Main Content (Canvas) -->
 <main class="flex-1 relative overflow-hidden bg-background">
-<!-- Map Interface -->
-<div class="absolute inset-0 z-0">
-<div class="w-full h-full grayscale-[0.5] opacity-90" data-alt="A detailed satellite-style map of Ternate island with intricate coastal lines and urban road networks. Overlaid are glowing digital route lines in primary blue connecting several infrastructure markers. The aesthetic is professional, architectural, and high-tech, focusing on engineering precision." data-location="Ternate" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB4m1pOmrqGQn1z4jn2Bc7E8BG5-rrpUMPTm0UDRXDuAjjYNjEUUAgfwObR1FmicPEbTqqM1w6bIkGntw4ru2w1vKLVGMQGu76XbeAxtk8BA3OnkH6PIOBGTAlKxsYrpWT28ui7_NyGrq9mQuLaRO_nkA1pkDYdgH2Cq_pRlDf9jMcaribTk6Qt2_ghGgdLq9GMQa6HEgLa3EKqwo8OXb479JwmktXYVvFgfeeIqRbDeSkIlQCSFzIPZ5KiJzO1lrvRT-Xr5lONWfsL')"></div>
-<!-- SVG Overlay for Route -->
-<svg class="absolute inset-0 w-full h-full pointer-events-none" preserveaspectratio="xMidYMid slice" viewbox="0 0 1000 1000">
-<path class="route-line" d="M200,300 L400,350 L450,550 L700,600 L850,450" fill="none" stroke="#2563eb" stroke-width="4"></path>
-<!-- Points -->
-<circle cx="200" cy="300" fill="#2563eb" r="8"></circle>
-<circle class="pulse-red" cx="400" cy="350" fill="#ba1a1a" r="8"></circle>
-<circle class="pulse-yellow" cx="450" cy="550" fill="#784b00" r="8"></circle>
-<circle class="pulse-yellow" cx="700" cy="600" fill="#784b00" r="8"></circle>
-<circle cx="850" cy="450" fill="#2563eb" r="8"></circle>
-</svg>
-</div>
+<!-- Leaflet Map -->
+<div id="leaflet-map" class="absolute inset-0 z-0"></div>
 <!-- UI Overlays -->
 <div class="absolute inset-x-0 top-0 p-md flex flex-col md:flex-row gap-md pointer-events-none">
 <!-- Route Stats Overlay -->
@@ -348,15 +338,77 @@
 </a>
 </nav>
 <script>
-        // Simple Interaction logic
-        document.addEventListener('DOMContentLoaded', () => {
-            const stops = document.querySelectorAll('.overflow-y-auto > div');
-            stops.forEach(stop => {
-                stop.addEventListener('click', () => {
-                    stops.forEach(s => s.classList.remove('ring-2', 'ring-primary'));
-                    stop.classList.add('ring-2', 'ring-primary');
-                });
+    document.addEventListener('DOMContentLoaded', () => {
+        // ── Inisialisasi Leaflet Map Ternate ──────────────────────────────
+        const map = L.map('leaflet-map', {
+            center: [0.7897, 127.3842],
+            zoom: 14,
+            zoomControl: true
+        });
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            maxZoom: 19
+        }).addTo(map);
+
+        // ── Stop / titik kunjungan teknisi ────────────────────────────────
+        const stops = [
+            { no:1, lat:0.7883, lng:127.3782, label:'STOP 1 – DARURAT', nama:'PJU #912 – Jl. Pahlawan Revolusi', tipe:'error',   warna:'#ba1a1a' },
+            { no:2, lat:0.7825, lng:127.3742, label:'STOP 2 – RUTIN',   nama:'PJU #441 – Kawasan Pelabuhan',   tipe:'rutin',   warna:'#784b00' },
+            { no:3, lat:0.7895, lng:127.3815, label:'STOP 3 – RUTIN',   nama:'PJU #102 – Taman Kota',          tipe:'rutin',   warna:'#784b00' },
+            { no:4, lat:0.7912, lng:127.3821, label:'STOP 4 – RUTIN',   nama:'PJU #203 – Jl. Ahmad Yani',      tipe:'rutin',   warna:'#784b00' },
+            { no:5, lat:0.7965, lng:127.3860, label:'STOP 5 – SELESAI', nama:'PJU #337 – Jl. Sultan Babullah', tipe:'selesai', warna:'#004ac6' },
+        ];
+
+        // Garis rute
+        const routeCoords = stops.map(s => [s.lat, s.lng]);
+        L.polyline(routeCoords, {
+            color: '#004ac6', weight: 5, opacity: 0.85,
+            dashArray: '10, 6'
+        }).addTo(map);
+
+        // Animasi "route-line" via CSS offset – dikelola Leaflet secara otomatis
+
+        // Marker setiap stop
+        stops.forEach(s => {
+            const icon = L.divIcon({
+                className: '',
+                html: `<div style="
+                    background:${s.warna};color:#fff;
+                    border-radius:50%;width:34px;height:34px;
+                    display:flex;align-items:center;justify-content:center;
+                    font-weight:bold;font-size:13px;
+                    border:3px solid #fff;
+                    box-shadow:0 2px 10px rgba(0,0,0,0.4);
+                ">${s.no}</div>`,
+                iconSize: [34, 34], iconAnchor: [17, 17], popupAnchor: [0, -22]
+            });
+            L.marker([s.lat, s.lng], { icon })
+                .addTo(map)
+                .bindPopup(`<b>${s.label}</b><br>${s.nama}`);
+        });
+
+        // Fit bounds agar semua stop terlihat
+        map.fitBounds(L.latLngBounds(routeCoords).pad(0.2));
+
+        // ── Klik item di daftar kunjungan → pan peta ──────────────────────
+        const stopCards = document.querySelectorAll('.overflow-y-auto > div');
+        stopCards.forEach((card, idx) => {
+            card.style.cursor = 'pointer';
+            card.addEventListener('click', () => {
+                stopCards.forEach(c => c.classList.remove('ring-2', 'ring-primary'));
+                card.classList.add('ring-2', 'ring-primary');
+                if (stops[idx]) map.flyTo([stops[idx].lat, stops[idx].lng], 17);
             });
         });
-    </script>
+
+        // ── Tombol Mulai Navigasi → zoom ke Stop 1 ────────────────────────
+        const navBtn = document.querySelector('button span.material-symbols-outlined');
+        if (navBtn && navBtn.textContent.trim() === 'navigation') {
+            navBtn.closest('button').addEventListener('click', () => {
+                map.flyTo([stops[0].lat, stops[0].lng], 17);
+            });
+        }
+    });
+</script>
 </body></html>

@@ -6,6 +6,8 @@
 <title>Ternate Smart PJU - Safety Map</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Geist:wght@400;600;700&family=JetBrains+Mono&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
 <style>
@@ -141,11 +143,8 @@
 </header>
 <!-- Main Map Container -->
 <main class="relative w-full h-screen pt-14 pb-20">
-<!-- Background Map (Simulated with Placeholder) -->
-<div class="absolute inset-0 z-0 bg-surface-dim" data-alt="A highly detailed topographical map of Ternate island, Indonesia, featuring intricate street layouts and coastal lines. The map uses a sophisticated clean cartography style with a professional blue and slate color palette. Significant landmarks and safety zones are highlighted with subtle emerald glows. The lighting is bright and even, evoking a sense of clarity and modern urban safety infrastructure." data-location="Ternate, Indonesia" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD8GGS3T8aL0HM-XuJk7aQfk6b-WGQd-6RVgeSehd-UndEtZAo3zeb6exdKNgePhO5W-oTBmEcRodhpD07jurMRb-gJUYATP5XomN0QIqrZtre-YWg4Eexzlrhci37C3kdqQfPlgfl32pQuModtZ-yQpRopyYxVVUB6cFakKbl5HmBXt16A4cWp2m8JjI6lO9hBsW-5wDTT9_Rp5UPMwhunUrADbPddtG08fwFGkNfocoWxPKIXn2N9VNoxQSD0uokd2gxkXx2BrJgo')">
-<!-- Map Overlay Gradients for Depth -->
-<div class="absolute inset-0 map-gradient-overlay pointer-events-none"></div>
-</div>
+<!-- Leaflet Map -->
+<div id="leaflet-map" class="absolute inset-0 z-0" style="top:56px; bottom:80px;"></div>
 <!-- Floating UI: Top Left - Search & Layers -->
 <div class="absolute top-20 left-4 z-20 flex flex-col gap-md w-full max-w-[340px]">
 <!-- Search Bar -->
@@ -291,25 +290,83 @@
 <span class="font-label-caps text-[10px] mt-1">Profile</span>
 </a>
 </nav>
-<!-- Map Interactive Micro-interactions Script -->
+<!-- Leaflet + Interaction Script -->
 <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const toggle = document.querySelector('input[type="checkbox"]');
-            toggle.addEventListener('change', (e) => {
-                const mapBg = document.querySelector('[data-location]');
-                if (e.target.checked) {
-                    mapBg.style.filter = 'brightness(1.1) saturate(1.1)';
-                } else {
-                    mapBg.style.filter = 'brightness(0.8) contrast(1.2)';
-                }
-            });
+    document.addEventListener('DOMContentLoaded', () => {
+        // ── Inisialisasi peta Ternate ──────────────────────────────────────
+        const map = L.map('leaflet-map', {
+            center: [0.7897, 127.3842],
+            zoom: 15,
+            zoomControl: true
+        });
 
-            // Smooth scroll for cards
-            const scrollContainer = document.querySelector('.hide-scrollbar');
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            maxZoom: 19
+        }).addTo(map);
+
+        // ── Rute terang (Brightest Routes) ─────────────────────────────────
+        const ruteTerang = [
+            [0.7825, 127.3742], // Pelabuhan
+            [0.7852, 127.3770], // Jl. Stadion
+            [0.7870, 127.3805], // Jl. Salero
+            [0.7883, 127.3782], // Jl. Pahlawan Revolusi
+            [0.7895, 127.3815], // Taman Kota
+            [0.7912, 127.3821], // Jl. Ahmad Yani
+            [0.7930, 127.3798], // Jl. Sultan Khairun
+            [0.7950, 127.3835], // Jl. Nukila
+            [0.7965, 127.3860], // Jl. Sultan Babullah
+            [0.7995, 127.3888], // Jl. Tanah Tinggi
+            [0.8003, 127.3902], // Jl. Makassar
+        ];
+        L.polyline(ruteTerang, { color: '#10b981', weight: 5, opacity: 0.8, dashArray: null }).addTo(map);
+
+        // ── Zona aman (Safe Havens) ─────────────────────────────────────────
+        const safeHavens = [
+            { lat: 0.7855, lng: 127.3768, nama: 'Polsek Ternate Selatan',   tipe: 'Police',   jarak: '450m'  },
+            { lat: 0.7930, lng: 127.3800, nama: 'Dhuafa Center Ternate',    tipe: 'Community', jarak: '820m' },
+            { lat: 0.7998, lng: 127.3895, nama: 'RSUD Chasan Boesoirie',    tipe: 'Medical',   jarak: '1.2km' },
+            { lat: 0.7872, lng: 127.3810, nama: 'Kantor Kelurahan Tanah Raja', tipe: 'Gov',    jarak: '600m' },
+        ];
+
+        const havenColor = { Police:'#3b82f6', Community:'#f59e0b', Medical:'#ef4444', Gov:'#8b5cf6' };
+        safeHavens.forEach(h => {
+            const icon = L.divIcon({
+                className: '',
+                html: `<div style="background:${havenColor[h.tipe]||'#6b7280'};color:#fff;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:16px;border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,0.4);">🛡</div>`,
+                iconSize: [32, 32], iconAnchor: [16, 16], popupAnchor: [0, -20]
+            });
+            L.marker([h.lat, h.lng], { icon })
+                .addTo(map)
+                .bindPopup(`<b>${h.nama}</b><br>${h.tipe} · ${h.jarak}`);
+        });
+
+        // ── Titik PJU di rute terang ────────────────────────────────────────
+        ruteTerang.forEach((coord, i) => {
+            L.circleMarker(coord, {
+                radius: 7, color: '#fff', fillColor: '#10b981',
+                fillOpacity: 1, weight: 2
+            }).addTo(map)
+              .bindTooltip(`PJU-TTE-${String(i+1).padStart(3,'0')}`, { direction: 'top' });
+        });
+
+        // ── Toggle layer "Lighting Density" ────────────────────────────────
+        const toggle = document.querySelector('input[type="checkbox"]');
+        if (toggle) {
+            toggle.addEventListener('change', () => {
+                document.getElementById('leaflet-map').style.filter =
+                    toggle.checked ? 'brightness(1.05)' : 'brightness(0.85) grayscale(0.3)';
+            });
+        }
+
+        // ── Smooth scroll kartu Safe Haven ─────────────────────────────────
+        const scrollContainer = document.querySelector('.hide-scrollbar');
+        if (scrollContainer) {
             scrollContainer.addEventListener('wheel', (evt) => {
                 evt.preventDefault();
                 scrollContainer.scrollLeft += evt.deltaY;
             });
-        });
-    </script>
+        }
+    });
+</script>
 </body></html>

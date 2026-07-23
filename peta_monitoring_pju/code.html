@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="id" class="light"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&amp;family=Geist:wght@600;700;800&amp;family=JetBrains+Mono&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet"><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script src="/js/api-client.js"></script><script id="tailwind-config">try{
+<!DOCTYPE html><html lang="id" class="light"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&amp;family=Geist:wght@600;700;800&amp;family=JetBrains+Mono&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet"><link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/><script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script src="/js/api-client.js"></script><script id="tailwind-config">try{
       tailwind.config = {
         darkMode: "class",
         theme: {
@@ -108,31 +108,8 @@
 </header>
 <!-- Main Content: Map Interface -->
 <main class="flex-1 relative overflow-hidden bg-surface-container-low">
-<!-- Interactive Map Canvas -->
-<div class="absolute inset-0 map-canvas w-full h-full" data-location="Ternate, Indonesia">
-<div class="w-full h-full relative" data-alt="A clean, professional digital map interface of a metropolitan city area. The map uses a minimalist, light-mode palette with soft grey streets and subtle green spaces. Numerous small, circular markers are scattered across the grid, glowing in distinct emerald green, amber yellow, and ruby red colors to indicate infrastructure status. The overall aesthetic is precise, data-driven, and corporate-modern, reflecting a high-tech utility management dashboard." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDOmjnooTXPYSlTaeVu0OKIMQ9nPOeXsYX0vmWiVzv-GoKvRn3FPHr3SzGKxHJjftH3Va34mvf7Un_CL2AacYYO0xWJDRUS6mHbBeLHSokgn2gjkW9Im1r42GYwY0BhHgSPXf47flLvb7w_hjDsiSlKdVhRIVSoZmK-Vfk3xjlBKPVdMYoJTuBonOjH4X__FdfoC4Xy7sfzF-XY27i5oFWy3Spr-r8N3H0msGXoZ3cMu4uMk8KZ9kG5FEJ6i1_Sg2KvHY_TWH8-dVrZ')">
-<!-- Floating Markers (Simulation) -->
-<!-- Green: Normal -->
-<button class="absolute top-[30%] left-[40%] group active:scale-90 transition-transform" onclick="selectPole('PJU-JKT-001', 'Active', '80%')">
-<span class="material-symbols-outlined text-emerald-500 marker-glow-green text-[32px]" data-icon="location_on" style="font-variation-settings: 'FILL' 1;" data-original-icon="location_on">location_on</span>
-<div class="hidden group-hover:block absolute -top-8 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-[10px] px-2 py-1 rounded shadow-lg whitespace-nowrap">PJU-TTE-001</div>
-</button>
-<!-- Yellow: Dimmed -->
-<button class="absolute top-[45%] left-[55%] group active:scale-90 transition-transform" onclick="selectPole('PJU-JKT-042', 'Dimmed', '30%')">
-<span class="material-symbols-outlined text-amber-500 marker-glow-yellow text-[32px]" data-icon="location_on" style="font-variation-settings: 'FILL' 1;">location_on</span>
-<div class="hidden group-hover:block absolute -top-8 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-[10px] px-2 py-1 rounded shadow-lg whitespace-nowrap">PJU-TTE-042</div>
-</button>
-<!-- Red: Warning/Error -->
-<button class="absolute top-[60%] left-[35%] group active:scale-90 transition-transform" onclick="selectPole('PJU-JKT-088', 'Offline', '0%')">
-<span class="material-symbols-outlined text-red-500 marker-glow-red text-[32px]" data-icon="location_on" style="font-variation-settings: 'FILL' 1;">location_on</span>
-<div class="hidden group-hover:block absolute -top-8 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-[10px] px-2 py-1 rounded shadow-lg whitespace-nowrap">PJU-TTE-088</div>
-</button>
-<!-- More random markers for density -->
-<span class="absolute top-[20%] left-[25%] material-symbols-outlined text-emerald-500/60 text-[24px]" data-icon="location_on" style="font-variation-settings: 'FILL' 1;">location_on</span>
-<span class="absolute top-[75%] left-[65%] material-symbols-outlined text-emerald-500/60 text-[24px]" data-icon="location_on" style="font-variation-settings: 'FILL' 1;">location_on</span>
-<span class="absolute top-[15%] left-[80%] material-symbols-outlined text-emerald-500/60 text-[24px]" data-icon="location_on" style="font-variation-settings: 'FILL' 1;">location_on</span>
-</div>
-</div>
+<!-- Leaflet Map -->
+<div id="leaflet-map" class="absolute inset-0 w-full h-full" style="z-index:0"></div>
 <!-- Search Bar Overlay -->
 <div class="absolute top-4 left-1/2 -translate-x-1/2 w-full max-w-md px-4">
 <div class="relative group">
@@ -224,26 +201,92 @@
 <span class="font-label-caps text-label-caps mt-1">Alerts</span>
 </a>
 </nav>
-<script class="">
-        function selectPole(id, status, dimming) {
+<script>
+        // ─── Data PJU Ternate (koordinat GPS nyata) ───────────────────────────
+        const PJU_ASSETS = [
+            { id:'PJU-TTE-001', lat:0.7883, lng:127.3782, status:'Active',  dimming:'80%', alamat:'Jl. Pahlawan Revolusi, Ternate' },
+            { id:'PJU-TTE-015', lat:0.7825, lng:127.3742, status:'Active',  dimming:'75%', alamat:'Kawasan Pelabuhan Ahmad Yani' },
+            { id:'PJU-TTE-023', lat:0.7965, lng:127.3860, status:'Active',  dimming:'90%', alamat:'Jl. Sultan Babullah, Ternate' },
+            { id:'PJU-TTE-033', lat:0.8003, lng:127.3902, status:'Dimmed',  dimming:'35%', alamat:'Jl. Makassar, Ternate Utara' },
+            { id:'PJU-TTE-042', lat:0.7912, lng:127.3821, status:'Dimmed',  dimming:'30%', alamat:'Jl. Ahmad Yani, Ternate' },
+            { id:'PJU-TTE-056', lat:0.7852, lng:127.3770, status:'Active',  dimming:'85%', alamat:'Jl. Stadion, Ternate Selatan' },
+            { id:'PJU-TTE-071', lat:0.7995, lng:127.3888, status:'Active',  dimming:'70%', alamat:'Jl. Tanah Tinggi, Ternate' },
+            { id:'PJU-TTE-088', lat:0.7950, lng:127.3835, status:'Offline', dimming:'0%',  alamat:'Jl. Nukila, Ternate Tengah' },
+            { id:'PJU-TTE-095', lat:0.7870, lng:127.3805, status:'Active',  dimming:'80%', alamat:'Jl. Salero, Ternate' },
+            { id:'PJU-TTE-102', lat:0.7895, lng:127.3815, status:'Active',  dimming:'65%', alamat:'Taman Kota Ternate' },
+            { id:'PJU-TTE-118', lat:0.7930, lng:127.3798, status:'Active',  dimming:'80%', alamat:'Jl. Sultan Khairun, Tanah Raja' },
+            { id:'PJU-TTE-134', lat:0.7840, lng:127.3760, status:'Dimmed',  dimming:'40%', alamat:'Jl. Mangga Dua, Ternate Selatan' },
+        ];
+
+        // ─── Inisialisasi Leaflet Map ──────────────────────────────────────────
+        document.addEventListener('DOMContentLoaded', () => {
+            const map = L.map('leaflet-map', {
+                center: [0.7897, 127.3842],
+                zoom: 15,
+                zoomControl: true,
+                attributionControl: true
+            });
+
+            // OpenStreetMap tiles
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                maxZoom: 19
+            }).addTo(map);
+
+            // Custom icon factory
+            function makeIcon(color) {
+                return L.divIcon({
+                    className: '',
+                    html: `<div style="
+                        width:26px;height:26px;border-radius:50% 50% 50% 0;
+                        background:${color};border:3px solid #fff;
+                        box-shadow:0 2px 8px rgba(0,0,0,0.4);
+                        transform:rotate(-45deg);
+                    "></div>`,
+                    iconSize: [26, 26],
+                    iconAnchor: [13, 26],
+                    popupAnchor: [0, -28]
+                });
+            }
+
+            const colorMap = { Active:'#10b981', Dimmed:'#f59e0b', Offline:'#ef4444' };
+
+            PJU_ASSETS.forEach(asset => {
+                const icon = makeIcon(colorMap[asset.status]);
+                L.marker([asset.lat, asset.lng], { icon })
+                    .addTo(map)
+                    .bindTooltip(asset.id, { permanent: false, direction: 'top' })
+                    .on('click', () => selectPole(asset.id, asset.status, asset.dimming, asset.alamat));
+            });
+
+            // Search - pan peta ke marker yang cocok
+            document.querySelector('input').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    const q = this.value.toUpperCase();
+                    const found = PJU_ASSETS.find(a => a.id.includes(q));
+                    if (found) {
+                        map.flyTo([found.lat, found.lng], 17);
+                        selectPole(found.id, found.status, found.dimming, found.alamat);
+                    }
+                }
+            });
+        });
+
+        // ─── Update panel detail bawah ────────────────────────────────────────
+        function selectPole(id, status, dimming, alamat) {
             const card = document.getElementById('pole-detail-card');
             const idEl = document.getElementById('pole-id');
             const statusBadge = document.getElementById('pole-status-badge');
             const dimmingEl = document.getElementById('pole-dimming');
             const dimmingBar = document.getElementById('pole-dimming-bar');
 
-            // Visual feedback - temporary bounce
             card.classList.add('translate-y-4', 'opacity-50');
-            
             setTimeout(() => {
                 idEl.innerText = id;
                 dimmingEl.innerText = dimming;
                 dimmingBar.style.width = dimming;
-                
-                // Status Styling
                 statusBadge.innerText = status;
                 statusBadge.className = 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold ';
-                
                 if (status === 'Active') {
                     statusBadge.classList.add('bg-emerald-100', 'text-emerald-800');
                     dimmingBar.className = 'h-full transition-all duration-1000 bg-primary';
@@ -254,54 +297,12 @@
                     statusBadge.classList.add('bg-red-100', 'text-red-800');
                     dimmingBar.className = 'h-full transition-all duration-1000 bg-red-500';
                 }
-
+                // Update alamat jika ada elemen
+                const alamatEl = document.querySelector('[data-field="alamat"]');
+                if (alamatEl && alamat) alamatEl.innerText = alamat;
                 card.classList.remove('translate-y-4', 'opacity-50');
             }, 150);
         }
-
-        // Search Input Interaction
-        document.querySelector('input').addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') {
-                const val = this.value.toUpperCase();
-                if (val.includes('001')) selectPole('PJU-JKT-001', 'Active', '80%');
-                else if (val.includes('042')) selectPole('PJU-JKT-042', 'Dimmed', '30%');
-                else if (val.includes('088')) selectPole('PJU-JKT-088', 'Offline', '0%');
-                else selectPole(val || 'N/A', 'Unknown', '0%');
-            }
-        });
-
-        // Load real assets from API
-        async function loadAssetsFromAPI() {
-            try {
-                const response = await window.PJUAPI.getAssets();
-                if (response.success && response.data) {
-                    const assets = response.data;
-                    console.log('Loaded assets:', assets);
-                    
-                    // Update pole cards with real data
-                    const poleCards = document.querySelectorAll('.cursor-pointer');
-                    if (poleCards.length > 0 && assets.length > 0) {
-                        assets.forEach((asset, index) => {
-                            if (index < poleCards.length) {
-                                const card = poleCards[index];
-                                const poleId = asset.asset_code || `PJU-${String(index + 1).padStart(3, '0')}`;
-                                const status = asset.status === 'active' ? 'Active' : 
-                                              asset.status === 'maintenance' ? 'Dimmed' : 'Offline';
-                                const dimming = asset.status === 'active' ? '80%' : 
-                                              asset.status === 'maintenance' ? '30%' : '0%';
-                                
-                                card.onclick = () => selectPole(poleId, status, dimming);
-                            }
-                        });
-                    }
-                }
-            } catch (error) {
-                console.error('Failed to load assets:', error);
-            }
-        }
-
-        // Load assets on page load
-        document.addEventListener('DOMContentLoaded', loadAssetsFromAPI);
     </script>
 
 </body></html>
