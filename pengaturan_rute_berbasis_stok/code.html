@@ -4,6 +4,8 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Pengaturan Rute Berbasis Stok</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Geist:wght@400;600;700;800&family=JetBrains+Mono&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
@@ -205,7 +207,7 @@
 <div class="lg:col-span-8 space-y-lg">
 <section class="relative h-[400px] lg:h-[500px] bg-surface-container border border-outline-variant rounded-xl overflow-hidden shadow-inner">
 <!-- Map Placeholder -->
-<div class="absolute inset-0 z-0 bg-cover bg-center" data-alt="A clean, highly detailed technical mapping interface showing a top-down view of a city grid. The map uses a muted slate and light grey color palette with primary blue lines indicating optimized routes. Glowing blue and amber node points represent technician tasks. Professional GIS software aesthetic with subtle grid overlays." data-location="Jakarta Pusat" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuADCAL8bu1nYtaZpjtHVXHdgdouKZFeA03yA__8AkIx65LRbRd4Okn08lGa6qVJL9FfnbuORhkU7hlsz4zmK1sZjPcuIUxG8duupFaxQ0O6b2W6mYDbjZTKv8sTr5KmqBk7TLupc7bVDQJYBWpvOF3HoiD2tv06zsk0WcmzfFYCMZy-qOk8KDqigYsB7d5nkCjjQhZBCtWw4jz_1mELNl78pOU6YMmkvwVN6cRIkztURV5fr3SX8hGavaDSeeWUavrzasl4OGdd7zk7')">
+<div class="absolute inset-0 z-0 bg-cover bg-center" data-alt="A clean, highly detailed technical mapping interface showing a top-down view of a city grid. The map uses a muted slate and light grey color palette with primary blue lines indicating optimized routes. Glowing blue and amber node points represent technician tasks. Professional GIS software aesthetic with subtle grid overlays." data-location="Ternate" id="mini-map-rute" style="min-height:400px">
 </div>
 <!-- Map Controls -->
 <div class="absolute top-4 right-4 flex flex-col gap-2 z-10">
@@ -222,7 +224,7 @@
 <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
 <p class="font-label-caps text-label-caps text-primary">RUTE TEROPTIMASI</p>
 </div>
-<p class="font-body-medium text-body-medium text-on-surface mb-1">Jakarta Pusat - Harmoni Area</p>
+<p class="font-body-medium text-body-medium text-on-surface mb-1">Ternate Tengah - Area Gamalama</p>
 <p class="text-[12px] text-on-surface-variant">8.4 KM • 4 Perhentian • 110 Menit</p>
 </div>
 </section>
@@ -240,7 +242,7 @@
 <div class="w-8 h-8 rounded-lg bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-sm">1</div>
 <div>
 <p class="font-body-medium text-body-medium text-on-surface group-hover:text-primary transition-colors">Gardu Distribusi GD-12</p>
-<p class="text-xs text-on-surface-variant">Jl. Medan Merdeka Barat</p>
+<p class="text-xs text-on-surface-variant">Jl. Pahlawan Revolusi</p>
 </div>
 </div>
 <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-700 border border-emerald-200">Stok Cukup</span>
@@ -257,7 +259,7 @@
 <div class="w-8 h-8 rounded-lg bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-sm">2</div>
 <div>
 <p class="font-body-medium text-body-medium text-on-surface group-hover:text-primary transition-colors">Perbaikan Tiang TR-09</p>
-<p class="text-xs text-on-surface-variant">Jl. Kebon Sirih Raya</p>
+<p class="text-xs text-on-surface-variant">Jl. Sultan Babullah</p>
 </div>
 </div>
 <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-700 border border-emerald-200">Stok Cukup</span>
@@ -274,7 +276,7 @@
 <div class="w-8 h-8 rounded-lg bg-surface-container-high text-on-surface-variant flex items-center justify-center font-bold text-sm">3</div>
 <div>
 <p class="font-body-medium text-body-medium text-on-surface group-hover:text-primary transition-colors">Panel LP-X4 Substation</p>
-<p class="text-xs text-on-surface-variant">Jl. Veteran III</p>
+<p class="text-xs text-on-surface-variant">Jl. Ahmad Yani</p>
 </div>
 </div>
 <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-amber-100 text-amber-700 border border-amber-200">Stok Kurang</span>
@@ -291,7 +293,7 @@
 <div class="w-8 h-8 rounded-lg bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-sm">4</div>
 <div>
 <p class="font-body-medium text-body-medium text-on-surface group-hover:text-primary transition-colors">Penerangan Jalan PJU-77</p>
-<p class="text-xs text-on-surface-variant">Monas Barat Daya</p>
+<p class="text-xs text-on-surface-variant">Taman Kota Ternate</p>
 </div>
 </div>
 <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-700 border border-emerald-200">Stok Cukup</span>
@@ -341,6 +343,33 @@
                 document.querySelectorAll('.group').forEach(el => el.classList.remove('border-primary'));
                 item.classList.add('border-primary');
             });
+        });
+
+        // Mini-map rute berbasis stok
+        document.addEventListener('DOMContentLoaded', () => {
+            const el = document.getElementById('mini-map-rute');
+            if (!el || typeof L === 'undefined') return;
+            const map = L.map('mini-map-rute', { zoomControl:true, attributionControl:false });
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom:18 }).addTo(map);
+            map.setView([0.7897, 127.3842], 14);
+            // Rute 4 stop di Ternate
+            const stops = [
+                { no:1, lat:0.7883, lng:127.3782, nama:'Gardu GD-12 – Jl. Pahlawan Revolusi', w:'#2563eb' },
+                { no:2, lat:0.7852, lng:127.3770, nama:'Perbaikan TR-09 – Jl. Sultan Babullah', w:'#2563eb' },
+                { no:3, lat:0.7912, lng:127.3821, nama:'Panel LP-X4 – Jl. Ahmad Yani',          w:'#f59e0b' },
+                { no:4, lat:0.7895, lng:127.3815, nama:'PJU-77 – Taman Kota Ternate',           w:'#2563eb' },
+            ];
+            L.polyline(stops.map(s=>[s.lat,s.lng]), { color:'#2563eb', weight:4, dashArray:'8 4', opacity:0.85 }).addTo(map);
+            stops.forEach(s => {
+                L.divIcon && L.marker([s.lat,s.lng], {
+                    icon: L.divIcon({
+                        className:'',
+                        html:`<div style="background:${s.w};color:#fff;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:12px;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,0.4)">${s.no}</div>`,
+                        iconSize:[28,28], iconAnchor:[14,14], popupAnchor:[0,-18]
+                    })
+                }).addTo(map).bindPopup(s.nama);
+            });
+            map.fitBounds(stops.map(s=>[s.lat,s.lng]), { padding:[30,30] });
         });
     </script>
 </body></html>

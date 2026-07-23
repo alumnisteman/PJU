@@ -9,6 +9,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
 <!-- Tailwind CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <!-- API Client -->
 <script src="/js/api-client.js"></script>
@@ -313,14 +315,10 @@
 </button>
 </div>
 <div class="aspect-square rounded-lg relative overflow-hidden bg-surface-container border border-outline-variant">
-<!-- Image Placeholder for Map -->
-<div class="w-full h-full bg-cover bg-center opacity-60" data-location="Jakarta" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAVuitL7TZnIOI8kX6XiGeNkZfnr8NSXWKTBvElqfHg9TqoIAAeKgXM8_-q3-ZItXFipeZNQ6N3F_a_jArhUCammazIY0HEYU1NCoQD9murFMu2ZsMBTxfOmkgdbuZ4yQwssa9TNGGnIrg4g1s2soIhjkTlykuZA2vt2VoULe4LJiSYkbPVAsi54aQ_hzX2omy0f1DkGEIKjZgYz4uhxa0LOZ7bkwFnMNuut9sowczYGlEjVsVUqTplqrOxy33PD_U3202d1FhtbE9b')"></div>
-<!-- Pulsing map points -->
-<div class="absolute top-1/4 left-1/3 w-3 h-3 bg-primary rounded-full border-2 border-white shadow-lg animate-pulse"></div>
-<div class="absolute top-1/2 left-2/3 w-3 h-3 bg-error rounded-full border-2 border-white shadow-lg animate-pulse"></div>
-<div class="absolute bottom-1/3 right-1/4 w-3 h-3 bg-primary rounded-full border-2 border-white shadow-lg animate-pulse"></div>
-<!-- Overlay Control -->
-<div class="absolute bottom-2 left-2 flex gap-1">
+<!-- Peta Mini Ternate -->
+<div id="mini-map-dashboard" class="w-full h-full absolute inset-0" style="min-height:200px"></div>
+<!-- Overlay Counter -->
+<div class="absolute bottom-2 left-2 flex gap-1 z-[400]">
 <div class="bg-white/90 p-1.5 rounded shadow-sm flex items-center gap-1">
 <span class="w-2 h-2 rounded-full bg-primary"></span>
 <span class="text-[10px] font-bold">1240</span>
@@ -353,7 +351,7 @@
 </thead>
 <tbody class="divide-y divide-outline-variant">
 <tr class="hover:bg-surface-container-low/50 transition-colors">
-<td class="px-6 py-4 font-code-sm">PJU-JKT-829</td>
+<td class="px-6 py-4 font-code-sm">PJU-TTE-829</td>
 <td class="px-6 py-4">
 <div class="flex flex-col">
 <span class="font-body-medium text-on-surface">Power Failure</span>
@@ -369,7 +367,7 @@
 </td>
 </tr>
 <tr class="hover:bg-surface-container-low/50 transition-colors">
-<td class="px-6 py-4 font-code-sm">PJU-JKT-102</td>
+<td class="px-6 py-4 font-code-sm">PJU-TTE-102</td>
 <td class="px-6 py-4">
 <div class="flex flex-col">
 <span class="font-body-medium text-on-surface">Voltage Drop</span>
@@ -385,7 +383,7 @@
 </td>
 </tr>
 <tr class="hover:bg-surface-container-low/50 transition-colors">
-<td class="px-6 py-4 font-code-sm">PJU-JKT-441</td>
+<td class="px-6 py-4 font-code-sm">PJU-TTE-441</td>
 <td class="px-6 py-4">
 <div class="flex flex-col">
 <span class="font-body-medium text-on-surface">Lamp Burnout</span>
@@ -525,4 +523,21 @@
         // Refresh data every 30 seconds
         setInterval(loadDashboardData, 30000);
     </script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const el = document.getElementById('mini-map-dashboard');
+    if (!el) return;
+    const map = L.map('mini-map-dashboard', { zoomControl:false, attributionControl:false, dragging:false, scrollWheelZoom:false });
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom:18 }).addTo(map);
+    map.setView([0.7897, 127.3842], 13);
+    // Titik PJU Ternate (normal=biru, kritis=merah)
+    const pts = [
+        [0.7883,127.3782,'#2563eb'], [0.7825,127.3742,'#2563eb'],
+        [0.7950,127.3835,'#ef4444'], [0.7912,127.3821,'#f59e0b'],
+        [0.7965,127.3860,'#2563eb'], [0.7995,127.3888,'#2563eb'],
+        [0.8003,127.3902,'#f59e0b'], [0.7852,127.3770,'#2563eb'],
+    ];
+    pts.forEach(([lat,lng,c]) => L.circleMarker([lat,lng],{radius:6,color:'#fff',fillColor:c,fillOpacity:1,weight:2}).addTo(map));
+});
+</script>
 </body></html>

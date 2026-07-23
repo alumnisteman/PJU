@@ -4,6 +4,8 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Maintenance Schedule | Smart PJU Control</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Geist:wght@400;700&family=JetBrains+Mono&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
@@ -224,7 +226,7 @@
 <div class="flex gap-4">
 <div class="mt-1 w-2 h-2 rounded-full bg-primary flex-shrink-0"></div>
 <div class="space-y-1">
-<h4 class="font-body-medium text-body-medium text-on-surface group-hover:text-primary transition-colors">Routine Check - Area Sudirman</h4>
+<h4 class="font-body-medium text-body-medium text-on-surface group-hover:text-primary transition-colors">Pemeriksaan Rutin - Area Gamalama</h4>
 <div class="flex flex-wrap gap-x-4 gap-y-1 text-on-surface-variant font-body-base text-[13px]">
 <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">calendar_today</span> Oct 12, 2023</span>
 <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">group</span> Team Alpha (Technician)</span>
@@ -246,7 +248,7 @@
 <div class="flex gap-4">
 <div class="mt-1 w-2 h-2 rounded-full bg-tertiary flex-shrink-0"></div>
 <div class="space-y-1">
-<h4 class="font-body-medium text-body-medium text-on-surface group-hover:text-primary transition-colors">Replacement of LED - Area Blok M</h4>
+<h4 class="font-body-medium text-body-medium text-on-surface group-hover:text-primary transition-colors">Penggantian LED - Area Pelabuhan Ternate</h4>
 <div class="flex flex-wrap gap-x-4 gap-y-1 text-on-surface-variant font-body-base text-[13px]">
 <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">calendar_today</span> Oct 14, 2023</span>
 <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">group</span> Team Beta (Civil)</span>
@@ -268,7 +270,7 @@
 <div class="flex gap-4">
 <div class="mt-1 w-2 h-2 rounded-full bg-outline flex-shrink-0"></div>
 <div class="space-y-1">
-<h4 class="font-body-medium text-body-medium text-on-surface group-hover:text-primary transition-colors">Sensor Calibration - Kuningan Bypass</h4>
+<h4 class="font-body-medium text-body-medium text-on-surface group-hover:text-primary transition-colors">Kalibrasi Sensor - Jl. Nukila Ternate</h4>
 <div class="flex flex-wrap gap-x-4 gap-y-1 text-on-surface-variant font-body-base text-[13px]">
 <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">calendar_today</span> Oct 15, 2023</span>
 <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">group</span> Automated System</span>
@@ -290,7 +292,7 @@
 <div class="flex gap-4">
 <div class="mt-1 w-2 h-2 rounded-full bg-emerald-500 flex-shrink-0"></div>
 <div class="space-y-1">
-<h4 class="font-body-medium text-body-medium text-on-surface line-through">Grounding Inspection - Senayan Circle</h4>
+<h4 class="font-body-medium text-body-medium text-on-surface line-through">Inspeksi Grounding - Taman Kota Ternate</h4>
 <div class="flex flex-wrap gap-x-4 gap-y-1 text-on-surface-variant font-body-base text-[13px]">
 <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">calendar_today</span> Oct 08, 2023</span>
 <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">group</span> Team Delta</span>
@@ -315,12 +317,12 @@
 <h3 class="font-headline-sm text-headline-sm">Maintenance Distribution</h3>
 </div>
 <div class="relative h-[300px]">
-<div class="w-full h-full bg-cover bg-center grayscale contrast-125" data-alt="A clean, minimalist topographical map of a metropolitan city area like Jakarta at night, featuring glowing markers for maintenance zones. The map uses a sophisticated slate and blue color palette, with high-contrast UI overlays showing maintenance density. The visual style is professional, engineering-focused, and sharp." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBnWTdLHlXEpGm3qtSDyICs4vfi7k-YeZL8KEj84C4Cg_fMi9U1PjqvWFs09UIqd8azUjknChKuu79mEgY7KF65JQsjRBCV7gxz_HJ4Vb9Qtfkw2QQ-IrFOk-ofsd46L8F9exMRLIycHa-gtQNNG0u7TX4U2fDS1qiLnFSBvbvDf0LlP7JNNcM_qV6KcSxmMlhVO3IAqKS1MQVUMk7aA9O5wvQ99FmY1cZ9Kg053t8yq6xTkhenPRpgQDR2_jEpTiGBMsWFjsv9cu2o')"></div>
+<div class="w-full h-full bg-cover bg-center grayscale contrast-125" data-location="Ternate" id="mini-map-jadwal" style="min-height:300px"></div>
 <div class="absolute inset-0 bg-primary/5 pointer-events-none"></div>
 <!-- Mock Map Overlays -->
 <div class="absolute top-4 left-4 p-3 bg-surface-container-lowest border border-outline-variant rounded-lg shadow-sm">
 <div class="text-label-caps font-label-caps text-on-surface-variant mb-1">SELECTED ZONE</div>
-<div class="font-body-medium">Jakarta South - District 4</div>
+<div class="font-body-medium">Ternate Selatan - Zona 4</div>
 </div>
 </div>
 </section>
@@ -357,7 +359,7 @@
 <span class="material-symbols-outlined text-primary">engineering</span>
 </div>
 <div>
-<div class="font-headline-sm text-headline-sm">Routine Check - Area Sudirman</div>
+<div class="font-headline-sm text-headline-sm">Pemeriksaan Rutin - Area Gamalama</div>
 <div class="text-on-surface-variant text-body-medium">Work Order #WO-2023-0941</div>
 </div>
 </div>
@@ -368,7 +370,7 @@
 </div>
 <div class="space-y-1">
 <div class="font-label-caps text-label-caps text-on-surface-variant">LOCATION</div>
-<div class="font-body-medium">Area Sudirman Central</div>
+<div class="font-body-medium">Area Gamalama, Ternate Tengah</div>
 </div>
 <div class="space-y-1">
 <div class="font-label-caps text-label-caps text-on-surface-variant">ASSIGNED TEAM</div>
@@ -396,11 +398,28 @@
             modal.classList.toggle('hidden');
             modal.classList.toggle('flex');
         }
-
-        // Add micro-interactions for task list items
         document.querySelectorAll('.cursor-pointer').forEach(item => {
-            item.addEventListener('click', () => {
-                toggleModal();
+            item.addEventListener('click', () => { toggleModal(); });
+        });
+
+        // Mini-map jadwal pemeliharaan
+        document.addEventListener('DOMContentLoaded', () => {
+            const el = document.getElementById('mini-map-jadwal');
+            if (!el || typeof L === 'undefined') return;
+            const map = L.map('mini-map-jadwal', { zoomControl:false, attributionControl:false, dragging:false, scrollWheelZoom:false });
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom:18 }).addTo(map);
+            map.setView([0.7897, 127.3842], 13);
+            // Zona pemeliharaan Ternate
+            const zona = [
+                { lat:0.7883, lng:127.3782, label:'Zona 1 – Pahlawan', warna:'#ef4444' },
+                { lat:0.7825, lng:127.3742, label:'Zona 2 – Pelabuhan', warna:'#f59e0b' },
+                { lat:0.7895, lng:127.3815, label:'Zona 3 – Taman Kota', warna:'#2563eb' },
+                { lat:0.7965, lng:127.3860, label:'Zona 4 – Ternate Selatan', warna:'#10b981' },
+            ];
+            zona.forEach(z => {
+                L.circleMarker([z.lat, z.lng], { radius:10, color:'#fff', fillColor:z.warna, fillOpacity:0.9, weight:2 })
+                    .addTo(map)
+                    .bindTooltip(z.label, { permanent:false, direction:'top' });
             });
         });
     </script>
